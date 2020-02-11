@@ -1,0 +1,28 @@
+{
+  "ecmaVersion": 8,
+  "libs": [],
+  "loadEagerly": [
+    "bin/objects/models/*.js"
+  ],
+  "dontLoad": [
+    "node_modules/**"
+  ],
+  "plugins": {
+    "doc_comment": true,
+    "node": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "node_resolve": {},
+    "modules": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "es_modules": {},
+    "complete_strings": {
+      "maxLength": 15
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "extends": "stylelint-config-recommended-scss",
+  "rules": {
+    "declaration-colon-space-before": "never",
+    "declaration-block-semicolon-space-before": "never",
+    "rule-empty-line-before": "never"
+  }
+}

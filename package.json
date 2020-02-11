@@ -1,0 +1,49 @@
+{
+  "name": "template-webapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jquery": "^3.4.1",
+    "materialize-css": "^1.0.0",
+    "morgan": "~1.9.1",
+    "node-sass-middleware": "0.11.0",
+    "pug": "^2.0.4"
+  },
+  "description": "Template for all my future web application ( express, scss, pug, eslint... )",
+  "main": "src/app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://dhmmasson@github.com/dhmmasson/template-webapp.git"
+  },
+  "keywords": [
+    "template",
+    "express",
+    "node",
+    "js",
+    "javascript",
+    "pug",
+    "scss"
+  ],
+  "author": "dhmmasson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dhmmasson/template-webapp/issues"
+  },
+  "homepage": "https://github.com/dhmmasson/template-webapp#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "jsdoc-to-markdown": "^5.0.3",
+    "stylelint": "^13.0.0",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-scss": "^3.14.2"
+  },
+  "sasslintConfig": ".sasslintrc.json"
+}

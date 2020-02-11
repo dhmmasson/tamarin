@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+  nav
+    .nav-wrapper
+      a.brand-logo= __appTitle
+      ul#nav-mobile.right.hide-on-med-and-down
+        li
+          a home
+        li
+          a( href=__appHomePage ) github
+  .container.z-depth-1
+    .row 
+      .col.s12.m6.offset-m3 
+        p= __appDescription 
