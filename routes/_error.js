@@ -31,7 +31,4 @@ function errorHandler( err, req, res ) {
   res.render( "error" ) ;
 }
 
-module.exports =
-{ handle404    : handle404
-, errorHandler : errorHandler
-} ;
+module.exports = handle404 ;

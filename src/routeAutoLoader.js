@@ -1,7 +1,8 @@
 /* eslint global-require: 0, no-continue: 0, no-sync:0*/
 /**
- * this file automatically set the route from the routes folder
+ * @file routeAutoLoader - this file automatically set the route from the routes folder
  * @author dhmmasson
+ * @module express-autoroute
  */
 const fs = require( "fs" ) ;
 const path = require( "path" ) ;
@@ -25,7 +26,7 @@ function loadFiles( app, directory ) {
     // only get .js file
     if( !RegExp( ".*[.]js" ).test( file ) ) continue ;
     if( RegExp( "^_.*" ).test( file ) ) continue ;
-    if( RegExp( path.basename( __filename ) ).test( file ) ) continue ;
+
     try{
       const router = require( path.resolve( routeDirectory, path.basename( file, ".js" ) ) ) ;
       let mount = "/" ;

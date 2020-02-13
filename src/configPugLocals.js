@@ -1,10 +1,12 @@
 /**
- * this file set some locals value for pug, namely author's names, title and description from the package.json file
+ * @file ConfigPugLocals - this file set some locals value for pug, namely author's names, title and description from the package.json file
  * @author dhmmasson
+ * @module configPugLocals
  */
 
 
 const packageJson = require( "../package.json" ) ;
+
 
 /**
  * setLocals - set the pug locals
@@ -19,7 +21,6 @@ function setLocals( app ) {
   , __appAuthors     : packageJson.author
   , __appHomePage    : packageJson.homepage
   } ;
-  console.log( locals ) ;
   app.locals = locals ;
 }
 

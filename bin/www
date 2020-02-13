@@ -3,9 +3,11 @@
 /**
  * Module dependencies.
  */
-const app = require( "../app" ) ;
-const debug = require( "debug" )( "template-webapp:server" ) ;
-const http = require( "http" ) ;
+import app from "../app.mjs" ;
+import debug from "debug" ;
+import http from "http" ;
+
+debug( "template-webapp:server" ) ;
 
 /**
  * Get port from environment and store in Express.
