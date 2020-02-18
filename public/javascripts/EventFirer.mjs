@@ -50,7 +50,7 @@ class EventFirer {
    * TODO check for duplicate
    */
   on( eventName, callback, _this ) {
-    if( typeof callback !== "function" ) console.warn( this, eventName, callback ) ;
+    if( typeof callback !== "function" ) return ;
     if( typeof this.handlers[ eventName ] === "function" ) {
       this.handlers[ eventName ] = [ this.handlers[ eventName ], callback.bind( _this ) ] ;
     } else if ( this.handlers[ eventName ] instanceof Array ) {

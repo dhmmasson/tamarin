@@ -25,19 +25,17 @@ class Sorter extends EventFirer {
     super() ;
 
     /** @property {Object} technologies - all the technologies
-     * @property {Object} technologies.all Array of all the technologies
+     * @property {module:Models.Technology[]} technologies.all Array of all the technologies
      * @property {Object} technologies.sorted Array of all the technologies sorted by latest computed score
      * @property {Object} technologies.map ap of all the technologies to be sorted, call the setter
      * */
     this.technologies = technologies ;
 
-    /** @property {module:Models.Criterion[]} - Array of all criterai*/
-    this.criteriaArray = [] ;
-
-    /** @property {Object.<string,module:Models.Criterion>} - When a criterion has been updated in the UI add it to this array remove them when sort is complete */
-    this.updatedCriteria = [] ;
-
-    /** @property {Object.<string,module:Models.Criterion>} - Map of all criteria*/
+    /** @property {Object} criteria - all the criteria
+     * @property {module:Models.Criterion[]} criteria.all Array of all the criteria
+     * @property {module:Models.Criterion[]} criteria.updated Array of all the criteria that have been recently updated
+     * @property {Object.<string, module:Models.Criterion[]>} criteria.map Array of all the criteria that have been recently updated
+     */
     this.criteria = criteria ;
 
     definePrivateProperties( this, "_technologies", "_criteria" ) ;
@@ -81,22 +79,25 @@ class Sorter extends EventFirer {
    * @param  {module:Models.Criterion[]} Criterion description
    */
   set criteria ( criteria ) {
-    this.criteriaMap = {} ;
-    this.criteriaArray = [] ;
+    this._criteria =
+    { all     : []
+    , map     : {}
+    , updated : []
+    } ;
     // Recreate object from the json serialization
     for( const _criterion of criteria ) {
       const criterion = new Models.Criterion( _criterion ) ;
-      this.criteriaMap[ criterion.name ] = criterion ;
-      this.criteriaArray.push( criterion ) ;
+      this._criteria.map[ criterion.name ] = criterion ;
+      this._criteria.all.push( criterion ) ;
       // watch for update
       criterion.on( Models.Criterion.eventType.updated
         , ( eventName, criterion ) => {
-          this.updatedCriteria.push( criterion ) ;
+          this._criteria.updated.push( criterion ) ;
           this.sort() ;
         }, this ) ;
     }
     // Clone the criteria as all should be updated
-    this.updatedCriteria = this.criteriaArray.slice() ;
+    this._criteria.updated = this._criteria.all.slice() ;
   }
 
 
@@ -121,7 +122,7 @@ class Sorter extends EventFirer {
     this.updateBounds().updateDominance().updateScore() ;
     // Clone technologies array and sort through score
     this.technologies.sorted = this.technologies.all.slice().sort( ( a, b ) => b.score - a.score ) ;
-    this.updatedCriteria = [] ;
+    this.criteria.updated = [] ;
     this.fire( Sorter.eventType.sorted ) ;
     return this ;
   }
@@ -133,7 +134,7 @@ class Sorter extends EventFirer {
    * @return {Sorter}  this
    */
   updateDominance( ) {
-    this.technologies.all.forEach( e => e.updateDominance( this.updatedCriteria, this.technologies.all ) ) ;
+    this.technologies.all.forEach( e => e.updateDominance( this.criteria.updated, this.technologies.all ) ) ;
     return this ;
   }
 
@@ -144,7 +145,7 @@ class Sorter extends EventFirer {
    * @return {Sorter}  this sorter
    */
   updateBounds( ) {
-    this.technologies.all.forEach( e => e.updateBounds( this.updatedCriteria ) ) ;
+    this.technologies.all.forEach( e => e.updateBounds( this.criteria.updated ) ) ;
     return this ;
   }
 
@@ -155,7 +156,7 @@ class Sorter extends EventFirer {
    * @return {Sorter}  this
    */
   updateScore( ) {
-    this.technologies.all.forEach( e => e.updateScore( this.criteriaArray ) ) ;
+    this.technologies.all.forEach( e => e.updateScore( this.criteria.all ) ) ;
     return this ;
   }
 

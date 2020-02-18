@@ -1,4 +1,4 @@
-import { Sorter } from "./sortingAlgorithm.mjs" ;
+import { Sorter } from "./Sorter.mjs" ;
 const sorter = new Sorter( [], [] ) ;
 window.sorter = sorter ;
 
@@ -13,17 +13,17 @@ $.get( "/api/technologies", function( data ) {
 } ) ;
 
 function test() {
-  if( sorter.criteriaArray.length > 0 && sorter.technologies.all.length > 0 ) {
+  if( sorter.criteria.all.length > 0 && sorter.technologies.all.length > 0 ) {
     sorter.on( Sorter.eventType.sorted, printer ) ;
-    sorter.criteriaArray[ 0 ].weight = 0 ;
-    sorter.criteriaArray[ 1 ].weight = 1 ;
+    sorter.criteria.all[ 0 ].weight = 0 ;
+    sorter.criteria.all[ 1 ].weight = 1 ;
 
-    sorter.criteriaArray[ 1 ].blurIntensity = 0 ;
-    sorter.criteriaArray[ 1 ].blurIntensity = 0.1 ;
-    sorter.criteriaArray[ 1 ].blurIntensity = 0.2 ;
+    sorter.criteria.all[ 1 ].blurIntensity = 0 ;
+    sorter.criteria.all[ 1 ].blurIntensity = 0.1 ;
+    sorter.criteria.all[ 1 ].blurIntensity = 0.2 ;
 
-    sorter.criteriaArray[ 3 ].blurIntensity = 0.2 ;
-    sorter.criteriaArray[ 3 ].weight = 1 ;
+    sorter.criteria.all[ 3 ].blurIntensity = 0.2 ;
+    sorter.criteria.all[ 3 ].weight = 1 ;
   }
 }
 
@@ -35,12 +35,11 @@ function round( number, precision ) {
   return shift( Math.round( shift( number, +precision ) ), -precision ) ;
 }
 function printer( eventType, sorter ) {
-  const { criteriaArray:criteria, technologies } = sorter ;
-  console.log( sorter ) ;
+  const { criteria, technologies } = sorter ;
   const printableArray = [] ;
   for( const technology of technologies.sorted ) {
     const line = { name: technology.name } ;
-    for( const criterion of criteria ) {
+    for( const criterion of criteria.all ) {
       if( criterion.weight > 0 ) {
         line[ criterion.name + "min" ] = round( technology.bounds[ criterion.name ], 2 ) ;
         line[ criterion.name + "max" ] = technology.evaluations[ criterion.name ] ;
