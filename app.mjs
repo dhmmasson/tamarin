@@ -1,5 +1,5 @@
-import autoLoader from "./src/routeAutoLoader.js" ;
-import config from "./src/configPugLocals.js" ;
+import autoLoader from "./src/routeAutoLoader.cjs" ;
+import config from "./src/configPugLocals.cjs" ;
 import cookieParser from "cookie-parser" ;
 import databaseConnector from "./src/databaseConnector.mjs" ;
 import dotenv from "dotenv" ;
@@ -36,10 +36,11 @@ app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modul
 app.set( "views", path.join( process.env.PWD, "views" ) ) ;
 app.set( "view engine", "pug" ) ;
 
-config( app ) ;
-autoLoader( app ) ;
+
+app.locals = config() ;
+app.use( autoLoader( ) ) ;
 // create a database connector
-databaseConnector( app ) ;
+app.set( "connector", databaseConnector() ) ;
 
 /** Error handling */
 app.use( errorHandler ) ;

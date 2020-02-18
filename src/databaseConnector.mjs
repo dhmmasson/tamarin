@@ -4,15 +4,15 @@
  * @module Connector
  */
 
-import { Criteria, Technology } from "../public/javascripts/models.mjs" ;
+import * as models from "../public/javascripts/models.mjs" ;
 import mysql from "mysql2" ;
 
 
 /**
  * @class
- * @param  {module:Express.Application} app the express application to plug into
+
  */
-function Connector( app ) {
+function Connector() {
   const configuration =
     { host     : process.env.mysqlHost
     , user     : process.env.mysqlUser
@@ -21,21 +21,20 @@ function Connector( app ) {
     } ;
   // Internal pool to connect to the database
   const pool = mysql.createPool( configuration ).promise() ;
-  // register the connector to the application
-  app.set( "connector", this ) ;
+
 
   /**
-  * Connector#getCriteria -  return all the criteria in the database
+  * Connector#getCriterion -  return all the criteria in the database
   *
-  * @return {Promise<module:models.Criteria[]>}  Promise to deliver the criteria from the database
+  * @return {Promise<module:models.Criterion[]>}  Promise to deliver the criteria from the database
   */
   this.getCriteria = function() {
     return pool.query(
-      `SELECT criteria.name, min( data.value ) as min,  max( data.value ) as max
+      `SELECT criteria.name, min( data.value ) as min, max( data.value ) as max
   FROM criteria
   LEFT JOIN data on data.criteria_name = criteria.name
   GROUP BY criteria.name` )
-      .then( cleanCriteria ) ;
+      .then( cleanCriterion ) ;
   } ;
 
 
@@ -70,7 +69,7 @@ function Connector( app ) {
       let technology = technologiesMap[ evaluation.technology ] ;
       // Create technology if not already in the array
       if( technology === undefined ) {
-        technology = new Technology( evaluation ) ;
+        technology = new models.Technology( evaluation ) ;
         technologiesMap[ evaluation.technology ] = technology ;
         technologiesArray.push( technology ) ;
       }
@@ -81,20 +80,20 @@ function Connector( app ) {
 
 
   /**
-   * cleanCriteria - Clean criteria from the database request ( mainly clean the min and max values to be integer)
+   * cleanCriterion - Clean criteria from the database request ( mainly clean the min and max values to be integer)
    *
-   * @param  {Array.<module:models.Criteria>} rows an array where the first element is an array of criteria to clean
-   * @return {Promise.<module:models.Criteria[]>}          Cleaned Criteria
+   * @param  {Array.<module:models.Criterion>} rows an array where the first element is an array of criteria to clean
+   * @return {Promise.<module:models.Criterion[]>}          Cleaned Criterion
    */
-  function cleanCriteria( [ rows ] ) {
+  function cleanCriterion( [ rows ] ) {
 
-    /** @type Criteria[] */
+    /** @type Criterion[] */
     const criterias = [] ;
     for( const row of rows ) {
-      criterias.push( new Criteria( row ) ) ;
+      criterias.push( new models.Criterion( row ) ) ;
     }
     return Promise.resolve( criterias ) ;
   }
 }
 
-export default function( app ) { return new Connector( app ) ; }
+export default function() { return new Connector() ; }

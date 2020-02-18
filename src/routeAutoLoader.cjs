@@ -6,6 +6,7 @@
  */
 const fs = require( "fs" ) ;
 const path = require( "path" ) ;
+const express = require( "express" ) ;
 
 
 /**
@@ -17,7 +18,8 @@ const path = require( "path" ) ;
  *
  * @TODO: be somehow recursive
  */
-function loadFiles( app, directory ) {
+function loadFiles( directory ) {
+  const root = express.Router() ;
   const baseDirectory = process.env.PWD || path.resolve( __dirname, ".." ) ;
   let routeDirectory = ( directory === undefined ) ? "routes" : directory ;
   routeDirectory = path.isAbsolute( routeDirectory ) ? routeDirectory : path.resolve( baseDirectory, routeDirectory ) ;
@@ -37,12 +39,12 @@ function loadFiles( app, directory ) {
         router.name = path.basename( file, ".js" ) ;
         mount = "/" + path.basename( file, ".js" ) ;
       }
-      app.use( mount, router ) ;
+      root.use( mount, router ) ;
     } catch( error ) {
       console.warn( "impossible to load " + file ) ;
     }
   }
-  return app ;
+  return root ;
 }
 
 module.exports = loadFiles ;

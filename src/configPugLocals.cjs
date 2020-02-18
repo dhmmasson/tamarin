@@ -4,9 +4,7 @@
  * @module configPugLocals
  */
 
-
 const packageJson = require( "../package.json" ) ;
-
 
 /**
  * setLocals - set the pug locals
@@ -14,14 +12,14 @@ const packageJson = require( "../package.json" ) ;
  * @param  {Express~Application} app the Express application to configure
  * @return {Express~Application}     the Express application configured
  */
-function setLocals( app ) {
+function setLocals( ) {
   const locals =
   { __appTitle       : packageJson.name
   , __appDescription : packageJson.description
   , __appAuthors     : packageJson.author
   , __appHomePage    : packageJson.homepage
   } ;
-  app.locals = locals ;
+  return locals ;
 }
 
 module.exports = setLocals ;
