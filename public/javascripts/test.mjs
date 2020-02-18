@@ -4,7 +4,6 @@ window.sorter = sorter ;
 
 $.get( "/api/criteria", function( data ) {
   sorter.criteria = data.criteria ;
-
   test() ;
 } ) ;
 
@@ -14,15 +13,17 @@ $.get( "/api/technologies", function( data ) {
 } ) ;
 
 function test() {
-
-  if( sorter.criteriaArray.length > 0 && sorter.technologiesArray.length > 0 ) {
+  if( sorter.criteriaArray.length > 0 && sorter.technologies.all.length > 0 ) {
     sorter.on( Sorter.eventType.sorted, printer ) ;
     sorter.criteriaArray[ 0 ].weight = 0 ;
-    sorter.criteriaArray[ 1 ].weight = 3 ;
+    sorter.criteriaArray[ 1 ].weight = 1 ;
 
     sorter.criteriaArray[ 1 ].blurIntensity = 0 ;
     sorter.criteriaArray[ 1 ].blurIntensity = 0.1 ;
     sorter.criteriaArray[ 1 ].blurIntensity = 0.2 ;
+
+    sorter.criteriaArray[ 3 ].blurIntensity = 0.2 ;
+    sorter.criteriaArray[ 3 ].weight = 1 ;
   }
 }
 
@@ -34,9 +35,10 @@ function round( number, precision ) {
   return shift( Math.round( shift( number, +precision ) ), -precision ) ;
 }
 function printer( eventType, sorter ) {
-  const { criteriaArray:criteria, sortedTechnologies:technologies } = sorter ;
+  const { criteriaArray:criteria, technologies } = sorter ;
+  console.log( sorter ) ;
   const printableArray = [] ;
-  for( const technology of technologies ) {
+  for( const technology of technologies.sorted ) {
     const line = { name: technology.name } ;
     for( const criterion of criteria ) {
       if( criterion.weight > 0 ) {

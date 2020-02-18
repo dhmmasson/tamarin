@@ -1,19 +1,6 @@
 const createError = require( "http-errors" ) ;
 
 /**
- * handle404 - catch 404 and forward to error handler
- *
- * @param  {Express~Request} req  the HTTP request
- * @param  {Express~Response} res  the HTTP response
- * @param  {Express~callback} next the next handler to call
- */
-function handle404 ( req, res ) {
-  console.log( "Handle404" ) ;
-  errorHandler( createError( 404 ), req, res ) ;
-}
-
-
-/**
  * errorHandler - The actual handler
  * provides a message the error to error.pug
  *
@@ -29,6 +16,18 @@ function errorHandler( err, req, res ) {
   // render the error page
   res.status( err.status || 500 ) ;
   res.render( "error" ) ;
+}
+
+/**
+ * handle404 - catch 404 and forward to error handler
+ *
+ * @param  {Express~Request} req  the HTTP request
+ * @param  {Express~Response} res  the HTTP response
+ * @param  {Express~callback} next the next handler to call
+ */
+function handle404 ( req, res ) {
+  console.log( "Handle404" ) ;
+  errorHandler( createError( 404 ), req, res ) ;
 }
 
 module.exports = handle404 ;

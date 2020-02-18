@@ -1,7 +1,22 @@
-import debug from "debug" ;
+/**
+ * @file httpHandler - A set of utility function for the express server
+ * @author dhmmasson
+ */
 
 /**
- * Event listener for HTTP server "error" event.
+  * Express Error Callback
+  *
+  * @callback onError
+  * @param {external:Express.Error} error
+  * @throws {EACCES|EADDRINUSE}
+  * @memberof! module:HttpUtils
+  */
+
+/**
+ * generate an event listener capable of printing the port
+ * @param  {(string|number)} port name of the pipe or port number
+ * @return {module:ExpressUtility.onError}      Event listener for HTTP server "error" event.
+ * @memberof! module:HttpUtils
  */
 function errorHandler( port ) {
   return function onError( error ) {
@@ -25,17 +40,4 @@ function errorHandler( port ) {
   } ;
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-function listeningHandler( server ) {
-  return function onListening() {
-    const addr = server.address() ;
-    const bind = typeof addr === "string"
-      ? "pipe " + addr
-      : "port " + addr.port ;
-    debug( "Listening on " + bind ) ;
-  } ;
-}
-
-export { errorHandler, listeningHandler } ;
+export { errorHandler } ;

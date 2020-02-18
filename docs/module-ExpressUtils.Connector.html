@@ -29,7 +29,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-Connector.html">Connector</a>~</span>Connector<span class="signature">(app)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="module-ExpressUtils.html">ExpressUtils</a>.</span>Connector<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -42,7 +42,7 @@
     
 
     
-    <h4 class="name" id="Connector"><span class="type-signature"></span>new Connector<span class="signature">(app)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Connector"><span class="type-signature"></span>new Connector<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -55,55 +55,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>app</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Express.Application</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the express application to plug into</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -139,7 +90,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="databaseConnector.js.html">databaseConnector.js</a>, <a href="databaseConnector.js.html#line48">line 48</a>
+        <a href="src_expressUtils_databaseConnector.mjs.html">src/expressUtils/databaseConnector.mjs</a>, <a href="src_expressUtils_databaseConnector.mjs.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -195,7 +146,7 @@
     
 
     
-    <h4 class="name" id="getCriteria"><span class="type-signature"></span>getCriteria<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Criteria>>}</span></h4>
+    <h4 class="name" id="getCriteria"><span class="type-signature"></span>getCriteria<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;module:models.Criterion>>}</span></h4>
     
 
     
@@ -203,7 +154,7 @@
 
 
 <div class="description">
-    Connector#getCriteria -  return all the criteria in the database
+    Connector#getCriterion -  return all the criteria in the database
 </div>
 
 
@@ -247,7 +198,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="databaseConnector.js.html">databaseConnector.js</a>, <a href="databaseConnector.js.html#line65">line 65</a>
+        <a href="src_expressUtils_databaseConnector.mjs.html">src/expressUtils/databaseConnector.mjs</a>, <a href="src_expressUtils_databaseConnector.mjs.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -287,7 +238,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;Array.&lt;Criteria>></span>
+<span class="param-type">Promise.&lt;Array.&lt;module:models.Criterion>></span>
 
 
     </dd>
@@ -305,7 +256,7 @@
     
 
     
-    <h4 class="name" id="getTechnologies"><span class="type-signature"></span>getTechnologies<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Technology>>}</span></h4>
+    <h4 class="name" id="getTechnologies"><span class="type-signature"></span>getTechnologies<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;module:models.Technology>>}</span></h4>
     
 
     
@@ -357,7 +308,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="databaseConnector.js.html">databaseConnector.js</a>, <a href="databaseConnector.js.html#line80">line 80</a>
+        <a href="src_expressUtils_databaseConnector.mjs.html">src/expressUtils/databaseConnector.mjs</a>, <a href="src_expressUtils_databaseConnector.mjs.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -365,6 +316,13 @@
 
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>join with technology table to gather the description</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -397,7 +355,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;Array.&lt;Technology>></span>
+<span class="param-type">Promise.&lt;Array.&lt;module:models.Technology>></span>
 
 
     </dd>
@@ -415,7 +373,7 @@
     
 
     
-    <h4 class="name" id="~cleanCriteria"><span class="type-signature">(inner) </span>cleanCriteria<span class="signature">(rows)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Criteria>>}</span></h4>
+    <h4 class="name" id="~cleanCriterion"><span class="type-signature">(inner) </span>cleanCriterion<span class="signature">(rows)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;module:models.Criterion>>}</span></h4>
     
 
     
@@ -423,7 +381,7 @@
 
 
 <div class="description">
-    cleanCriteria - Clean criteria from the database request ( mainly clean the min and max values to be integer)
+    cleanCriterion - Clean criteria from the database request ( mainly clean the min and max values to be integer)
 </div>
 
 
@@ -465,7 +423,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Criteria></span>
+<span class="param-type">Array.&lt;module:models.Criterion></span>
 
 
             
@@ -516,7 +474,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="databaseConnector.js.html">databaseConnector.js</a>, <a href="databaseConnector.js.html#line121">line 121</a>
+        <a href="src_expressUtils_databaseConnector.mjs.html">src/expressUtils/databaseConnector.mjs</a>, <a href="src_expressUtils_databaseConnector.mjs.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -545,7 +503,7 @@
 
         
 <div class="param-desc">
-    Cleaned Criteria
+    Cleaned Criterion
 </div>
 
 
@@ -556,7 +514,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;Array.&lt;Criteria>></span>
+<span class="param-type">Promise.&lt;Array.&lt;module:models.Criterion>></span>
 
 
     </dd>
@@ -574,7 +532,7 @@
     
 
     
-    <h4 class="name" id="~pivotEvaluation"><span class="type-signature">(inner) </span>pivotEvaluation<span class="signature">(evaluations)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;Technology>>}</span></h4>
+    <h4 class="name" id="~pivotEvaluation"><span class="type-signature">(inner) </span>pivotEvaluation<span class="signature">(evaluations)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;module:models.Technology>>}</span></h4>
     
 
     
@@ -624,7 +582,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Evaluation></span>
+<span class="param-type">Array.&lt;module:models.Evaluation></span>
 
 
             
@@ -675,7 +633,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="databaseConnector.js.html">databaseConnector.js</a>, <a href="databaseConnector.js.html#line91">line 91</a>
+        <a href="src_expressUtils_databaseConnector.mjs.html">src/expressUtils/databaseConnector.mjs</a>, <a href="src_expressUtils_databaseConnector.mjs.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -715,7 +673,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;Array.&lt;Technology>></span>
+<span class="param-type">Promise.&lt;Array.&lt;module:models.Technology>></span>
 
 
     </dd>
@@ -743,13 +701,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-configPugLocals.html">configPugLocals</a></li><li><a href="module-Connector.html">Connector</a></li><li><a href="module-express-autoroute.html">express-autoroute</a></li></ul><h3>Classes</h3><ul><li><a href="module-Connector-Connector.html">Connector</a></li><li><a href="module-Connector-Criteria.html">Criteria</a></li><li><a href="module-Connector-Evaluation.html">Evaluation</a></li><li><a href="module-Connector-Technology.html">Technology</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ExpressUtils.html">ExpressUtils</a></li><li><a href="module-HttpUtils.html">HttpUtils</a></li><li><a href="module-Models.html">Models</a></li></ul><h3>Classes</h3><ul><li><a href="EventFirer.html">EventFirer</a></li><li><a href="module-ExpressUtils.Connector.html">Connector</a></li><li><a href="module-Models.Criterion.html">Criterion</a></li><li><a href="module-Models.Evaluation.html">Evaluation</a></li><li><a href="module-Models.Technology.html">Technology</a></li><li><a href="Sorter.html">Sorter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#definePrivateProperties">definePrivateProperties</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 11 2020 19:39:17 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 18 2020 23:32:11 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

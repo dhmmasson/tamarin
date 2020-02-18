@@ -3,18 +3,18 @@
 /**
  * Module dependencies.
  */
-import * as httpHandlers from "../src/httpHandler.mjs" ;
+import * as expressUtility from "../src/httpUtils/index.mjs" ;
 import app from "../app.mjs" ;
 import debug from "debug" ;
 import http from "http" ;
-import normalizePort from "../src/normalizePort.mjs" ;
+
 
 debug( "rezbuild-capuchin:server" ) ;
 
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort( process.env.PORT || "3000" ) ;
+const port = expressUtility.normalizePort( process.env.PORT || "3000" ) ;
 app.set( "port", port ) ;
 
 /**
@@ -26,5 +26,5 @@ const server = http.createServer( app ) ;
  * Listen on provided port, on all network interfaces.
  */
 server.listen( port ) ;
-server.on( "error", httpHandlers.errorHandler( port ) ) ;
-server.on( "listening", httpHandlers.listeningHandler( server ) ) ;
+server.on( "error", expressUtility.errorHandler( port ) ) ;
+server.on( "listening", expressUtility.listeningHandler( server ) ) ;

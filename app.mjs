@@ -1,7 +1,6 @@
-import autoLoader from "./src/routeAutoLoader.cjs" ;
-import config from "./src/configPugLocals.cjs" ;
+import { autoLocals, autoRoute, mysqlConnector } from "./src/expressUtils/index.mjs" ;
 import cookieParser from "cookie-parser" ;
-import databaseConnector from "./src/databaseConnector.mjs" ;
+
 import dotenv from "dotenv" ;
 import errorHandler from "./routes/_error.js" ;
 import express from "express" ;
@@ -37,10 +36,10 @@ app.set( "views", path.join( process.env.PWD, "views" ) ) ;
 app.set( "view engine", "pug" ) ;
 
 
-app.locals = config() ;
-app.use( autoLoader( ) ) ;
+app.locals = autoLocals() ;
+app.use( autoRoute( ) ) ;
 // create a database connector
-app.set( "connector", databaseConnector() ) ;
+app.set( "connector", mysqlConnector() ) ;
 
 /** Error handling */
 app.use( errorHandler ) ;

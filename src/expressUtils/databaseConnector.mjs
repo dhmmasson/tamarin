@@ -1,16 +1,15 @@
 /**
  * @file databaseConnector - Create the connexion to the sql database and provide the accessors
  * @author dhmmasson <@dhmmasson>
- * @module Connector
  */
 
-import * as models from "../public/javascripts/models.mjs" ;
+import * as models from "../../public/javascripts/Models/index.mjs" ;
 import mysql from "mysql2" ;
 
 
 /**
  * @class
-
+ * @memberof! module:ExpressUtils
  */
 function Connector() {
   const configuration =

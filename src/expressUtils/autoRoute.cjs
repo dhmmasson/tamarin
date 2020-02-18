@@ -2,7 +2,7 @@
 /**
  * @file routeAutoLoader - this file automatically set the route from the routes folder
  * @author dhmmasson
- * @module express-autoroute
+ * @memberof! module:ExpressUtils
  */
 const fs = require( "fs" ) ;
 const path = require( "path" ) ;
@@ -15,8 +15,8 @@ const express = require( "express" ) ;
 * @param  {Express~Application} app the Express application to configure
  * @param  {string=} directory the path to extract the routes from
  * @return {Express~Application}     the Express application configured
- *
- * @TODO: be somehow recursive
+ * @memberof! module:ExpressUtils
+ * @TODO: Use express-autoroute
  */
 function loadFiles( directory ) {
   const root = express.Router() ;
@@ -26,7 +26,7 @@ function loadFiles( directory ) {
   const dirs = fs.readdirSync( routeDirectory ) ;
   for( const file of dirs ) {
     // only get .js file
-    if( !RegExp( ".*[.]js" ).test( file ) ) continue ;
+    if( !RegExp( ".*[.]js$" ).test( file ) ) continue ;
     if( RegExp( "^_.*" ).test( file ) ) continue ;
 
     try{
