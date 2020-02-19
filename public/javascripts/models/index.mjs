@@ -1,7 +1,7 @@
 
 /**
- * @file Models.js - Contains all the different Models needed for the sorting algorithm
- * @author dhmmasson
+ * @file Contains all the different Models needed for the sorting algorithm
+ * @author dhmmasson <@dhmmasson>
  * @module Models
  */
 

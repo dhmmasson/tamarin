@@ -2,7 +2,6 @@
     "plugins": [],
     "recurseDepth": 10,
     "source": {
-        "include": ["./src","./public/javascripts"],
         "includePattern": ".+\\.[mc]?js$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
@@ -19,6 +18,6 @@
       "template": "templates/default",
       "encoding": "utf8",
       "destination": "./docs/",
-      "recurse": true      
+      "recurse": true
     }
 }

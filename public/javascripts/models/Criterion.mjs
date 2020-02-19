@@ -5,12 +5,12 @@
  * @author dhmmasson
  */
 
-import { EventFirer } from "../EventFirer.mjs" ;
+import { EventEmitter } from "../EventEmitter.mjs" ;
 import { definePrivateProperties } from "../utils.mjs" ;
 
 
 /**
- * @extends EventFirer
+ * @extends EventEmitter
  * @property {string} name - Unique name of the criteria, to use to reference the criteria
  * @property {string} description - Full name to be used to be displayed
  * @property {Score}  min - Minimum value for the criteria in the database
@@ -20,7 +20,7 @@ import { definePrivateProperties } from "../utils.mjs" ;
  * @memberof! Models
  * @alias module:Models.Criterion
  */
-class Criterion extends EventFirer {
+class Criterion extends EventEmitter {
 
   /**
    * constructor - create a new criterion from a serialization of it (either from json or from the db)

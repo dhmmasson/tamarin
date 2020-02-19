@@ -4,16 +4,16 @@
  * @author dhmmasson <@dhmmasson>
  */
 import * as Models from "./Models/index.mjs" ;
-import { EventFirer } from "./EventFirer.mjs" ;
+import { EventEmitter } from "./EventEmitter.mjs" ;
 import { definePrivateProperties } from "./utils.mjs" ;
 
 /**
   * Sorter - the sortingAlgorithm wrapper class
   *
   * @class
-  * @extends EventFirer
+  * @extends EventEmitter
   */
-class Sorter extends EventFirer {
+class Sorter extends EventEmitter {
 
   /**
    * constructor - initialize everything

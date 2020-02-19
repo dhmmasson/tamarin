@@ -3,7 +3,7 @@
  * @author dhmmasson <@dhmmasson>
  */
 
-class EventFirer {
+class EventEmitter {
 
   /**
    * Constructor - Create an new event firer
@@ -18,7 +18,7 @@ class EventFirer {
   /**
    * fire - call the callback relative to the event
    *
-   * @param  {EventFirer.eventType} eventName name of the event to fire
+   * @param  {EventEmitter.eventType} eventName name of the event to fire
    */
   fire( eventName ) {
     if( Object.hasOwnProperty.call( this.handlers, eventName ) ) {
@@ -44,8 +44,8 @@ class EventFirer {
   /**
    * on - add event listener
    *
-   * @param  {EventFirer.eventType} eventName event to subscribe to
-   * @param  {EventFirer.callback}  callback callback
+   * @param  {EventEmitter.eventType} eventName event to subscribe to
+   * @param  {EventEmitter.callback}  callback callback
    * @param  {object}  [_this] object to bind the callback
    * TODO check for duplicate
    */
@@ -66,6 +66,6 @@ class EventFirer {
  * @enum {string}
  * @readonly
  */
-EventFirer.eventType = {} ;
+EventEmitter.eventType = {} ;
 
-export { EventFirer } ;
+export { EventEmitter } ;
