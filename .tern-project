@@ -2,7 +2,7 @@
   "ecmaVersion": 8,
   "libs": [],
   "loadEagerly": [
-    "bin/objects/models/*.js"
+    "public/javascripts/*.js"
   ],
   "dontLoad": [
     "node_modules/**"

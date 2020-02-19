@@ -1,6 +1,6 @@
 {
-  "name": "template-webapp",
-  "version": "0.0.0",
+  "name": "rezbuild-emperor-tamarin",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -14,30 +14,26 @@
     "jquery": "^3.4.1",
     "materialize-css": "^1.0.0",
     "morgan": "~1.9.1",
+    "mysql2": "^2.1.0",
     "node-sass-middleware": "0.11.0",
     "pug": "^2.0.4"
   },
-  "description": "Template for all my future web application ( express, scss, pug, eslint... )",
-  "main": "src/app.js",
+  "description": "Rezbuild Emperor Tamarin is a tool to explore a set of product by ordering a set of criteria",
+  "main": "bin/www",
   "repository": {
     "type": "git",
-    "url": "git+https://dhmmasson@github.com/dhmmasson/template-webapp.git"
+    "url": "git+https://dhmmasson@github.com/dhmmasson/rezbuild-emperor-tamarin.git"
   },
   "keywords": [
-    "template",
-    "express",
-    "node",
-    "js",
-    "javascript",
-    "pug",
-    "scss"
+    "decision support tools",
+    "HCI"
   ],
   "author": "dhmmasson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dhmmasson/template-webapp/issues"
+    "url": "https://github.com/dhmmasson/rezbuild-emperor-tamarin/issues"
   },
-  "homepage": "https://github.com/dhmmasson/template-webapp#readme",
+  "homepage": "https://github.com/dhmmasson/rezbuild-emperor-tamarin#readme",
   "devDependencies": {
     "eslint": "^6.8.0",
     "jsdoc-to-markdown": "^5.0.3",
@@ -45,5 +41,6 @@
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.14.2"
   },
-  "sasslintConfig": ".sasslintrc.json"
+  "sasslintConfig": ".sasslintrc.json",
+  "type": "module"
 }
