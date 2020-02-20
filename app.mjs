@@ -1,12 +1,12 @@
-import { autoLocals, autoRoute, mysqlConnector } from "./src/expressUtils/index.mjs" ;
+import { autoLocals, autoRoute, mysqlConnector, updateTemplate } from "./src/expressUtils/index.mjs" ;
 import cookieParser from "cookie-parser" ;
-
 import dotenv from "dotenv" ;
 import errorHandler from "./routes/_error.js" ;
 import express from "express" ;
 import logger from "morgan" ;
 import path from "path" ;
 import sassMiddleware from "node-sass-middleware" ;
+
 
 dotenv.config() ;
 const app = express() ;
@@ -23,6 +23,9 @@ app.use( sassMiddleware(
   , indentedSyntax : false // .scss
   , sourceMap      : true
   } ) ) ;
+
+updateTemplate( path.resolve( process.env.PWD, "views/partials" )
+  , path.resolve( process.env.PWD, "public/javascripts" ) ) ;
 
 /** Static routes : css, images, and app js*/
 app.use( express.static( path.join( process.env.PWD, "public" ) ) ) ;
