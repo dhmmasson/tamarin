@@ -9,7 +9,7 @@
 * @property {string} description - Full name to be used to be displayed
 * @property {Object.<Criterion~name,Evaluation~value>} evaluations - actual evaluation of the technology for the criteria
 * @property {Object.<Criterion~name,Evaluation~value>} bounds - blurred value for the criteria
-* @property {Object.<Technology~name,number>} dominance - How many technologies are dominated ( value  >  bounds )
+* @property {Object.<Criterion~name,number>} dominance - How many technologies are dominated ( value  >  bounds )
 * @property {number} score - computed score : weighted sum.
 * @todo Change everything to have a it in a one read ( compare this techno to an reduced array of technologies )
 * @memberof! Models
