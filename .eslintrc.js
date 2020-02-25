@@ -107,7 +107,8 @@ module.exports = {
       "error",
       2,
       {
-        "ObjectExpression":0
+        "ObjectExpression":0,
+        "VariableDeclarator":{ "var": 1, "let": 1, "const": 2 }
       }
     ],
     "indent-legacy":"off",

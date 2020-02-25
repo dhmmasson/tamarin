@@ -18,7 +18,7 @@ import { definePrivateProperties } from "../utils.mjs" ;
  * @property {number} weight - weight of the criteria for the score computation
  * @property {number} blurIntensity - [0-1] how much to extend the range [ evaluation - blurIntensity * ( max - min ), evaluation ]
  * @memberof! Models
- * @alias module:Models.Criterion
+ * @alias module:Models~Criterion
  */
 class Criterion extends EventEmitter {
 
@@ -44,7 +44,7 @@ class Criterion extends EventEmitter {
   /**
    * blur - take a evaluation and blur it according to the intensity
    *
-   * @param  {module:Models.Score} value the evaluation to blur
+   * @param  {module:Models~Score} value the evaluation to blur
    * @return {Score}       the computed lower bound
    */
   blur( value ) {
@@ -104,7 +104,7 @@ class Criterion extends EventEmitter {
  * Criterion.eventType
  * @enum {string}
  * @readonly
- * @memberof! module:Models.Criterion
+ * @memberof! module:Models~Criterion
  */
 Criterion.eventType =
 {
