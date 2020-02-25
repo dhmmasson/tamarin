@@ -6,9 +6,11 @@
 
 import autoLocals from "./autoLocals.cjs" ;
 import autoRoute from "./autoRoute.cjs" ;
-import mysqlConnector from "./databaseConnector.mjs" ;
 
+import mysqlConnector from "../databaseConnector/databaseConnector.mjs" ;
+import updateTemplate from "./updateTemplate.cjs" ;
 export { autoLocals
   , autoRoute
   , mysqlConnector
+  , updateTemplate
 } ;

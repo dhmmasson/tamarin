@@ -1,0 +1,16 @@
+table
+  tr 
+    td Technology
+    each criterion in criteria
+      if criterion.weight > 0 
+        td
+          span #{criterion.name} 
+          span (w: #{criterion.weight }, b: #{ Math.floor(criterion.blurIntensity * 100) }%)        
+  each technology in technologies
+    tr 
+      td= technology.name
+      each criterion in criteria
+        if criterion.weight > 0 
+          td
+            span #{technology.dominance[ criterion.name ]} (#{ Math.floor( 20*technology.bounds[ criterion.name ])} - #{ Math.floor( 20*technology.evaluations[ criterion.name ])})
+            

@@ -1,4 +1,5 @@
 import { Sorter } from "./Sorter.mjs" ;
+import { template } from "./template.mjs" ;
 const sorter = new Sorter( [], [] ) ;
 window.sorter = sorter ;
 
@@ -15,6 +16,12 @@ $.get( "/api/technologies", function( data ) {
 function test() {
   if( sorter.criteria.all.length > 0 && sorter.technologies.all.length > 0 ) {
     sorter.on( Sorter.eventType.sorted, printer ) ;
+    sorter.on( Sorter.eventType.sorted, () => {
+      console.log( "hello" ) ;
+      $( "#result" ).empty().append( template.table(
+        { technologies : sorter.technologies.sorted
+        , criteria     : sorter.criteria.all } ) ) ;
+    } ) ;
     sorter.criteria.all[ 0 ].weight = 0 ;
     sorter.criteria.all[ 1 ].weight = 1 ;
 
@@ -24,7 +31,34 @@ function test() {
 
     sorter.criteria.all[ 3 ].blurIntensity = 0.2 ;
     sorter.criteria.all[ 3 ].weight = 1 ;
+
+
+    $( "#controlPanel" )
+      .empty()
+      .append( template.twoSliderControlPanel( { criteria: sorter.criteria.all } ) )
+      .find( "input" )
+      .change( function( e ) {
+        const input = $( e.target )
+          , criterionName = input.data( "criterion" )
+          , parameter = input.data( "parameter" )
+          , criterion = sorter.criteria.map[ criterionName ] ;
+        criterion[ parameter ] = input.val() ;
+
+      } ) ;
+
+
+    // const confortBlur = $( "#comfort_blur" ) ;
+    // confortBlur.change( () => {
+    //
+    //   sorter.criteria.map.Comfort.blurIntensity = confortBlur.val() / 100 ;
+    //
+    // } ) ;
+    // const confortWeight = $( "#comfort_weight" ) ;
+    // confortWeight.change( () => { sorter.criteria.map.Comfort.weight = confortWeight.val() / 20 ; } ) ;
+    //
+
   }
+
 }
 
 function round( number, precision ) {

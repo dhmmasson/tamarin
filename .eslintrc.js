@@ -6,6 +6,7 @@ module.exports = {
     "node":true
   },
   "extends":"eslint:recommended",
+    "parser": "babel-eslint",
   "globals":{
     "Atomics":"readonly",
     "SharedArrayBuffer":"readonly",
@@ -106,7 +107,8 @@ module.exports = {
       "error",
       2,
       {
-        "ObjectExpression":0
+        "ObjectExpression":0,
+        "VariableDeclarator":{ "var": 1, "let": 1, "const": 2 }
       }
     ],
     "indent-legacy":"off",

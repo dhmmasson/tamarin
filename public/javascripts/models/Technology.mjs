@@ -13,7 +13,7 @@
 * @property {number} score - computed score : weighted sum.
 * @todo Change everything to have a it in a one read ( compare this techno to an reduced array of technologies )
 * @memberof! Models
-* @alias module:Models.Technology
+* @alias module:Models~Technology
 */
 class Technology {
 
@@ -24,7 +24,7 @@ class Technology {
    * @param  {string} [serialization.technology]         - name of the technology or `serialization.name` if not present
    * @param  {string} [serialization.name]               - name of the technology
    * @param  {string} [serialization.description]                      - description of the technology
-   * @param  {Object.<string, module:Models.Score>} serialization.evaluations - key are part {@link module:Models.Criterion} evaluations
+   * @param  {Object.<string, module:Models~Score>} serialization.evaluations - key are part {@link module:Models~Criterion} evaluations
    */
   constructor ( { technology, name, decription, evaluations } ) {
     this.name = technology || name ;
@@ -39,8 +39,8 @@ class Technology {
   /**
    * updateBounds - update the bounds for the given criteria
    *
-   * @param  {module:Models.Criterion[]} criteria
-   * @return {module:Models.Technology}        return this
+   * @param  {module:Models~Criterion[]} criteria
+   * @return {module:Models~Technology}        return this
    */
   updateBounds( criteria ) {
     for( const criterion of criteria ) {
@@ -54,9 +54,9 @@ class Technology {
   /**
    * updateDominance - compute how many other technology are dominated (i.e this lower bound is greater than their evaluation)
    *
-   * @param  {module:Models.Criterion[]} criteria     updated criteria ( or all )
-   * @param  {module:Models.Technology[]} technologies all technologies to compare to
-   * @return {module:Models.Technology}              this
+   * @param  {module:Models~Criterion[]} criteria     updated criteria ( or all )
+   * @param  {module:Models~Technology[]} technologies all technologies to compare to
+   * @return {module:Models~Technology}              this
    */
   updateDominance( criteria, technologies ) {
     for( const criterion of criteria ) {
@@ -75,8 +75,8 @@ class Technology {
   /**
    * updateScore - weight sum of the dominance
    *
-   * @param  {module:Models.Criterion[]} criteria Array of all criteria
-   * @return {module:Models.Technology}          this
+   * @param  {module:Models~Criterion[]} criteria Array of all criteria
+   * @return {module:Models~Technology}          this
    * @todo should normalize dominance to rank
    */
   updateScore( criteria ) {

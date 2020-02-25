@@ -32,40 +32,27 @@ Contains all the different Models needed for the sorting algorithm
 **Author**: dhmmasson <@dhmmasson>  
 
 * [Models](#module_Models)
-    * _static_
-        * [.Evaluation](#module_Models.Evaluation)
-    * _inner_
-        * [~Criterion](#module_Models.Criterion) ⇐ [<code>EventEmitter</code>](#EventEmitter)
-            * [new Criterion(serialization)](#new_module_Models.Criterion_new)
-            * _instance_
-                * [.weight](#module_Models.Criterion+weight) ⇒ <code>number</code>
-                * [.weight](#module_Models.Criterion+weight) ⇒ <code>number</code>
-                * [.blurIntensity](#module_Models.Criterion+blurIntensity) ⇒ <code>number</code>
-                * [.blurIntensity](#module_Models.Criterion+blurIntensity) ⇒ <code>number</code>
-                * [.blur(value)](#module_Models.Criterion+blur) ⇒ <code>Score</code>
-                * [.fire(eventName)](#EventEmitter+fire)
-                * [.on(eventName, callback, [_this])](#EventEmitter+on)
-            * _static_
-                * [.Criterion.eventType](#module_Models.Criterion.Criterion.eventType) : <code>enum</code>
-        * [~Technology](#module_Models.Technology)
-            * [new Technology(serialization)](#new_module_Models.Technology_new)
-            * [.updateBounds(criteria)](#module_Models.Technology+updateBounds) ⇒ [<code>Technology</code>](#module_Models.Technology)
-            * [.updateDominance(criteria, technologies)](#module_Models.Technology+updateDominance) ⇒ [<code>Technology</code>](#module_Models.Technology)
-            * [.updateScore(criteria)](#module_Models.Technology+updateScore) ⇒ [<code>Technology</code>](#module_Models.Technology)
+    * [~Criterion](#module_Models..Criterion) ⇐ [<code>EventEmitter</code>](#EventEmitter)
+        * [new Criterion(serialization)](#new_module_Models..Criterion_new)
+        * _instance_
+            * [.weight](#module_Models..Criterion+weight) ⇒ <code>number</code>
+            * [.weight](#module_Models..Criterion+weight) ⇒ <code>number</code>
+            * [.blurIntensity](#module_Models..Criterion+blurIntensity) ⇒ <code>number</code>
+            * [.blurIntensity](#module_Models..Criterion+blurIntensity) ⇒ <code>number</code>
+            * [.blur(value)](#module_Models..Criterion+blur) ⇒ <code>Score</code>
+            * [.fire(eventName)](#EventEmitter+fire)
+            * [.on(eventName, callback, [_this])](#EventEmitter+on)
+        * _static_
+            * [.Criterion.eventType](#module_Models..Criterion.Criterion.eventType) : <code>enum</code>
+    * [~Technology](#module_Models..Technology)
+        * [new Technology(serialization)](#new_module_Models..Technology_new)
+        * [.updateBounds(criteria)](#module_Models..Technology+updateBounds) ⇒ [<code>Technology</code>](#module_Models..Technology)
+        * [.updateDominance(criteria, technologies)](#module_Models..Technology+updateDominance) ⇒ [<code>Technology</code>](#module_Models..Technology)
+        * [.updateScore(criteria)](#module_Models..Technology+updateScore) ⇒ [<code>Technology</code>](#module_Models..Technology)
+    * [~Evaluation](#module_Models..Evaluation)
+    * [~Score](#module_Models..Score) : <code>number</code>
 
-<a name="module_Models.Evaluation"></a>
-
-### Models.Evaluation
-**Kind**: static class of [<code>Models</code>](#module_Models)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| technology | <code>string</code> | Name of the technology |
-| criteria | <code>string</code> | name of the criteria |
-| value | <code>Score</code> | evaluation for the couple `technology` - `criteria` |
-
-<a name="module_Models.Criterion"></a>
+<a name="module_Models..Criterion"></a>
 
 ### Models~Criterion ⇐ [<code>EventEmitter</code>](#EventEmitter)
 **Kind**: inner class of [<code>Models</code>](#module_Models)  
@@ -82,20 +69,20 @@ Contains all the different Models needed for the sorting algorithm
 | blurIntensity | <code>number</code> | [0-1] how much to extend the range [ evaluation - blurIntensity * ( max - min ), evaluation ] |
 
 
-* [~Criterion](#module_Models.Criterion) ⇐ [<code>EventEmitter</code>](#EventEmitter)
-    * [new Criterion(serialization)](#new_module_Models.Criterion_new)
+* [~Criterion](#module_Models..Criterion) ⇐ [<code>EventEmitter</code>](#EventEmitter)
+    * [new Criterion(serialization)](#new_module_Models..Criterion_new)
     * _instance_
-        * [.weight](#module_Models.Criterion+weight) ⇒ <code>number</code>
-        * [.weight](#module_Models.Criterion+weight) ⇒ <code>number</code>
-        * [.blurIntensity](#module_Models.Criterion+blurIntensity) ⇒ <code>number</code>
-        * [.blurIntensity](#module_Models.Criterion+blurIntensity) ⇒ <code>number</code>
-        * [.blur(value)](#module_Models.Criterion+blur) ⇒ <code>Score</code>
+        * [.weight](#module_Models..Criterion+weight) ⇒ <code>number</code>
+        * [.weight](#module_Models..Criterion+weight) ⇒ <code>number</code>
+        * [.blurIntensity](#module_Models..Criterion+blurIntensity) ⇒ <code>number</code>
+        * [.blurIntensity](#module_Models..Criterion+blurIntensity) ⇒ <code>number</code>
+        * [.blur(value)](#module_Models..Criterion+blur) ⇒ <code>Score</code>
         * [.fire(eventName)](#EventEmitter+fire)
         * [.on(eventName, callback, [_this])](#EventEmitter+on)
     * _static_
-        * [.Criterion.eventType](#module_Models.Criterion.Criterion.eventType) : <code>enum</code>
+        * [.Criterion.eventType](#module_Models..Criterion.Criterion.eventType) : <code>enum</code>
 
-<a name="new_module_Models.Criterion_new"></a>
+<a name="new_module_Models..Criterion_new"></a>
 
 #### new Criterion(serialization)
 constructor - create a new criterion from a serialization of it (either from json or from the db)
@@ -109,64 +96,64 @@ constructor - create a new criterion from a serialization of it (either from jso
 | [serialization.min] | <code>number</code> | <code>0</code> | min value for the criteria, 0 if absent |
 | [serialization.max] | <code>number</code> | <code>5</code> | max value for the criteria, 5 if absent |
 
-<a name="module_Models.Criterion+weight"></a>
+<a name="module_Models..Criterion+weight"></a>
 
 #### criterion.weight ⇒ <code>number</code>
 set - Change the weight of this criteria in the final mix
 
 fire the event event:Criterion.eventType.weightUpdated followed by event event:Criterion.eventType.updated
 
-**Kind**: instance property of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance property of [<code>Criterion</code>](#module_Models..Criterion)  
 **Returns**: <code>number</code> - return the new weight  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | newWeight | <code>number</code> | the new weight. 0 indicate that the criteria is not considered in the final mix. There is no normalisation for now. |
 
-<a name="module_Models.Criterion+weight"></a>
+<a name="module_Models..Criterion+weight"></a>
 
 #### criterion.weight ⇒ <code>number</code>
 get - get the weight associated to this criteria.
 
-**Kind**: instance property of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance property of [<code>Criterion</code>](#module_Models..Criterion)  
 **Returns**: <code>number</code> - the weight. 0 means that the criteria should not be considered  
-<a name="module_Models.Criterion+blurIntensity"></a>
+<a name="module_Models..Criterion+blurIntensity"></a>
 
 #### criterion.blurIntensity ⇒ <code>number</code>
 set - fire the event event:Criterion.eventType.blurIntensityUpdated followed by event event:Criterion.eventType.updated
 
-**Kind**: instance property of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance property of [<code>Criterion</code>](#module_Models..Criterion)  
 **Returns**: <code>number</code> - return the intensity  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | intensity | <code>number</code> | a 0-1 value. 0 mean no blurring should be applied ( exact values ) 1 mean all values for this technology are the same. .5 means that A dominate B if B value is smaller than A - .5 * ( range ) |
 
-<a name="module_Models.Criterion+blurIntensity"></a>
+<a name="module_Models..Criterion+blurIntensity"></a>
 
 #### criterion.blurIntensity ⇒ <code>number</code>
 get - return the intensity of the blur
 
-**Kind**: instance property of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance property of [<code>Criterion</code>](#module_Models..Criterion)  
 **Returns**: <code>number</code> - a value between 0 and 1.  
-<a name="module_Models.Criterion+blur"></a>
+<a name="module_Models..Criterion+blur"></a>
 
 #### criterion.blur(value) ⇒ <code>Score</code>
 blur - take a evaluation and blur it according to the intensity
 
-**Kind**: instance method of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance method of [<code>Criterion</code>](#module_Models..Criterion)  
 **Returns**: <code>Score</code> - the computed lower bound  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| value | <code>module:Models.Score</code> | the evaluation to blur |
+| value | [<code>Score</code>](#module_Models..Score) | the evaluation to blur |
 
 <a name="EventEmitter+fire"></a>
 
 #### criterion.fire(eventName)
 fire - call the callback relative to the event
 
-**Kind**: instance method of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance method of [<code>Criterion</code>](#module_Models..Criterion)  
 **Overrides**: [<code>fire</code>](#EventEmitter+fire)  
 
 | Param | Type | Description |
@@ -178,7 +165,7 @@ fire - call the callback relative to the event
 #### criterion.on(eventName, callback, [_this])
 on - add event listener
 
-**Kind**: instance method of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: instance method of [<code>Criterion</code>](#module_Models..Criterion)  
 **Overrides**: [<code>on</code>](#EventEmitter+on)  
 
 | Param | Type | Description |
@@ -187,12 +174,12 @@ on - add event listener
 | callback | <code>EventEmitter.callback</code> | callback |
 | [_this] | <code>object</code> | object to bind the callback TODO check for duplicate |
 
-<a name="module_Models.Criterion.Criterion.eventType"></a>
+<a name="module_Models..Criterion.Criterion.eventType"></a>
 
 #### Criterion.Criterion.eventType : <code>enum</code>
 Criterion.eventType
 
-**Kind**: static enum of [<code>Criterion</code>](#module_Models.Criterion)  
+**Kind**: static enum of [<code>Criterion</code>](#module_Models..Criterion)  
 **Read only**: true  
 **Properties**
 
@@ -202,7 +189,7 @@ Criterion.eventType
 | blurIntensityUpdated | <code>string</code> | <code>&quot;blurIntensityUpdated&quot;</code> | called when the blurIntensity is changed |
 | weightUpdated | <code>string</code> | <code>&quot;weightUpdated&quot;</code> | called when the weightUpdated is changed |
 
-<a name="module_Models.Technology"></a>
+<a name="module_Models..Technology"></a>
 
 ### Models~Technology
 **Kind**: inner class of [<code>Models</code>](#module_Models)  
@@ -218,17 +205,17 @@ Criterion.eventType
 | description | <code>string</code> | Full name to be used to be displayed |
 | evaluations | <code>Object.&lt;Criterion~name, Evaluation~value&gt;</code> | actual evaluation of the technology for the criteria |
 | bounds | <code>Object.&lt;Criterion~name, Evaluation~value&gt;</code> | blurred value for the criteria |
-| dominance | <code>Object.&lt;Technology~name, number&gt;</code> | How many technologies are dominated ( value  >  bounds ) |
+| dominance | <code>Object.&lt;Criterion~name, number&gt;</code> | How many technologies are dominated ( value  >  bounds ) |
 | score | <code>number</code> | computed score : weighted sum. |
 
 
-* [~Technology](#module_Models.Technology)
-    * [new Technology(serialization)](#new_module_Models.Technology_new)
-    * [.updateBounds(criteria)](#module_Models.Technology+updateBounds) ⇒ [<code>Technology</code>](#module_Models.Technology)
-    * [.updateDominance(criteria, technologies)](#module_Models.Technology+updateDominance) ⇒ [<code>Technology</code>](#module_Models.Technology)
-    * [.updateScore(criteria)](#module_Models.Technology+updateScore) ⇒ [<code>Technology</code>](#module_Models.Technology)
+* [~Technology](#module_Models..Technology)
+    * [new Technology(serialization)](#new_module_Models..Technology_new)
+    * [.updateBounds(criteria)](#module_Models..Technology+updateBounds) ⇒ [<code>Technology</code>](#module_Models..Technology)
+    * [.updateDominance(criteria, technologies)](#module_Models..Technology+updateDominance) ⇒ [<code>Technology</code>](#module_Models..Technology)
+    * [.updateScore(criteria)](#module_Models..Technology+updateScore) ⇒ [<code>Technology</code>](#module_Models..Technology)
 
-<a name="new_module_Models.Technology_new"></a>
+<a name="new_module_Models..Technology_new"></a>
 
 #### new Technology(serialization)
 constructor - construct a new Technology object from a serialization (json or the db)
@@ -240,40 +227,40 @@ constructor - construct a new Technology object from a serialization (json or th
 | [serialization.technology] | <code>string</code> | name of the technology or `serialization.name` if not present |
 | [serialization.name] | <code>string</code> | name of the technology |
 | [serialization.description] | <code>string</code> | description of the technology |
-| serialization.evaluations | <code>Object.&lt;string, module:Models.Score&gt;</code> | key are part [Criterion](#module_Models.Criterion) evaluations |
+| serialization.evaluations | <code>Object.&lt;string, module:Models~Score&gt;</code> | key are part [Criterion](#module_Models..Criterion) evaluations |
 
-<a name="module_Models.Technology+updateBounds"></a>
+<a name="module_Models..Technology+updateBounds"></a>
 
-#### technology.updateBounds(criteria) ⇒ [<code>Technology</code>](#module_Models.Technology)
+#### technology.updateBounds(criteria) ⇒ [<code>Technology</code>](#module_Models..Technology)
 updateBounds - update the bounds for the given criteria
 
-**Kind**: instance method of [<code>Technology</code>](#module_Models.Technology)  
-**Returns**: [<code>Technology</code>](#module_Models.Technology) - return this  
+**Kind**: instance method of [<code>Technology</code>](#module_Models..Technology)  
+**Returns**: [<code>Technology</code>](#module_Models..Technology) - return this  
 
 | Param | Type |
 | --- | --- |
-| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | 
+| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | 
 
-<a name="module_Models.Technology+updateDominance"></a>
+<a name="module_Models..Technology+updateDominance"></a>
 
-#### technology.updateDominance(criteria, technologies) ⇒ [<code>Technology</code>](#module_Models.Technology)
+#### technology.updateDominance(criteria, technologies) ⇒ [<code>Technology</code>](#module_Models..Technology)
 updateDominance - compute how many other technology are dominated (i.e this lower bound is greater than their evaluation)
 
-**Kind**: instance method of [<code>Technology</code>](#module_Models.Technology)  
-**Returns**: [<code>Technology</code>](#module_Models.Technology) - this  
+**Kind**: instance method of [<code>Technology</code>](#module_Models..Technology)  
+**Returns**: [<code>Technology</code>](#module_Models..Technology) - this  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | updated criteria ( or all ) |
-| technologies | [<code>Array.&lt;Technology&gt;</code>](#module_Models.Technology) | all technologies to compare to |
+| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | updated criteria ( or all ) |
+| technologies | [<code>Array.&lt;Technology&gt;</code>](#module_Models..Technology) | all technologies to compare to |
 
-<a name="module_Models.Technology+updateScore"></a>
+<a name="module_Models..Technology+updateScore"></a>
 
-#### technology.updateScore(criteria) ⇒ [<code>Technology</code>](#module_Models.Technology)
+#### technology.updateScore(criteria) ⇒ [<code>Technology</code>](#module_Models..Technology)
 updateScore - weight sum of the dominance
 
-**Kind**: instance method of [<code>Technology</code>](#module_Models.Technology)  
-**Returns**: [<code>Technology</code>](#module_Models.Technology) - this  
+**Kind**: instance method of [<code>Technology</code>](#module_Models..Technology)  
+**Returns**: [<code>Technology</code>](#module_Models..Technology) - this  
 **Todo**
 
 - [ ] should normalize dominance to rank
@@ -281,8 +268,26 @@ updateScore - weight sum of the dominance
 
 | Param | Type | Description |
 | --- | --- | --- |
-| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | Array of all criteria |
+| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | Array of all criteria |
 
+<a name="module_Models..Evaluation"></a>
+
+### Models~Evaluation
+**Kind**: inner class of [<code>Models</code>](#module_Models)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| technology | <code>string</code> | Name of the technology |
+| criteria | <code>string</code> | name of the criteria |
+| value | <code>Score</code> | evaluation for the couple `technology` - `criteria` |
+
+<a name="module_Models..Score"></a>
+
+### Models~Score : <code>number</code>
+number between 0 - 5
+
+**Kind**: inner typedef of [<code>Models</code>](#module_Models)  
 <a name="EventEmitter"></a>
 
 ## EventEmitter
@@ -371,8 +376,8 @@ constructor - initialize everything
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [technologies] | [<code>Array.&lt;Technology&gt;</code>](#module_Models.Technology) | description |
-| [criteria] | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | description |
+| [technologies] | [<code>Array.&lt;Technology&gt;</code>](#module_Models..Technology) | description |
+| [criteria] | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | description |
 
 <a name="Sorter+technologies"></a>
 
@@ -383,7 +388,7 @@ constructor - initialize everything
 | Name | Type | Description |
 | --- | --- | --- |
 | technologies | <code>Object</code> | all the technologies |
-| technologies.all | [<code>Array.&lt;Technology&gt;</code>](#module_Models.Technology) | Array of all the technologies |
+| technologies.all | [<code>Array.&lt;Technology&gt;</code>](#module_Models..Technology) | Array of all the technologies |
 | technologies.sorted | <code>Object</code> | Array of all the technologies sorted by latest computed score |
 | technologies.map | <code>Object</code> | ap of all the technologies to be sorted, call the setter |
 
@@ -396,9 +401,9 @@ constructor - initialize everything
 | Name | Type | Description |
 | --- | --- | --- |
 | criteria | <code>Object</code> | all the criteria |
-| criteria.all | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | Array of all the criteria |
-| criteria.updated | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | Array of all the criteria that have been recently updated |
-| criteria.map | <code>Object.&lt;string, Array.&lt;module:Models.Criterion&gt;&gt;</code> | Array of all the criteria that have been recently updated |
+| criteria.all | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | Array of all the criteria |
+| criteria.updated | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | Array of all the criteria that have been recently updated |
+| criteria.map | <code>Object.&lt;string, Array.&lt;module:Models~Criterion&gt;&gt;</code> | Array of all the criteria that have been recently updated |
 
 <a name="Sorter+technologies"></a>
 
@@ -409,7 +414,7 @@ set technologies - initialize the technology map, reset the sorted arrays
 
 | Param | Type | Description |
 | --- | --- | --- |
-| technologies | [<code>Array.&lt;Technology&gt;</code>](#module_Models.Technology) | json serialized technology array |
+| technologies | [<code>Array.&lt;Technology&gt;</code>](#module_Models..Technology) | json serialized technology array |
 
 <a name="Sorter+technologies"></a>
 
@@ -427,7 +432,7 @@ set criteria - initialize the criteria map, reset the values
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Criterion | [<code>Array.&lt;Criterion&gt;</code>](#module_Models.Criterion) | description |
+| Criterion | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | description |
 
 <a name="Sorter+criteria"></a>
 

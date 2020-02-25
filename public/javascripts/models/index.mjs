@@ -10,12 +10,11 @@ import { Technology } from "./Technology.mjs" ;
 
 /**
 * @typedef {number} Score - number between 0 - 5
-* @memberof! Models
 */
 
 /**
 * @class
-* @name module:Models.Evaluation
+* @name Evaluation
 * @property {string} technology - Name of the technology
 * @property {string} criteria -  name of the criteria
 * @property {Score} value - evaluation for the couple `technology` - `criteria`

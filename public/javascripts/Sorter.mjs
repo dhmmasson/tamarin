@@ -18,23 +18,23 @@ class Sorter extends EventEmitter {
   /**
    * constructor - initialize everything
    *
-   * @param  {module:Models.Technology[]} [technologies] description
-   * @param  {module:Models.Criterion[]} [criteria]   description
+   * @param  {module:Models~Technology[]} [technologies] description
+   * @param  {module:Models~Criterion[]} [criteria]   description
    */
   constructor( technologies, criteria ) {
     super() ;
 
     /** @property {Object} technologies - all the technologies
-     * @property {module:Models.Technology[]} technologies.all Array of all the technologies
+     * @property {module:Models~Technology[]} technologies.all Array of all the technologies
      * @property {Object} technologies.sorted Array of all the technologies sorted by latest computed score
      * @property {Object} technologies.map ap of all the technologies to be sorted, call the setter
      * */
     this.technologies = technologies ;
 
     /** @property {Object} criteria - all the criteria
-     * @property {module:Models.Criterion[]} criteria.all Array of all the criteria
-     * @property {module:Models.Criterion[]} criteria.updated Array of all the criteria that have been recently updated
-     * @property {Object.<string, module:Models.Criterion[]>} criteria.map Array of all the criteria that have been recently updated
+     * @property {module:Models~Criterion[]} criteria.all Array of all the criteria
+     * @property {module:Models~Criterion[]} criteria.updated Array of all the criteria that have been recently updated
+     * @property {Object.<string, module:Models~Criterion[]>} criteria.map Array of all the criteria that have been recently updated
      */
     this.criteria = criteria ;
 
@@ -45,7 +45,7 @@ class Sorter extends EventEmitter {
   /**
    * set technologies - initialize the technology map, reset the sorted arrays
    *
-   * @param  {module:Models.Technology[]} technologies json serialized technology array
+   * @param  {module:Models~Technology[]} technologies json serialized technology array
    */
   set technologies ( technologies ) {
     this._technologies =
@@ -56,7 +56,7 @@ class Sorter extends EventEmitter {
     // Recreate object from the json serialization
     for( const serialization of technologies ) {
 
-      /** @type module:Models.Technology */
+      /** @type module:Models~Technology */
       const technology = new Models.Technology( serialization ) ;
       this._technologies.all.push( technology ) ;
       this._technologies.map[ technology.name ] = technology ;
@@ -76,7 +76,7 @@ class Sorter extends EventEmitter {
   /**
    * set criteria - initialize the criteria map, reset the values
    *
-   * @param  {module:Models.Criterion[]} Criterion description
+   * @param  {module:Models~Criterion[]} Criterion description
    */
   set criteria ( criteria ) {
     this._criteria =

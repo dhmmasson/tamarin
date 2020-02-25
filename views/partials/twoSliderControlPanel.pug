@@ -1,0 +1,22 @@
+form 
+  each criterion in criteria 
+    .row
+      label.col.l2.m12.s12 #{ criterion.description } 
+      label.col.l5.m6.s12 weight
+        .range-field
+          input( type="range"
+               , data-criterion=criterion.name
+               , data-parameter="weight"
+               , value=criterion.weight
+               , min="0"
+               , max="100"
+               , step="1" )
+      label.col.l5.m6.s12  Granularity
+        .range-field
+          input( type="range"
+               , data-criterion=criterion.name
+               , data-parameter="blurIntensity"
+               , value=criterion.blurIntensity
+               , min="0"
+               , max="1"
+               , step="0.01" )
