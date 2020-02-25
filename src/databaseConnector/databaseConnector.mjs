@@ -1,7 +1,7 @@
-/* eslint newline-per-chained-call: ["error", { "ignoreChainWithDepth": 2 }]*/
 /**
  * @file databaseConnector - Create the connexion to the sql database and provide the accessors. load queries from sql files
  * @author dhmmasson <@dhmmasson>
+ * @memberof! module:ExpressUtils
  */
 
 import * as models from "../../public/javascripts/Models/index.mjs" ;
@@ -15,7 +15,7 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) ) ;
 /** @typedef {string} Query - a string representing a mysql Query **/
 
 /**
- *
+ * Connector to the database, read queries from sql files
  * @class
  * @memberof! module:ExpressUtils
  */
@@ -44,6 +44,8 @@ class Connector {
 
     /** @property {Object.<string,Query> } sqlRoot - root folder for the sql files  */
     this.sqlRoot = resolve( process.env.PWD, configuration.sqlPath ) ;
+    // delete sqlPath as mysql is strict on what should be in it options object
+    delete configuration.sqlPath ;
 
     /** @property {external:MySql2.pool} pool - internal pool to query the db */
     this.pool = mysql.createPool( configuration ).promise() ;
@@ -51,39 +53,35 @@ class Connector {
     /** @property {Object.<string,Query> } sql - queries map */
     this.sql = {} ;
 
-    this.importSql() ;
+    this.importSql().then( console.log ) ;
   }
 
 
   /**
    * importSql - Read the files in the this.sqlRoot folder, populate this.sql with
    *
-   * @return {type}  description
+   * @return {Promise.<empty>} An empty promise... resolved when the sql map is filled
    */
   importSql( ) {
-    fs.readdir( this.sqlRoot )
-      .then( files => {
-        return Promise.all(
-          files.map( file => {
-            return fs.readFile( resolve( this.sqlRoot, file ), "utf8" )
-              .then( data => Promise.resolve( [ file, data ] ) ) ;
-          } ) ) ;
-      } )
-      .then( allSql => {
-        allSql.forEach( ( [ filename, query ] ) => {
-          this.sql[ basename( filename, ".sql" ) ] = query ;
-        } ) ;
-      } )
+
+    const storeQuery = filename => query => { this.sql[ basename( filename, ".sql" ) ] = query ; }
+        , getContent = filename => fs.readFile( resolve( this.sqlRoot, filename ), "utf8" )
+        , readSqlFile = filename => getContent( filename ).then( storeQuery( filename ) )
+        , readFiles = files => Promise.all( files.map( readSqlFile ) ) ;
+
+    return fs.readdir( this.sqlRoot )
+      .then( readFiles )
       .catch( console.warn ) ;
   }
 
   /**
-  * Connector#getCriterion -  return all the criteria in the database
+  * Connector#getCriteria -  return all the criteria in the database
   *
-  * @return {Promise<module:models.Criterion[]>}  Promise to deliver the criteria from the database
+  * @return {Promise.<Criterion[]>}  Promise to deliver all the {@link module:Models~Criterion} from the database
   */
   getCriteria() {
-    return this.pool.query( this.sql.criteria_get_all )
+    return this.pool
+      .query( this.sql.criteria_get_all )
       .then( cleanCriterion ) ;
   }
 
@@ -91,12 +89,13 @@ class Connector {
   /**
    * Connector:getTechnologies - return all evaluated technologies
    *
-   * @return {Promise<module:models.Technology[]>}  Promise to deliver the evaluated technologies from the database
+   * @return {Promise.<Technology[]>}  Promise to deliver the evaluated {@link module:Models~Technology} from the database
    * @todo join with technology table to gather the description
    */
   getTechnologies() {
     // TODO: join with technology table to gather the description
-    return this.pool.query( this.sql.data_get_all )
+    return this.pool
+      .query( this.sql.data_get_all )
       .then( pivotEvaluation ) ;
   }
 }
@@ -104,8 +103,9 @@ class Connector {
 /**
   * Connector~pivotEvaluation - Convert an array of evaluation into an array of evaluated technologies
   *
-  * @param  {module:models.Evaluation[]} evaluations array of evaluations
-  * @return {Promise<module:models.Technology[]>} Promise a array of evaluated technologies
+  * @param  {module:Models~Evaluation[]} evaluations array of evaluations
+  * @return {Promise<module:Models~Technology[]>} Promise a array of evaluated technologies
+  * @memberof! module:ExpressUtils~Connector
   */
 function pivotEvaluation( [ evaluations ] ) {
 
@@ -133,8 +133,9 @@ function pivotEvaluation( [ evaluations ] ) {
 /**
    * cleanCriterion - Clean criteria from the database request ( mainly clean the min and max values to be integer)
    *
-   * @param  {Array.<module:models.Criterion>} rows an array where the first element is an array of criteria to clean
-   * @return {Promise.<module:models.Criterion[]>}          Cleaned Criterion
+   * @param  {Array.<module:Models~Criterion>} rows an array where the first element is an array of criteria to clean
+   * @return {Promise.<module:Models~Criterion[]>}          Cleaned Criterion
+   * @memberof! module:ExpressUtils~Connector
    */
 function cleanCriterion( [ rows ] ) {
 
@@ -145,6 +146,5 @@ function cleanCriterion( [ rows ] ) {
   }
   return Promise.resolve( criterias ) ;
 }
-
 
 export default function() { return new Connector() ; }
