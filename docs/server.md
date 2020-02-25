@@ -12,6 +12,27 @@
 </dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#exportTemplates">exportTemplates(pugPath, jsPath, [_templateName])</a></dt>
+<dd><p>exportTemplates - Read the folder <code>path</code>, parse all pug files and create a <code>_templateName</code>.js file corresponding in the <code>jsPath</code></p>
+</dd>
+<dt><a href="#convertPugFile">convertPugFile(origin, files)</a> ⇒ <code>Promise.&lt;Array.&lt;String&gt;&gt;</code></dt>
+<dd></dd>
+<dt><a href="#convert">convert(origin, file)</a> ⇒ <code>promise.&lt;string&gt;</code></dt>
+<dd><p>Convert template <code>file</code> to a function string</p>
+</dd>
+<dt><a href="#save">save(destination, templateName, jsFunctionArray)</a> ⇒ <code>promise</code></dt>
+<dd><p>Save all template functions in <code>jsFunctionArray</code> in file <code>templateName</code>  in folder <code>destination</code>
+all functions become method of an Object named <code>templateName</code>
+a pug object containing all necessary pug runtime functions is also included</p>
+</dd>
+<dt><a href="#functionToMethod">functionToMethod(_str, prefix, objectName)</a> ⇒ <code>string</code></dt>
+<dd><p>transform all functions that start with the given <code>prefix</code> in the input <code>str</code> to method of the object <code>objectName</code></p>
+</dd>
+</dl>
+
 ## Typedefs
 
 <dl>
@@ -135,7 +156,7 @@ constructor - create a databaseConnector to get informations
 importSql - Read the files in the this.sqlRoot folder, populate this.sql with
 
 **Kind**: instance method of [<code>Connector</code>](#module_ExpressUtils.Connector)  
-**Returns**: <code>Promise.&lt;empty&gt;</code> - An empty promise...  
+**Returns**: <code>Promise.&lt;empty&gt;</code> - An empty promise... resolved when the sql map is filled  
 <a name="module_ExpressUtils.Connector+getCriteria"></a>
 
 #### connector.getCriteria() ⇒ <code>Promise.&lt;Array.&lt;Criterion&gt;&gt;</code>
@@ -459,6 +480,77 @@ updateScore - weight sum of the dominance
 number between 0 - 5
 
 **Kind**: inner typedef of [<code>Models</code>](#module_Models)  
+<a name="exportTemplates"></a>
+
+## exportTemplates(pugPath, jsPath, [_templateName])
+exportTemplates - Read the folder `path`, parse all pug files and create a `_templateName`.js file corresponding in the `jsPath`
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| pugPath | <code>string</code> |  | folder path containing the pug files to export |
+| jsPath | <code>string</code> |  | folder path containing the pug files to export |
+| [_templateName] | <code>string</code> | <code>&quot;template&quot;</code> | folder path containing the pug files to export |
+
+<a name="convertPugFile"></a>
+
+## convertPugFile(origin, files) ⇒ <code>Promise.&lt;Array.&lt;String&gt;&gt;</code>
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;Array.&lt;String&gt;&gt;</code> - a Promised array of function strings  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| origin | <code>string</code> | the path to the template folder |
+| files | <code>Array.&lt;string&gt;</code> | an array of files to consider as template ( only *.pug file will be used ) |
+
+<a name="convert"></a>
+
+## convert(origin, file) ⇒ <code>promise.&lt;string&gt;</code>
+Convert template `file` to a function string
+
+**Kind**: global function  
+**Returns**: <code>promise.&lt;string&gt;</code> - a resolved promise with the jsFunction string corresponding to the pug file  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| origin | <code>string</code> | path to the folder containing the pug templates |
+| file | <code>string</code> | the pug template |
+
+<a name="save"></a>
+
+## save(destination, templateName, jsFunctionArray) ⇒ <code>promise</code>
+Save all template functions in `jsFunctionArray` in file `templateName`  in folder `destination`
+all functions become method of an Object named `templateName`
+a pug object containing all necessary pug runtime functions is also included
+
+**Kind**: global function  
+**Returns**: <code>promise</code> - Promise from fs.writeFile  
+**Todo**
+
+- [ ] change handle just one function instead of array
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| destination | <code>string</code> | where to save the script file containing the templates function |
+| templateName | <code>string</code> | where to save the script file containing the templates function |
+| jsFunctionArray | <code>Array.&lt;string&gt;</code> | an array of template function strings to be concatened and save tot he file |
+
+<a name="functionToMethod"></a>
+
+## functionToMethod(_str, prefix, objectName) ⇒ <code>string</code>
+transform all functions that start with the given `prefix` in the input `str` to method of the object `objectName`
+
+**Kind**: global function  
+**Returns**: <code>string</code> - The modified string  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| _str | <code>string</code> | javascript text to convert. e.g. `pug_attr( a, e) { }` |
+| prefix | <code>string</code> | prefix to all function to be converted e.g. pug_ |
+| objectName | <code>string</code> | name of the target object to bear the methods e.g. pug |
+
 <a name="Query"></a>
 
 ## Query : <code>string</code>
