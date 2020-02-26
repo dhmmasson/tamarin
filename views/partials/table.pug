@@ -8,7 +8,7 @@ table
           span (w: #{criterion.weight }, b: #{ Math.floor(criterion.blurIntensity * 100) }%)        
   each technology in technologies
     tr 
-      td= technology.name
+      td= technology.description
       each criterion in criteria
         if criterion.weight > 0 
           td

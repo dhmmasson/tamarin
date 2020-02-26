@@ -26,10 +26,10 @@ class Technology {
    * @param  {string} [serialization.description]                      - description of the technology
    * @param  {Object.<string, module:Models~Score>} serialization.evaluations - key are part {@link module:Models~Criterion} evaluations
    */
-  constructor ( { technology, name, decription, evaluations } ) {
+  constructor ( { technology, name, description, evaluations } ) {
     this.name = technology || name ;
     // TODO: Change so that description is taken into account
-    this.description = decription || technology ;
+    this.description = description || technology ;
     this.evaluations = evaluations || {} ;
     this.bounds = {} ;
     this.dominance = {} ;
