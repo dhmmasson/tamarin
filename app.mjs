@@ -33,6 +33,8 @@ app.use( express.static( path.join( process.env.PWD, "public" ) ) ) ;
 /** Static routes : libraries */
 app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/jquery/dist" ) ) ) ;
 app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/materialize-css/dist/js" ) ) ) ;
+app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/@svgdotjs/svg.draggable.js/dist" ) ) ) ;
+app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/@svgdotjs/svg.js/dist" ) ) ) ;
 
 /** Autoloading routes */
 app.set( "views", path.join( process.env.PWD, "views" ) ) ;

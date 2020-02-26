@@ -1,0 +1,15 @@
+@import "./_tamarinColors.scss";
+$ellipse-size: 5px;
+svg {
+  width:100%;
+}
+ellipse {
+  rx:$ellipse-size;
+  ry:$ellipse-size;
+}
+text {
+}
+.labelArea {
+  stroke: lightgray;
+  fill: transparent;
+}
