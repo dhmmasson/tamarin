@@ -3,7 +3,7 @@
  * @file sortingAlgorithm - sort technologies following a set of criteria
  * @author dhmmasson <@dhmmasson>
  */
-import * as Models from "./Models/index.mjs" ;
+import * as Models from "./models/index.mjs" ;
 import { EventEmitter } from "./EventEmitter.mjs" ;
 import { definePrivateProperties } from "./utils.mjs" ;
 
