@@ -4,7 +4,7 @@
  * @memberof! module:ExpressUtils
  */
 
-import * as models from "../../public/javascripts/Models/index.mjs" ;
+import * as models from "../../public/javascripts/models/index.mjs" ;
 import { basename, dirname, join, resolve } from "path" ;
 import { fileURLToPath } from "url" ;
 import { promises as fs } from "fs" ;
