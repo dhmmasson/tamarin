@@ -1,16 +1,17 @@
 extends layout
 
 block content
+  main
+    .fixed-action-btn.top
+      a.btn-floating.btn-large.waves-effect.waves-light.sidenav-trigger(href="#" data-target="slide-out" )
+        img( src="/images/favicon/apple-touch-icon.png" width="100%")
+    .row.z-depth-1
+      #controlPanel.col.s12
+    .row.z-depth-1
+      #result.col.s12
 
-  nav
-    .nav-wrapper
-      a.brand-logo= __appTitle
-      ul#nav-mobile.right.hide-on-med-and-down
-        li
-          a home
-        li
-          a( href=__appHomePage ) github
-  .row.z-depth-1
-    #controlPanel.col.s12
-  .row.z-depth-1
-    #result.col.s12
+block scripts
+  script.
+    $(document).ready(function(){
+     $('.sidenav').sidenav({edge:"right"});
+    });

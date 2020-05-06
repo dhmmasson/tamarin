@@ -1,3 +1,23 @@
 @import "./_tamarinColors.scss";
 @import "../../node_modules/materialize-css/sass/materialize.scss";
 @import "_svg.scss";
+tspan {
+  user-select: none;
+}
+.top {
+  bottom: auto;
+}
+td, th {
+  padding-top: 5px;
+  padding-bottom: 5px
+}
+i svg {
+  vertical-align: middle;
+  path {
+  fill: $primary-color;
+  }
+}
+.appTitle {
+  color: $primary-color;
+  font-size: 2rem;
+}
