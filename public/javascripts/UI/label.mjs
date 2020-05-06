@@ -55,14 +55,15 @@ class Label {
           , y2 = 2.5 + event.offsetY
           , x1 = x2 - Math.abs( y2 - y ) ;
 
-
       this.line = this.svg
         .polyline( [ x, y
           , x1, y
-          , x2, y2 ] )
-        .fill( "transparent" )
+          , x2, y2
+          , x1, y ] ) // Go back to prevent the bat wing effect
+        .fill( this.color )
         .stroke( this.color )
         .back() ;
+
       this.ellipse = this.svg
         .ellipse()
         .draggable()
@@ -82,13 +83,25 @@ class Label {
         , y2 = this.ellipse.cy()
         , x1 = x2 - Math.abs( y2 - y ) ;
 
-
     this.line.plot( [ x, y
       , x1, y
-      , x2, y2 ] )
+      , x2, y2
+      , x1, y ] )
       .back() ;
     this.callback( this ) ;
+    // Need to be after the callback : it sets/scale the weight
+    //
+    console.log( this ) ;
+    this.weightOverlay
+      .move( lerp( x, x1, 0.8 ), y )
+      .text( "Importance: " + this.criterion.weight ) ;
+    this.granularityOverlay
+      .move( lerp( x1, x2, 0.8 ), lerp( y, y2, 0.7 ) )
+      .text( "Granularity: " + prettyPrintPercent( this.criterion.blurIntensity ) ) ;
   }
 }
 
+
+const lerp = ( a, b, t ) => a * ( 1 - t ) + b * t ;
+const prettyPrintPercent = x => `${ Math.round( x * 100 ) }%` ;
 export { Label } ;
