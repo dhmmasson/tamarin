@@ -51,10 +51,10 @@ class Label {
 
   // add offset
   set stageBox( box ) {
-    const { x, y, x2, y2 } = box ;
-    this.constraints = new SVG.Box(
-      Math.max( 0, this.label.bbox().x2 - 10 )
-      , Math.max( 0, this.label.bbox().y - 10 ), x2, y2 ) ;
+    const { x2, y2 } = box ;
+    const x = Math.max( 0, this.label.bbox().x2 - 10 ) ;
+    const y = Math.max( 0, this.label.bbox().y - 10 ) ;
+    this.constraints = new SVG.Box( x, y, x2 - x + 10, y2 - y + 10 ) ;
   }
 
   /**
@@ -120,12 +120,12 @@ class Label {
     this.callback( this ) ;
     // Need to be after the callback : it sets/scale the weight
     this.weightOverlay
-      .move( lerp( x, x1, 0.8 ), y - 6 )
+      .move( lerp( x, x1, 1 ), y - 6 )
       .text( "Importance: " + this.criterion.weight )
       .hidden = !( this.criterion.weight > 0 ) ;
     this.granularityOverlay
-      .move( lerp( x1, x2, 0.8 ), lerp( y, y2, 0.7 ) )
-      .text( "Granularity: " + prettyPrintPercent( this.criterion.blurIntensity ) ) ;
+      .move( lerp( x1, x2, 0.75 ), lerp( y, y2, 0.7 ) )
+      .text( "Granularity: " + prettyPrintPercent( this.criterion.classCount / 12 ) ) ;
     this.granularityOverlay.hidden = !( this.criterion.blurIntensity > 0 ) ;
   }
 }
