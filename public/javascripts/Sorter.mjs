@@ -119,7 +119,7 @@ class Sorter extends EventEmitter {
    * @return {Sorter}  this
    */
   sort( ) {
-    this.updateBounds().updateDominance().updateScore() ;
+    this.updateBounds().updateDominance().normalizeDominance( ).updateScore() ;
     // Clone technologies array and sort through score
     this.technologies.sorted = this.technologies.all.slice().sort( ( a, b ) => b.score - a.score ) ;
     this.criteria.updated = [] ;
@@ -149,6 +149,23 @@ class Sorter extends EventEmitter {
     return this ;
   }
 
+  /**
+   * normalizeDominance - normalize dominance
+   *
+   * @return {Sorter}  this
+   */
+  normalizeDominance( ) {
+    for( const criterion of this.criteria.all ) {
+      criterion.maxDominance = this.technologies.all.reduce(
+        ( acc, technologie ) => Math.max( acc, technologie.dominance[ criterion.name ] )
+        , 0 ) ;
+      criterion.classCount = [ ...new Set( this.technologies.all
+        .map( technologie => technologie.dominance[ criterion.name ] ) )
+      ].length ;
+
+    }
+    return this ;
+  }
 
   /**
    * updateScore - refresh the score of all technologies

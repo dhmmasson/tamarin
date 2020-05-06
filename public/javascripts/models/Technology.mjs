@@ -81,9 +81,12 @@ class Technology {
    */
   updateScore( criteria ) {
     this.score = 0 ;
+    let normalization = 0 ;
     for( const criterion of criteria ) {
-      this.score += criterion.weight * this.dominance[ criterion.name ] ;
+      this.score += criterion.weight * this.dominance[ criterion.name ] / criterion.maxDominance ;
+      normalization += criterion.weight ;
     }
+    this.score /= normalization ;
     return this ;
   }
 }

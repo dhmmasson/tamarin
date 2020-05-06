@@ -1,19 +1,24 @@
 table.responsive-table.striped
-  tr 
-    th Technology
-    each criterion in criteria
-      if criterion.weight > 0 
-        th
-          span #{criterion.name} 
-          .hide-on-med-and-down
-            span (importance: #{criterion.weight }
-            br
-            span granularity: #{ Math.floor(criterion.blurIntensity * 100) }%)        
-  each technology in technologies
+  thead
     tr 
-      td= technology.description
+      th Technology
+      th score 
       each criterion in criteria
         if criterion.weight > 0 
-          td
-            span #{technology.dominance[ criterion.name ]}
-            
+          th
+            span #{criterion.name} 
+            .hide-on-med-and-down
+              span (importance: #{criterion.weight }
+              br
+              span granularity: #{ Math.floor(criterion.blurIntensity * 100) }%)        
+  tbody
+    each technology in technologies
+      tr
+         
+        td= technology.description
+        td= Math.round( 100 *technology.score ) 
+        each criterion in criteria
+          if criterion.weight > 0 
+            td
+              span= Math.floor( 100 * technology.dominance[ criterion.name ] / criterion.maxDominance ) 
+              

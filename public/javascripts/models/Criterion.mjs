@@ -38,6 +38,7 @@ class Criterion extends EventEmitter {
     this.description = description || name ;
     this.min = +min || 0 ;
     this.max = +max || 5 ;
+    this.maxDominance = 0 ;
     definePrivateProperties( this, "_weight", "_blur" ) ;
   }
 
