@@ -1,8 +1,9 @@
 /* eslint new-cap: ["error", { "capIsNewExceptions": ["SVG"] }]*/
 
 import * as SVGmodule from "../svg.esm.js" ;
+import { map, mapClamped, round } from "../utils.mjs" ;
 import { Label } from "./label.mjs" ;
-import { map, round } from "../utils.mjs" ;
+
 window.SVG = SVGmodule ;
 
 
@@ -69,36 +70,37 @@ class UI {
    * @return {UI} this
    */
   _setupStage() {
-    const labelBox = this.labelArea.bbox() ;
+    const offset = 5 ;
+    let labelBox = {}
+      , stageBox = {} ;
 
-    labelBox.w += 2 * labelBox.x + 50 ;
-    labelBox.x2 += 2 * labelBox.x + 50 ;
+    const { x, y, w, h } = this.labelArea.bbox() ;
+    labelBox = new SVG.Box( x - offset, y, w + 2 * offset, h ) ;
 
+    const { x2, y2 } = this.dimensions ;
+    stageBox = new SVG.Box( labelBox.x2, labelBox.y2, x2 - labelBox.x2, y2 - labelBox.y2 ) ;
 
-    this.stageBox = this.dimensions ;
-    // Move left border ( and adapt width dx = x - x2)
-    this.stageBox.w += this.stageBox.x ;
-    this.stageBox.x = labelBox.x2 ;
-    this.stageBox.w -= labelBox.x2 ;
-    // move up border
-    this.stageBox.h += this.stageBox.y ;
-    this.stageBox.y = labelBox.y2 ;
-    this.stageBox.h -= labelBox.y2 ;
+    // labelBox.x
+    this.stageBox = stageBox ;
+
+    for( const label of this.labels ) {
+      label.stageBox = this.stageBox ;
+    }
+
 
     this.labelArea
       .rect( labelBox.w, "100%" )
+      .move( labelBox.x, labelBox.y )
       .addClass( "labelArea" )
       .back() ;
-
+    console.log( this.stageBox.x ) ;
     this.svg
-      .line( this.stageBox.x
-        , this.stageBox.y
-        , this.stageBox.x
-        , this.stageBox.y2 )
-      .stroke( { width : 1
-      , color : "red" } ) ;
+      .rect( stageBox.w, stageBox.h )
+      .move( stageBox.x, stageBox.y )
+      .fill( "#eee" )
+      .back() ;
     this.mapWeight = map( this.stageBox.x, this.stageBox.w, 0, 10 ) ;
-    this.mapBlur = map( this.stageBox.y, this.stageBox.h, 0, 1 ) ;
+    this.mapBlur = mapClamped( this.stageBox.y, this.stageBox.h, 0, 0.2 ) ;
     return this ;
   }
 
@@ -122,10 +124,8 @@ class UI {
           , y : 15 * ++i }
           , criterion
           , label => {
-
             label.criterion.weight = round( this.mapWeight( label.ellipse.cx() ), 2 ) ;
             label.criterion.blurIntensity = Math.max( 0, round( this.mapBlur( label.ellipse.cy() ), 2 ) ) ;
-
           } ) ) ;
     }
     return this ;
