@@ -8,10 +8,7 @@ table.responsive-table.striped.compactTable
       th     
         .flex 
           span.orange-text  score 
-        .hide-on-med-and-down.flex.small
-          span.small (/100)
-        .hide-on-med-and-down.flex.small
-          span.small           
+          
       each criterion in criteria
         if criterion.weight > 0 
           th
@@ -23,7 +20,7 @@ table.responsive-table.striped.compactTable
               span granularity 
             .hide-on-med-and-down.flex.small
               span #{fixed2( criterion.weight ) } 
-              span #{ Math.floor(criterion.blurIntensity * 100) }%
+              span #{ Math.floor( criterion.blurIntensity * 100) }% - #{criterion.classCount } classes 
     tr.hide-on-large-only
       th Technology
       th.orange-text  score 
@@ -35,7 +32,6 @@ table.responsive-table.striped.compactTable
   tbody
     each technology in technologies
       tr
-         
         td= technology.description
         td.orange-text  
           each starIcon in star( technology.score  )

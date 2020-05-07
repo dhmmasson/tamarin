@@ -41,7 +41,6 @@ class Label {
     this.blurIntensity = 0 ;
 
     this.constraints = null ;
-
     this.ellipse = null ;
     this.callback = callback ;
 
@@ -51,6 +50,9 @@ class Label {
       .fill( this.color )
       .mousedown( event => { this.onMousedown( event ) ; } ) ;
 
+    this.labelBbox = this.label.bbox() ;
+    this.LineOrigin = { x : this.labelBbox.x2
+    , y : this.labelBbox.cy } ;
     if( this.criterion.weight > 0 ) {
       this.createHandle( 0, 0 ) ;
     }
@@ -84,8 +86,8 @@ class Label {
   onMousedown( event ) {
     if( this.ellipse === null ) {
       this.createHandle( event.offsetX, event.offsetY ) ;
-      this.ellipse.remember( "_draggable" ).startDrag( event ) ;
     }
+    this.ellipse.remember( "_draggable" ).startDrag( event ) ;
   }
 
 
@@ -106,29 +108,24 @@ class Label {
   }
 
   moveHandle( cx, cy ) {
-    const b = this.label.bbox() ;
     // Move ellipse
     this.ellipse.center( cx, cy ) ;
+    // 45º angle
+    const x1 = cx - Math.abs( cy - this.LineOrigin.y ) ;
 
-    const x = b.x2
-        , y = b.y + b.h / 2
-        , x2 = cx
-        , y2 = cy
-        , x1 = x2 - Math.abs( y2 - y ) ;
-
-    this.line.plot( [ x, y
-      , x1, y
-      , x2, y2
-      , x1, y ] )
+    this.line.plot( [ this.LineOrigin.x, this.LineOrigin.y
+      , x1, this.LineOrigin.y
+      , cx, cy
+      , x1, this.LineOrigin.y ] ) // Backtrace to prevent batwing effect
       .back() ;
 
-    this.weightLine.plot( [ x1, y, x2, y, x2, y - 4, x2, y + 4, x2, y ] ) ;
+    this.weightLine.plot( [ x1, this.LineOrigin.y, cx, this.LineOrigin.y, cx, this.LineOrigin.y - 4, cx, this.LineOrigin.y + 4, cx, this.LineOrigin.y ] ) ;
 
     // Update weight
     this.weight = round( this.panel.mapWeight( cx ), 2 ) ;
     this.criterion.weight = this.weight ;
     this.weightOverlay
-      .move( lerp( x, x1, 1 ), y )
+      .move( lerp( this.LineOrigin.x, x1, 1 ), this.LineOrigin.y )
       .text( "Importance: " + this.criterion.weight )
       .hidden = !( this.criterion.weight > 0 ) ;
 
@@ -153,7 +150,7 @@ class Label {
         , x1 = x2 - Math.abs( y2 - y ) ;
 
     this.line = this.slidersGroup
-      .polyline( [ x, y
+      .polyline( [ this.LineOrigin.x, this.LineOrigin.y
         , x1, y
         , x2, y2
         , x1, y ] ) // Go back to prevent the bat wing effect
@@ -161,32 +158,50 @@ class Label {
       .back() ;
 
     this.weightLine = this.slidersGroup
-      .polyline( [ x1, y, x2, y, x2, y - 2, x2, y + 2 ] ) // Go back to prevent the bat wing effect
+      .polyline( [ x1, this.LineOrigin.y
+        , x2, this.LineOrigin.y
+        , x2, this.LineOrigin.y - 2
+        , x2, this.LineOrigin.y + 2 ] ) // Go back to prevent the bat wing effect
       .stroke( this.color )
       .addClass( "dashed" )
       .back() ;
 
     this.ellipse = this.slidersGroup
       .ellipse()
+      .fill( this.color )
       .draggable()
+      .addClass( "bidirectionnel" )
       .move( 2.5 + targetX, 2.5 + targetY )
-      .on( "dragmove.namespace", e => this.onDrag( e ) ) ;
-    this.ellipse.fill( this.color ) ;
+      .on( "dragmove.namespace", e => this.onDrag( e ) )
+      // Managing axis constrained motion
+      .on( "dragend.namespace", () => {
 
+        this.constraints.axis = null ;
+        this.callback( this ) ;
+      } ) ;
+
+    // Create overlay for weight
     this.weightOverlay =
       new TextOverlay( this.slidersGroup.parent(), this.color )
         .move( lerp( x, x1, 0.2 ), y )
         .hide()
-        .mousedown( event => { this.ellipse.remember( "_draggable" ).startDrag( event ) ; } ) ;
+        .addClass( "horizontal" )
+        .mousedown( event => axisConstraint( this, "y", event ) ) ;
+    // Create overlay for granularity
     this.granularityOverlay =
       new TextOverlay( this.slidersGroup.parent(), this.color )
         .hide()
-        .mousedown( event => { this.ellipse.remember( "_draggable" ).startDrag( event ) ; } ) ;
+        .addClass( "vertical" )
+        .mousedown( event => axisConstraint( this, "x", event ) ) ;
 
   }
-
-
 }
+
+const axisConstraint = ( label, axis, event ) => {
+  label.constraints.axis = axis ;
+  label.constraints.constant = label.ellipse[ axis ]() ;
+  label.ellipse.remember( "_draggable" ).startDrag( event ) ;
+} ;
 
 
 function constrain( constraints, e ) {
@@ -194,6 +209,7 @@ function constrain( constraints, e ) {
 
   e.preventDefault() ;
   let { x, y } = box ;
+
   // In case your dragged element is a nested element,
   // you are better off using the rbox() instead of bbox()
 
@@ -212,7 +228,8 @@ function constrain( constraints, e ) {
   if ( box.y2 > constraints.y2 ) {
     y = constraints.y2 - box.h ;
   }
-
+  if( constraints.axis === "y" ) y = constraints.constant ;
+  if( constraints.axis === "x" ) x = constraints.constant ;
   return { x
   , y } ;
 

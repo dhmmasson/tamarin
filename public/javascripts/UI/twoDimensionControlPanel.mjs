@@ -146,10 +146,7 @@ class UI {
           , x : 5
           , y : 15 * ++i }
           , criterion
-          , label => {
-            label.criterion.weight = label.weight ;
-            label.criterion.blurIntensity = label.blurIntensity ;
-          } ) ) ;
+          , label => { } ) ) ;
     }
     return this ;
   }

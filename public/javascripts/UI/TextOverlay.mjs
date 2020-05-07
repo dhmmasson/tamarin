@@ -49,6 +49,11 @@ export default class TextOverlay {
     else this.group.show() ;
   }
 
+  addClass( className ) {
+    this.group.addClass( className ) ;
+    return this ;
+  }
+
   hide( ) { this.hidden = true ; return this ; }
 
   show( ) { this.hidden = false ; return this ; }
@@ -69,7 +74,8 @@ export default class TextOverlay {
     // Save them for resize/recenter
     this._x = x ;
     this._y = y ;
-    this.group.center( x, y ) ;
+    this.textElement.center( x, y ) ;
+    this.rect.center( x, y ) ;
     // Push back to top
     this.top() ;
     return this ;

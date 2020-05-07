@@ -26,4 +26,19 @@ ellipse {
 .labelsGroup {
   stroke: lightgray;
   fill: transparent;
+  & ~ g text {
+    cursor: grab;
+  }
+}
+.bidirectionnel, .vertical, .horizontal {
+  cursor: grab;
+}
+.bidirectionnel:active {
+  cursor: all-scroll;
+}
+.vertical:active {
+  cursor: ns-resize;
+}
+.horizontal:active {
+  cursor: ew-resize;
 }
