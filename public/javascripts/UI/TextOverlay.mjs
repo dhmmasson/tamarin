@@ -21,6 +21,7 @@ export default class TextOverlay {
   constructor( container, backgroundColor ) {
     this.svg = container ;
     this.color = backgroundColor ;
+    this.fontSize = 11 ;
     this.border = 2 ;
     // Save coordinate for resizing purposes
     this._x = 0 ;
@@ -31,10 +32,11 @@ export default class TextOverlay {
     this.textElement = this.group
       .text( "a" )
       .addClass( "overlay" )
-      .font( { anchor: "middle" } ) ;
+      .font( { anchor : "middle"
+      , size   : this.fontSize } ) ;
 
     this.rect = this.group
-      .rect( this.textElement.length() + this.border * 2, 12 + this.border * 2 )
+      .rect( this.textElement.length() + this.border * 2, this.fontSize + this.border * 2 )
       .radius( 3 )
       .fill( this.color )
       .stroke( this.color )
@@ -90,7 +92,7 @@ export default class TextOverlay {
   recenter( ) {
     this.rect
       .size( this.textElement.length() + this.border * 2
-        , 12 + this.border * 2 ) ;
+        , this.fontSize + this.border * 2 ) ;
     this.textElement.center( this._x, this._y ) ;
     this.rect.center( this._x, this._y ) ;
     return this ;

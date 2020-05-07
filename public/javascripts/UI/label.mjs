@@ -126,7 +126,7 @@ class Label {
     this.weight = round( this.panel.mapWeight( cx ), 2 ) ;
     this.criterion.weight = this.weight ;
     this.weightOverlay
-      .move( lerp( this.LineOrigin.x, x1, 1 ), this.LineOrigin.y )
+      .move( lerp( this.LineOrigin.x, cx + this.weightOverlay.textElement.length() / 2, 1 ), this.LineOrigin.y )
       .text( "Importance: " + this.criterion.weight )
       .hidden = !( this.criterion.weight > 0 ) ;
 
@@ -134,7 +134,7 @@ class Label {
     this.blurIntensity = Math.max( 0, round( this.panel.mapBlur( cy ), 2 ) ) ;
     this.criterion.blurIntensity = this.blurIntensity ;
     this.granularityOverlay
-      .move( lerp( x1, cx, 0.75 ), lerp( this.LineOrigin.y, cy, 0.7 ) )
+      .move( cx - this.granularityOverlay.textElement.length() / 2 - 7, cy )
       .text( `Granularity: ${ prettyPrintPercent( this.criterion.blurIntensity ) } - ${ this.criterion.classCount } classes` )
       .hidden = !( this.criterion.weight > 0 && this.criterion.blurIntensity > 0 ) ;
 

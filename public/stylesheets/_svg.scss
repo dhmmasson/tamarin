@@ -42,3 +42,6 @@ ellipse {
 .horizontal:active {
   cursor: ew-resize;
 }
+.dropshadow tspan{
+  text-shadow: 1px 1px 0 rgba(255,255,255, 0.3);
+}

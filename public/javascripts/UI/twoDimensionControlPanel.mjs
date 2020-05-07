@@ -106,6 +106,28 @@ class UI {
       .fill( "#eee" )
       .back() ;
 
+    this.areas.axis = this.svg.group() ;
+    const text = this.areas.axis
+      .text( "Importance" )
+      .fill( "#bbb" )
+      .addClass( "dropshadow" )
+      .font( { anchor : "left"
+      , size   : 20 } ) ;
+    text.move( this.stageBox.x2 - text.length() - 2, this.stageBox.y ) ;
+    this.areas.axis
+      .textPath( "Granularity" )
+      .fill( "#bbb" )
+      .addClass( "dropshadow" )
+      .font( { anchor : "left"
+      , size   : 20 } )
+      .plot( `M ${ this.stageBox.x - 10 } ${ this.stageBox.y2 - 2 } L ${ this.stageBox.x - 10 } ${ this.stageBox.y + 10 }` ) ;
+
+    const title = this.areas.axis
+      .text( "<- Drag criteria from the left to start ordering technologies" )
+      .fill( "#bbb" )
+      .font( { anchor : "left"
+      , size   : 20 } ) ;
+    title.move( this.stageBox.x + this.stageBox.w / 2 - title.length() / 2, this.labelBox.h / 2 ) ;
     // Generate mapping function
     this.mapWeight = map( this.stageBox.x, this.stageBox.w, 0, 10 ) ;
     this.mapBlur = mapClamped( this.stageBox.y, this.stageBox.h, 0, 0.2 ) ;
@@ -124,6 +146,7 @@ class UI {
   _cleanUpStage() {
     this.areas.labels.remove() ;
     this.areas.stage.remove() ;
+    this.areas.axis.remove() ;
     return this ;
   }
 
