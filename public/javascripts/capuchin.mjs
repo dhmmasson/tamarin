@@ -32,7 +32,6 @@ function initSorter() {
 
 function loadState( ) {
   sorter.criteria.all[ 0 ].weight = 1 ;
-  sorter.criteria.all[ 0 ].blurIntensity = 0.1 ;
 }
 
 function attachEventListener () {

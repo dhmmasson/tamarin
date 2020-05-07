@@ -85,9 +85,8 @@ export default class TextOverlay {
     this.rect
       .size( this.textElement.length() + this.border * 2
         , 12 + this.border * 2 ) ;
-    this.textElement.center( this._x,
-      this._y ) ;
-    //  this.move( this._x, this._y ) ;
+    this.textElement.center( this._x, this._y ) ;
+    this.rect.center( this._x, this._y ) ;
     return this ;
   }
 
