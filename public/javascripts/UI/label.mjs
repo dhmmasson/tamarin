@@ -123,18 +123,21 @@ class Label {
       , x2, y2
       , x1, y ] )
       .back() ;
+    this.weightLine.plot( [ x1, y, x2, y, x2, y - 4, x2, y + 4, x2, y ] ) ;
+
     this.callback( this ) ;
     // Need to be after the callback : it sets/scale the weight
     this.weightOverlay
-      .move( lerp( x, x1, 1 ), y - 6 )
+      .move( lerp( x, x1, 1 ), y )
       .text( "Importance: " + this.criterion.weight )
       .hidden = !( this.criterion.weight > 0 ) ;
     this.granularityOverlay
       .move( lerp( x1, x2, 0.75 ), lerp( y, y2, 0.7 ) )
-      .text( "Granularity: " + prettyPrintPercent( this.criterion.classCount / 12 ) ) ;
+      .text( `Granularity: ${ prettyPrintPercent( this.criterion.blurIntensity ) } - ${ this.criterion.classCount } classes` ) ;
     this.granularityOverlay.hidden = !( this.criterion.blurIntensity > 0 ) ;
   }
 }
+
 
 function constrain( constraints, e ) {
   const { handler, box } = e.detail ;
