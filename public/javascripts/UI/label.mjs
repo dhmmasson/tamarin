@@ -78,8 +78,14 @@ class Label {
           , x1, y
           , x2, y2
           , x1, y ] ) // Go back to prevent the bat wing effect
-        .fill( this.color )
+
         .stroke( this.color )
+        .back() ;
+
+      this.weightLine = this.svg
+        .polyline( [ x1, y, x2, y, x2, y - 2, x2, y + 2 ] ) // Go back to prevent the bat wing effect
+        .stroke( this.color )
+        .addClass( "dashed" )
         .back() ;
 
       this.ellipse = this.svg
@@ -92,7 +98,7 @@ class Label {
 
       this.weightOverlay =
       new TextOverlay( this.svg.parent(), this.color )
-        .move( lerp( x, x1, 0.8 ), y )
+        .move( lerp( x, x1, 0.2 ), y )
         .hide()
         .mousedown( event => { this.ellipse.remember( "_draggable" ).startDrag( event ) ; } ) ;
       this.granularityOverlay =

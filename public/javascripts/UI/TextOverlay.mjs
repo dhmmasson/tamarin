@@ -18,7 +18,7 @@ export default class TextOverlay {
    * @return {type}           description
    */
 
-  constructor( container, backgroundColor, textColor = "#FFF" ) {
+  constructor( container, backgroundColor ) {
     this.svg = container ;
     this.color = backgroundColor ;
     this.border = 2 ;
@@ -30,8 +30,7 @@ export default class TextOverlay {
     this.group.front().mouseover( () => this.group.front() ) ;
     this.textElement = this.group
       .text( "a" )
-      .stroke( textColor )
-      .font( { size: 12 } )
+      .addClass( "overlay" )
       .font( { anchor: "middle" } ) ;
 
     this.rect = this.group

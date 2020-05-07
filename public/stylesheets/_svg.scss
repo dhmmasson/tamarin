@@ -7,13 +7,22 @@ svg {
 // Unselectable text
 tspan {
   user-select: none;
-}
+  font-size: 12;
 
+}
+.overlay{
+  tspan {
+    fill: white;
+    font-weight: 300;
+  }
+}
+.dashed {
+  stroke-dasharray: 4; 
+}
 ellipse {
   rx:$ellipse-size;
   ry:$ellipse-size;
 }
-
 .labelArea {
   stroke: lightgray;
   fill: transparent;
