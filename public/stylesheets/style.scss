@@ -7,10 +7,6 @@ tspan {
 .top {
   bottom: auto;
 }
-td, th {
-  padding-top: 5px;
-  padding-bottom: 5px
-}
 i svg {
   vertical-align: middle;
   path {
@@ -21,3 +17,4 @@ i svg {
   color: $primary-color;
   font-size: 2rem;
 }
+@import "_compactTable.scss";

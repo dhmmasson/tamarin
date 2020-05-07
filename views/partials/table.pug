@@ -1,16 +1,33 @@
-table.responsive-table.striped
+- function fixed2( x ) { return Number.parseFloat(x).toFixed(2)}
+table.responsive-table.striped.compactTable
   thead
-    tr 
+    tr.hide-on-med-and-down
+      th Technology
+      th     
+        .flex 
+          span score 
+        .hide-on-med-and-down.flex.small
+          span.small (/100)
+        .hide-on-med-and-down.flex.small
+          span.small           
+      each criterion in criteria
+        if criterion.weight > 0 
+          th
+            .flex 
+              span #{criterion.name} 
+            .hide-on-med-and-down.flex.small
+              span importance 
+              span granularity 
+            .hide-on-med-and-down.flex.small
+              span #{fixed2( criterion.weight ) } 
+              span #{ Math.floor(criterion.blurIntensity * 100) }%
+    tr.hide-on-large-only
       th Technology
       th score 
       each criterion in criteria
         if criterion.weight > 0 
-          th
-            span #{criterion.name} 
-            .hide-on-med-and-down
-              span (importance: #{criterion.weight }
-              br
-              span granularity: #{ Math.floor(criterion.blurIntensity * 100) }%)        
+          th #{criterion.name} 
+                          
   tbody
     each technology in technologies
       tr
@@ -19,6 +36,5 @@ table.responsive-table.striped
         td= Math.round( 100 *technology.score ) 
         each criterion in criteria
           if criterion.weight > 0 
-            td
-              span= Math.floor( 100 * technology.dominance[ criterion.name ] / criterion.maxDominance ) 
+            td= Math.floor( 100 * technology.dominance[ criterion.name ] / criterion.maxDominance ) 
               
