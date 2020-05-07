@@ -17,13 +17,13 @@ tspan {
   }
 }
 .dashed {
-  stroke-dasharray: 4; 
+  stroke-dasharray: 4;
 }
 ellipse {
   rx:$ellipse-size;
   ry:$ellipse-size;
 }
-.labelArea {
+.labelsGroup {
   stroke: lightgray;
   fill: transparent;
 }

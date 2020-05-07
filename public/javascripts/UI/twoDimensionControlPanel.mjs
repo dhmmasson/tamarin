@@ -1,7 +1,7 @@
 /* eslint new-cap: ["error", { "capIsNewExceptions": ["SVG"] }]*/
 
 import * as SVGmodule from "../svg.esm.js" ;
-import { map, mapClamped, round } from "../utils.mjs" ;
+import { map, mapClamped } from "../utils.mjs" ;
 import { Label } from "./label.mjs" ;
 
 window.SVG = SVGmodule ;
@@ -13,7 +13,7 @@ window.SVG = SVGmodule ;
  * * @property {number} dimensions.height   full height of the svg area
  * @property {number} restAreaWidth         width in px of the rest area for the interactor
  * @property {BBOX} stageBox
- * @property {Svg.js~Container} labelArea
+ * @property {Svg.js~Container} labelsGroup
  * @property {Svg.js~Container} svg
  * @property {function} mapWeight  convert coordinate to weight
  * @property {function} mapBlur    convert coordinate to blurIntensity
@@ -26,16 +26,21 @@ class UI {
    *
    * @param  {htmlNode} root     description
    * @param  {module:Models~Criterion[]} criteria description
+   * @param  {Function} callback called when setting up is done
    */
-  constructor( root, criteria ) {
+  constructor( root, criteria, callback ) {
     this.dimensions = (
       { width  : "100%"
       , height : "300px" } ) ;
     this.restAreaWidth = 100 ;
 
     this._initSvg( root, this.dimensions ).then(
-      () => this._setupCriteria( criteria )
-        ._setupStage()
+      () => {
+        this._setupCriteria( criteria )
+          ._setupStage() ;
+        if( typeof callback === "function" ) return callback() ;
+        return null ;
+      }
     ) ;
 
   }
@@ -58,6 +63,14 @@ class UI {
         const rect = this.svg.rect( "100%", "100%" ) ;
         this.dimensions = rect.bbox() ;
         rect.remove() ;
+
+        window.addEventListener( "resize", () => {
+          const rect = this.svg.rect( "100%", "100%" ) ;
+          this.dimensions = rect.bbox() ;
+          rect.remove() ;
+          this._cleanUpStage()._setupStage() ;
+        } ) ;
+
         return this ;
       } ) ;
 
@@ -71,36 +84,46 @@ class UI {
    */
   _setupStage() {
     const offset = 5 ;
-    let labelBox = {}
-      , stageBox = {} ;
-
-    const { x, y, w, h } = this.labelArea.bbox() ;
-    labelBox = new SVG.Box( x - offset, y, w + 2 * offset, h ) ;
-
+    const { x, y, w, h } = this.labelsGroup.bbox() ;
     const { x2, y2 } = this.dimensions ;
-    stageBox = new SVG.Box( labelBox.x2, labelBox.y2, x2 - labelBox.x2, y2 - labelBox.y2 ) ;
 
-    // labelBox.x
-    this.stageBox = stageBox ;
+    this.labelBox = new SVG.Box( x - offset, y, w + 2 * offset, h ) ;
+    this.stageBox = new SVG.Box( this.labelBox.x2, this.labelBox.y2, x2 - this.labelBox.x2, y2 - this.labelBox.y2 ) ;
+
+
+    this.areas = {} ;
+    // Draw label area
+    this.areas.labels = this.labelsGroup
+      .rect( this.labelBox.w, "100%" )
+      .move( this.labelBox.x, this.labelBox.y )
+      .addClass( "labelsGroup" )
+      .back() ;
+
+    // Draw stage area
+    this.areas.stage = this.svg
+      .rect( this.stageBox.w, this.stageBox.h )
+      .move( this.stageBox.x, this.stageBox.y )
+      .fill( "#eee" )
+      .back() ;
+
+    // Generate mapping function
+    this.mapWeight = map( this.stageBox.x, this.stageBox.w, 0, 10 ) ;
+    this.mapBlur = mapClamped( this.stageBox.y, this.stageBox.h, 0, 0.2 ) ;
+
+    this.inverseMapWeight = map( 0, 10, this.stageBox.x, this.stageBox.w ) ;
+    this.inversemapBlur = map( 0, 0.2, this.stageBox.y, this.stageBox.h ) ;
 
     for( const label of this.labels ) {
       label.stageBox = this.stageBox ;
+      label.updatePosition() ;
     }
 
+    return this ;
+  }
 
-    this.labelArea
-      .rect( labelBox.w, "100%" )
-      .move( labelBox.x, labelBox.y )
-      .addClass( "labelArea" )
-      .back() ;
-    console.log( this.stageBox.x ) ;
-    this.svg
-      .rect( stageBox.w, stageBox.h )
-      .move( stageBox.x, stageBox.y )
-      .fill( "#eee" )
-      .back() ;
-    this.mapWeight = map( this.stageBox.x, this.stageBox.w, 0, 10 ) ;
-    this.mapBlur = mapClamped( this.stageBox.y, this.stageBox.h, 0, 0.2 ) ;
+  _cleanUpStage() {
+    this.areas.labels.remove() ;
+    this.areas.stage.remove() ;
     return this ;
   }
 
@@ -112,20 +135,20 @@ class UI {
    * @return {UI}          this
    */
   _setupCriteria( criteria ) {
-    this.labelArea = this.svg.group() ;
+    this.labelsGroup = this.svg.group() ;
 
     this.labels = [] ;
     let i = 0 ;
     for( const criterion of criteria ) {
       this.labels.push(
-        new Label( this.labelArea
+        new Label( this
           , { i : i
           , x : 5
           , y : 15 * ++i }
           , criterion
           , label => {
-            label.criterion.weight = round( this.mapWeight( label.ellipse.cx() ), 2 ) ;
-            label.criterion.blurIntensity = Math.max( 0, round( this.mapBlur( label.ellipse.cy() ), 2 ) ) ;
+            label.criterion.weight = label.weight ;
+            label.criterion.blurIntensity = label.blurIntensity ;
           } ) ) ;
     }
     return this ;
