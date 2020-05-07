@@ -87,6 +87,7 @@ class Label {
     if( this.ellipse === null ) {
       this.createHandle( event.offsetX, event.offsetY ) ;
     }
+    this.show() ;
     this.ellipse.remember( "_draggable" ).startDrag( event ) ;
   }
 
@@ -133,13 +134,19 @@ class Label {
     this.blurIntensity = Math.max( 0, round( this.panel.mapBlur( cy ), 2 ) ) ;
     this.criterion.blurIntensity = this.blurIntensity ;
     this.granularityOverlay
-      .move( lerp( x1, x2, 0.75 ), lerp( y, y2, 0.7 ) )
+      .move( lerp( x1, cx, 0.75 ), lerp( this.LineOrigin.y, cy, 0.7 ) )
       .text( `Granularity: ${ prettyPrintPercent( this.criterion.blurIntensity ) } - ${ this.criterion.classCount } classes` )
-      .hidden = !( this.criterion.blurIntensity > 0 ) ;
+      .hidden = !( this.criterion.weight > 0 && this.criterion.blurIntensity > 0 ) ;
 
-    this.callback( this ) ;
   }
 
+  show() {
+    this.slidersGroup.show() ;
+  }
+
+  hide() {
+    this.slidersGroup.hide() ;
+  }
 
   createHandle( targetX, targetY ) {
     const b = this.label.bbox() ;
@@ -177,6 +184,7 @@ class Label {
       .on( "dragend.namespace", () => {
 
         this.constraints.axis = null ;
+        if( this.criterion.weight < 0 ) this.hide() ;
         this.callback( this ) ;
       } ) ;
 
