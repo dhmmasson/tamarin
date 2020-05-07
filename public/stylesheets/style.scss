@@ -1,20 +1,6 @@
 @import "./_tamarinColors.scss";
 @import "../../node_modules/materialize-css/sass/materialize.scss";
 @import "_svg.scss";
-tspan {
-  user-select: none;
-}
-.top {
-  bottom: auto;
-}
-i svg {
-  vertical-align: middle;
-  path {
-  fill: $primary-color;
-  }
-}
-.appTitle {
-  color: $primary-color;
-  font-size: 2rem;
-}
+
 @import "_compactTable.scss";
+@import "_navBar.scss";

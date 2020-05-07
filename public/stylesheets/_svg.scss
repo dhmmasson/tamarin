@@ -3,12 +3,17 @@ $ellipse-size: 5px;
 svg {
   width:100%;
 }
+
+// Unselectable text
+tspan {
+  user-select: none;
+}
+
 ellipse {
   rx:$ellipse-size;
   ry:$ellipse-size;
 }
-text {
-}
+
 .labelArea {
   stroke: lightgray;
   fill: transparent;

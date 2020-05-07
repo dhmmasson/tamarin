@@ -2,16 +2,24 @@ extends layout
 
 block content
   main
-    .fixed-action-btn.top
-      a.btn-floating.btn-large.waves-effect.waves-light.sidenav-trigger(href="#" data-target="slide-out" )
+    .fixed-action-btn.actionsButton
+      a.btn-floating.btn-large.waves-effect.waves-light
         img( src="/images/favicon/apple-touch-icon.png" width="100%")
+      ul
+        li 
+          a.btn-floating.yellow.darken-1
+            i.material-icons save
+        li 
+          a.btn-floating.red.sidenav-trigger(href="#" data-target="slide-out" )
+            i.material-icons menu
+        
+
     .row.z-depth-1
       #controlPanel.col.s12
     .row.z-depth-1
       #result.col.s12
-
 block scripts
   script.
     $(document).ready(function(){
-     $('.sidenav').sidenav({edge:"right"});
+      $('.fixed-action-btn').floatingActionButton({hoverEnabled:true, direction:'bottom'});
     });
