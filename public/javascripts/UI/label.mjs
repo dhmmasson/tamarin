@@ -30,7 +30,9 @@ class Label {
   constructor( twoDimensionControlPanel, offset, criterion, callback ) {
     this.panel = twoDimensionControlPanel ;
     this.criterion = criterion ;
+
     this.color = colors[ offset.i % colors.length ] ;
+    criterion.color = this.color ;
     this.offset = offset ;
     this.labelsGroup = twoDimensionControlPanel.labelsGroup.group() ;
     this.slidersGroup = twoDimensionControlPanel.svg.group() ;

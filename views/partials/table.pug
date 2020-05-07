@@ -1,11 +1,13 @@
 - function fixed2( x ) { return Number.parseFloat(x).toFixed(2)}
+- const names=["star","star_half","star_border"]
+- function star( x ) {  x = Math.max(0,x) ; const full = Math.floor( x * 5 ), half = Math.floor( x * 10 ) %2 ; return [ full, half, 5 - full - half ].map( (e,i)=> Array( e ).fill( names[i] ) ).flat() } 
 table.responsive-table.striped.compactTable
   thead
     tr.hide-on-med-and-down
       th Technology
       th     
         .flex 
-          span score 
+          span.orange-text  score 
         .hide-on-med-and-down.flex.small
           span.small (/100)
         .hide-on-med-and-down.flex.small
@@ -13,8 +15,9 @@ table.responsive-table.striped.compactTable
       each criterion in criteria
         if criterion.weight > 0 
           th
-            .flex 
-              span #{criterion.name} 
+            .flex
+              - let style=`color:${criterion.color}` 
+              span( style=style) #{criterion.name} 
             .hide-on-med-and-down.flex.small
               span importance 
               span granularity 
@@ -23,18 +26,23 @@ table.responsive-table.striped.compactTable
               span #{ Math.floor(criterion.blurIntensity * 100) }%
     tr.hide-on-large-only
       th Technology
-      th score 
+      th.orange-text  score 
       each criterion in criteria
         if criterion.weight > 0 
-          th #{criterion.name} 
+          - let style=`color:${criterion.color}` 
+          th( style=style) #{criterion.name} 
                           
   tbody
     each technology in technologies
       tr
          
         td= technology.description
-        td= Math.round( 100 *technology.score ) 
+        td.orange-text  
+          each starIcon in star( technology.score  )
+            i.material-icons= starIcon
         each criterion in criteria
           if criterion.weight > 0 
-            td= Math.floor( 100 * technology.dominance[ criterion.name ] / criterion.maxDominance ) 
-              
+            - let style=`color:${criterion.color}`
+            td( style=style)
+              each starIcon in star( technology.dominance[ criterion.name ] / criterion.maxDominance )
+                i.material-icons= starIcon
