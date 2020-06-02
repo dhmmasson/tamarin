@@ -1,0 +1,34 @@
+.compactTable {
+  td, th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    &:not(:first-child) {
+      text-align: center
+    }
+  }
+  .flex {
+    display: flex;
+    flex-flow: row wrap;
+    &>* {
+      flex:1 1;
+      text-align: center;
+      &:last-child {
+        text-align:left;
+        padding-left: 0.75em;
+      }
+      &:first-child {
+        text-align:right;
+        padding-right: 0.75em;
+      }
+      &:last-child:first-child {
+        text-align:center;
+
+      }
+    }
+  }
+.small {
+  font-size:  0.8rem;
+  font-weight: normal;
+}
+
+}

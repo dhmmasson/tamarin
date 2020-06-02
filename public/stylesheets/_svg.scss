@@ -1,0 +1,47 @@
+@import "./_tamarinColors.scss";
+$ellipse-size: 5px;
+svg {
+  width:100%;
+}
+
+// Unselectable text
+tspan {
+  user-select: none;
+  font-size: 12;
+
+}
+.overlay{
+  tspan {
+    fill: white;
+    font-weight: 300;
+  }
+}
+.dashed {
+  stroke-dasharray: 4;
+}
+ellipse {
+  rx:$ellipse-size;
+  ry:$ellipse-size;
+}
+.labelsGroup {
+  stroke: lightgray;
+  fill: transparent;
+  & ~ g text {
+    cursor: grab;
+  }
+}
+.bidirectionnel, .vertical, .horizontal {
+  cursor: grab;
+}
+.bidirectionnel:active {
+  cursor: all-scroll;
+}
+.vertical:active {
+  cursor: ns-resize;
+}
+.horizontal:active {
+  cursor: ew-resize;
+}
+.dropshadow tspan{
+  text-shadow: 1px 1px 0 rgba(255,255,255, 0.3);
+}

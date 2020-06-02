@@ -7,12 +7,17 @@ html
     meta( name="author" content= __appAuthors )
     title= __appTitle
     link( rel='stylesheet', href='/stylesheets/style.css' )
-    link( rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png")
-    link( rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png")
-    link( rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png")
+    link( rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png" )
+    link( rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png" )
+    link( rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png" )
     link( rel="manifest" href="images/favicon/site.webmanifest" )
+    link( rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" )
   body
+
     block content
+      
     script( src="javascripts/jquery.min.js")
     script( src="javascripts/materialize.min.js")
-    script( src="javascripts/test.mjs" type="module" )
+    script( src="javascripts/capuchin.mjs" type="module" )
+    include includes/navBar.pug    
+    block scripts 

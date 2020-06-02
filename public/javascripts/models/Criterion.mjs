@@ -38,6 +38,7 @@ class Criterion extends EventEmitter {
     this.description = description || name ;
     this.min = +min || 0 ;
     this.max = +max || 5 ;
+    this.maxDominance = 0 ;
     definePrivateProperties( this, "_weight", "_blur" ) ;
   }
 
@@ -49,7 +50,7 @@ class Criterion extends EventEmitter {
    */
   blur( value ) {
     // Clamp the value to 0--5
-    return Math.max( 0, value - this.blurIntensity * ( this.max - this.min ) ) ;
+    return Math.max( 0, value - 2 * this.blurIntensity * ( this.max - this.min ) ) ;
   }
 
 
