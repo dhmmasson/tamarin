@@ -9,6 +9,10 @@
 ## Classes
 
 <dl>
+<dt><a href="#Label">Label</a></dt>
+<dd></dd>
+<dt><a href="#UI">UI</a></dt>
+<dd></dd>
 <dt><a href="#EventEmitter">EventEmitter</a></dt>
 <dd></dd>
 <dt><a href="#Sorter">Sorter</a> ⇐ <code><a href="#EventEmitter">EventEmitter</a></code></dt>
@@ -19,8 +23,29 @@
 ## Functions
 
 <dl>
+<dt><a href="#move">move(x, y)</a> ⇒ <code>TextOverlay</code></dt>
+<dd><p>move - Move the element to the given center coordinate, push back to top</p>
+</dd>
+<dt><a href="#recenter">recenter()</a> ⇒ <code>TextOverlay</code></dt>
+<dd><p>recenter - resize rectangle and recenter text</p>
+</dd>
+<dt><a href="#text">text(text)</a> ⇒ <code>TextOverlay</code></dt>
+<dd><p>text - update the text displayed</p>
+</dd>
+<dt><a href="#top">top()</a> ⇒ <code>TextOverlay</code></dt>
+<dd><p>top - push the element to the Top so that it overlay the line</p>
+</dd>
 <dt><a href="#definePrivateProperties">definePrivateProperties(object)</a> ⇒ <code>object</code></dt>
 <dd><p>definePrivateProperties - automatically define private <strong>(non enumerable)</strong> properties</p>
+</dd>
+<dt><a href="#round">round(number, precision)</a> ⇒ <code>type</code></dt>
+<dd><p>round - description</p>
+</dd>
+<dt><a href="#map">map(sourceMin, sourceRange, destinationMin, destinationRange)</a> ⇒ <code>type</code></dt>
+<dd><p>map - description</p>
+</dd>
+<dt><a href="#mapClamped">mapClamped(sourceMin, sourceRange, destinationMin, destinationRange)</a> ⇒ <code>type</code></dt>
+<dd><p>map - description</p>
 </dd>
 </dl>
 
@@ -288,6 +313,110 @@ updateScore - weight sum of the dominance
 number between 0 - 5
 
 **Kind**: inner typedef of [<code>Models</code>](#module_Models)  
+<a name="Label"></a>
+
+## Label
+**Kind**: global class  
+
+* [Label](#Label)
+    * [new Label(container, offset, criterion)](#new_Label_new)
+    * [.onMousedown(event)](#Label+onMousedown) ⇒ <code>type</code>
+
+<a name="new_Label_new"></a>
+
+### new Label(container, offset, criterion)
+constructor - create a new label that is interactive
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| container | <code>SVGjs~Element</code> | in which labelsGroup element should the Label be included |
+| offset | <code>Object</code> | * @param  {Object} offset.i index * @param  {Object} offset.x x coordinate for the label * @param  {Object} offset.y y coordinate for the label |
+| criterion | [<code>Criterion</code>](#module_Models..Criterion) | description |
+
+<a name="Label+onMousedown"></a>
+
+### label.onMousedown(event) ⇒ <code>type</code>
+onMousedown - On clicking over the label create an elipse and start dragging it
+if the ellipse exist don't create it.
+
+**Kind**: instance method of [<code>Label</code>](#Label)  
+**Returns**: <code>type</code> - description  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>type</code> | description |
+
+<a name="UI"></a>
+
+## UI
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| dimensions | <code>Object</code> | * @property {number} dimensions.width    full width of the svg area * @property {number} dimensions.height   full height of the svg area |
+| restAreaWidth | <code>number</code> | width in px of the rest area for the interactor |
+| stageBox | <code>BBOX</code> |  |
+| labelsGroup | <code>Svg.js~Container</code> |  |
+| svg | <code>Svg.js~Container</code> |  |
+| mapWeight | <code>function</code> | convert coordinate to weight |
+| mapBlur | <code>function</code> | convert coordinate to blurIntensity |
+| labels |  |  |
+
+
+* [UI](#UI)
+    * [new UI(root, criteria, callback)](#new_UI_new)
+    * [._initSvg(root, size)](#UI+_initSvg) ⇒ [<code>UI</code>](#UI)
+    * [._setupStage()](#UI+_setupStage) ⇒ [<code>UI</code>](#UI)
+    * [._setupCriteria(criteria)](#UI+_setupCriteria) ⇒ [<code>UI</code>](#UI)
+
+<a name="new_UI_new"></a>
+
+### new UI(root, criteria, callback)
+constructor - create the twoDimensionControlPanel
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| root | <code>htmlNode</code> | description |
+| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | description |
+| callback | <code>function</code> | called when setting up is done |
+
+<a name="UI+_initSvg"></a>
+
+### uI.\_initSvg(root, size) ⇒ [<code>UI</code>](#UI)
+async _initSvg - load the svg.draggable.js module and set up the svg
+
+**Kind**: instance method of [<code>UI</code>](#UI)  
+**Returns**: [<code>UI</code>](#UI) - this  
+
+| Param | Type |
+| --- | --- |
+| root | <code>htmlNode</code> | 
+| size | <code>Object</code> | 
+| size.width | <code>number</code> | 
+| size.height | <code>number</code> | 
+
+<a name="UI+_setupStage"></a>
+
+### uI.\_setupStage() ⇒ [<code>UI</code>](#UI)
+_setupStage - set the label area, the interacting area etc..
+
+**Kind**: instance method of [<code>UI</code>](#UI)  
+**Returns**: [<code>UI</code>](#UI) - this  
+<a name="UI+_setupCriteria"></a>
+
+### uI.\_setupCriteria(criteria) ⇒ [<code>UI</code>](#UI)
+_setupCriteria - set up the label in the area
+
+**Kind**: instance method of [<code>UI</code>](#UI)  
+**Returns**: [<code>UI</code>](#UI) - this  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| criteria | [<code>Array.&lt;Criterion&gt;</code>](#module_Models..Criterion) | description |
+
 <a name="EventEmitter"></a>
 
 ## EventEmitter
@@ -362,6 +491,7 @@ Sorter - the sortingAlgorithm wrapper class
         * [.sort()](#Sorter+sort) ⇒ [<code>Sorter</code>](#Sorter)
         * [.updateDominance()](#Sorter+updateDominance) ⇒ [<code>Sorter</code>](#Sorter)
         * [.updateBounds()](#Sorter+updateBounds) ⇒ [<code>Sorter</code>](#Sorter)
+        * [.normalizeDominance()](#Sorter+normalizeDominance) ⇒ [<code>Sorter</code>](#Sorter)
         * [.updateScore()](#Sorter+updateScore) ⇒ [<code>Sorter</code>](#Sorter)
         * [.fire(eventName)](#EventEmitter+fire)
         * [.on(eventName, callback, [_this])](#EventEmitter+on)
@@ -464,6 +594,13 @@ updateBounds - refresh technology bounds for the updated criteria
 
 **Kind**: instance method of [<code>Sorter</code>](#Sorter)  
 **Returns**: [<code>Sorter</code>](#Sorter) - this sorter  
+<a name="Sorter+normalizeDominance"></a>
+
+### sorter.normalizeDominance() ⇒ [<code>Sorter</code>](#Sorter)
+normalizeDominance - normalize dominance
+
+**Kind**: instance method of [<code>Sorter</code>](#Sorter)  
+**Returns**: [<code>Sorter</code>](#Sorter) - this  
 <a name="Sorter+updateScore"></a>
 
 ### sorter.updateScore() ⇒ [<code>Sorter</code>](#Sorter)
@@ -510,6 +647,49 @@ Sorter.eventType
 | --- | --- | --- |
 | sorted | <code>string</code> | <code>&quot;sorted&quot;</code> | 
 
+<a name="colors"></a>
+
+## colors
+**Kind**: global enum  
+<a name="move"></a>
+
+## move(x, y) ⇒ <code>TextOverlay</code>
+move - Move the element to the given center coordinate, push back to top
+
+**Kind**: global function  
+**Returns**: <code>TextOverlay</code> - itself  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| x | <code>number</code> | new center coordinate |
+| y | <code>number</code> | new center coordinate |
+
+<a name="recenter"></a>
+
+## recenter() ⇒ <code>TextOverlay</code>
+recenter - resize rectangle and recenter text
+
+**Kind**: global function  
+**Returns**: <code>TextOverlay</code> - itself  
+<a name="text"></a>
+
+## text(text) ⇒ <code>TextOverlay</code>
+text - update the text displayed
+
+**Kind**: global function  
+**Returns**: <code>TextOverlay</code> - itself  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | text to display |
+
+<a name="top"></a>
+
+## top() ⇒ <code>TextOverlay</code>
+top - push the element to the Top so that it overlay the line
+
+**Kind**: global function  
+**Returns**: <code>TextOverlay</code> - itself  
 <a name="definePrivateProperties"></a>
 
 ## definePrivateProperties(object) ⇒ <code>object</code>
@@ -522,4 +702,47 @@ definePrivateProperties - automatically define private **(non enumerable)** prop
 | --- | --- | --- |
 | object | <code>object</code> | the object for which you want to define private properties |
 | ...names | <code>string</code> | as many private fields as you want to define |
+
+<a name="round"></a>
+
+## round(number, precision) ⇒ <code>type</code>
+round - description
+
+**Kind**: global function  
+**Returns**: <code>type</code> - description  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| number | <code>number</code> | description |
+| precision | <code>number</code> | description |
+
+<a name="map"></a>
+
+## map(sourceMin, sourceRange, destinationMin, destinationRange) ⇒ <code>type</code>
+map - description
+
+**Kind**: global function  
+**Returns**: <code>type</code> - description  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sourceMin | <code>number</code> | description |
+| sourceRange | <code>number</code> | description |
+| destinationMin | <code>number</code> | = 0   description |
+| destinationRange | <code>number</code> | = 1 description |
+
+<a name="mapClamped"></a>
+
+## mapClamped(sourceMin, sourceRange, destinationMin, destinationRange) ⇒ <code>type</code>
+map - description
+
+**Kind**: global function  
+**Returns**: <code>type</code> - description  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sourceMin | <code>number</code> | description |
+| sourceRange | <code>number</code> | description |
+| destinationMin | <code>number</code> | = 0   description |
+| destinationRange | <code>number</code> | = 1 description |
 
