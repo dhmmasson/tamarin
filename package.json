@@ -8,7 +8,7 @@
   "dependencies": {
     "@svgdotjs/svg.draggable.js": "^3.0.2",
     "@svgdotjs/svg.js": "^3.0.16",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
@@ -37,14 +37,16 @@
   },
   "homepage": "https://github.com/dhmmasson/rezbuild-emperor-tamarin#readme",
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "jsdoc-to-markdown": "^5.0.3",
-    "stylelint": "^13.0.0",
+    "stylelint": "^13.5.0",
     "stylelint-config-recommended-scss": "^4.2.0",
-    "stylelint-scss": "^3.14.2"
+    "stylelint-scss": "^3.17.2"
   },
   "sasslintConfig": ".sasslintrc.json",
   "type": "module",
-  "engines" : {  "node": "13.x" }
+  "engines": {
+    "node": "13.x"
+  }
 }
