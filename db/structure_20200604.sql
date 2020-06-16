@@ -33,22 +33,15 @@ CREATE TABLE `area` (
 
 
 
-# Dump of table criteria
+# Dump of table order
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `criteria`;
+DROP TABLE IF EXISTS `order`;
 
-CREATE TABLE `criteria` (
+CREATE TABLE `order` (
   `name` varchar(50) NOT NULL,
-  `type_name` varchar(50) NOT NULL,
-  `area_name` varchar(50) NOT NULL,
-  `unit` varchar(50) DEFAULT NULL,
   `description` text,
-  PRIMARY KEY (`name`),
-  KEY `type_name` (`type_name`),
-  KEY `area_name` (`area_name`),
-  CONSTRAINT `criteria_ibfk_2` FOREIGN KEY (`type_name`) REFERENCES `criteriaType` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `criteria_ibfk_3` FOREIGN KEY (`area_name`) REFERENCES `area` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -69,6 +62,18 @@ CREATE TABLE `criteriaType` (
 
 
 
+# Dump of table filter
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `filter`;
+
+CREATE TABLE `filter` (
+  `name` varchar(50) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 # Dump of table criteriaType_has_filter
 # ------------------------------------------------------------
 
@@ -81,6 +86,39 @@ CREATE TABLE `criteriaType_has_filter` (
   KEY `filter_name` (`filter_name`),
   CONSTRAINT `criteriatype_has_filter_ibfk_1` FOREIGN KEY (`criteriaType_name`) REFERENCES `criteriaType` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `criteriatype_has_filter_ibfk_2` FOREIGN KEY (`filter_name`) REFERENCES `filter` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table criteria
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `criteria`;
+
+CREATE TABLE `criteria` (
+  `name` varchar(50) NOT NULL,
+  `type_name` varchar(50) NOT NULL,
+  `area_name` varchar(50) NOT NULL,
+  `unit` varchar(50) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`name`),
+  KEY `type_name` (`type_name`),
+  KEY `area_name` (`area_name`),
+  CONSTRAINT `criteria_ibfk_2` FOREIGN KEY (`type_name`) REFERENCES `criteriaType` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `criteria_ibfk_3` FOREIGN KEY (`area_name`) REFERENCES `area` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table technology
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `technology`;
+
+CREATE TABLE `technology` (
+  `name` varchar(50) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -102,43 +140,6 @@ CREATE TABLE `data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-
-# Dump of table filter
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `filter`;
-
-CREATE TABLE `filter` (
-  `name` varchar(50) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Dump of table order
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `order`;
-
-CREATE TABLE `order` (
-  `name` varchar(50) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Dump of table technology
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `technology`;
-
-CREATE TABLE `technology` (
-  `name` varchar(50) NOT NULL,
-  `description` text,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 
