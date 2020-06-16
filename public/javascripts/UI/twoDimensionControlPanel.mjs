@@ -31,7 +31,7 @@ class UI {
   constructor( root, criteria, callback ) {
     this.dimensions = (
       { width  : "100%"
-      , height : "300px" } ) ;
+      , height : "500px" } ) ;
     this.restAreaWidth = 100 ;
 
     this._initSvg( root, this.dimensions ).then(
