@@ -32,13 +32,14 @@ class Criterion extends EventEmitter {
    * @param  {number} [serialization.max=5]           - max value for the criteria, 5 if absent
 
    */
-  constructor ( { name, description, min, max } ) {
+  constructor ( { name, description, min, max, sortingorder } ) {
     super( Criterion.eventType ) ;
     this.name = name ;
     this.description = description || name ;
     this.min = +min || 0 ;
     this.max = +max || 5 ;
     this.maxDominance = 0 ;
+	this.sortingorder = sortingorder ;
     definePrivateProperties( this, "_weight", "_blur" ) ;
   }
 
