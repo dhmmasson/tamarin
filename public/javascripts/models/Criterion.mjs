@@ -17,6 +17,7 @@ import { definePrivateProperties } from "../utils.mjs" ;
  * @property {Score}  max - Maximum value for the criteria in the database
  * @property {number} weight - weight of the criteria for the score computation
  * @property {number} blurIntensity - [0-1] how much to extend the range [ evaluation - blurIntensity * ( max - min ), evaluation ]
+  *@property {string} sortingorder - indicates whether the criterion is ascending or descending
  * @memberof! Models
  * @alias module:Models~Criterion
  */

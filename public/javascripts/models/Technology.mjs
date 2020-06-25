@@ -48,7 +48,7 @@ class Technology {
     for( const criterion of criteria ) {
       this.bounds[ criterion.name ] = criterion.blur( this.evaluations[ criterion.name ] ) ;
       this.dominance[ criterion.name ] = 0 ;
-		console.log(this.sortingorder[criterion.name]);
+	  
     }
     return this ;
   }
@@ -66,14 +66,12 @@ class Technology {
     this.dominance[ criterion.name ] = 0 ;
     for( const technology of technologies ) {
 		if( technology !== this ) {			
-          // this dominate technology / ascending
-			if (this.sortingorder [criterion.name] == 'ascending') {		  
-				if( this.bounds[ criterion.name ] > technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
+          // this dominate technology / ascending  
+			if( criterion.sortingorder == 'ascending' && this.bounds[ criterion.name ] > technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
+			// descending	  
+			if( criterion.sortingorder == 'descending' && this.bounds[ criterion.name ] < technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
 			}
-			if (this.sortingorder [criterion.name] == 'descending') {		  
-				if( this.bounds[ criterion.name ] < technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
-			}
-		}
+		
 	}	
 	}
     return this ;
