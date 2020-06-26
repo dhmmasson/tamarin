@@ -21,11 +21,13 @@ $.get( "/api/technologies", function( data ) {
   sorter.technologies = data.technologies ;
   initSorter() ;
 } ) ;
-
+let onlyOnce = true ;
 function initSorter() {
-  if( sorter.criteria.all.length > 0 && sorter.technologies.all.length > 0 ) {
+  if( sorter.criteria.all.length > 0 && sorter.technologies.all.length > 0 && onlyOnce ) {
     attachEventListener() ;
     loadState() ;
+	onlyOnce = false ;
+	$( "#controlPanel" ).mouseup( ()=> { setTimeout( updateTable, 100 ) } ) ;
   }
 }
 
@@ -36,11 +38,17 @@ function loadState( ) {
 
 function attachEventListener () {
   sorter.on( Sorter.eventType.sorted, () => {
-
-    $( "#result" ).empty().append( template.table(
-      { technologies : sorter.technologies.sorted
-      , criteria     : sorter.criteria.all } ) ) ;
+	updateTable(10) ;
+ 
   } ) ;
+}
+
+function updateTable( longueur ) {
+	longueur = longueur ? longueur : sorter.technologies.sorted.length ;
+
+	   $( "#result" ).empty().append( template.table(
+	  { technologies : sorter.technologies.sorted.slice(0,longueur)
+	  , criteria     : sorter.criteria.all } ) ) ;
 }
 
 function loadControlPanel( mode ) {
