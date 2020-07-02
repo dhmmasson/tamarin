@@ -1,6 +1,6 @@
 - function fixed2( x ) { return Number.parseFloat(x).toFixed(2)}
 - const names=["star","star_half","star_border"]
-- function star( x ) {  x = Math.max(0,x) ; const full = Math.floor( x * 5 ), half = Math.floor( x * 10 ) %2 ; return [ full, half, 5 - full - half ].map( (e,i)=> Array( e ).fill( names[i] ) ).flat() } 
+- function star( x ) {  x = Math.min(1, Math.max(0,x)) ; const full = Math.floor( x * 5 ), half = Math.floor( x * 10 ) %2 ; return [ full, half, 5 - full - half ].map( (e,i)=> Array( e ).fill( names[i] ) ).flat() } 
 table.responsive-table.striped.compactTable
   thead
     tr.hide-on-med-and-down
