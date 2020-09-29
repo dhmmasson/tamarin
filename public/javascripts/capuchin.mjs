@@ -1,31 +1,40 @@
 import { Sorter } from "./Sorter.mjs" ;
 import { UI } from "./UI/twoDimensionControlPanel.mjs" ;
 import { template } from "./template.mjs" ;
+import { Downloader } from "./Downloader.mjs" ;
 import * as SVGmodule from "./svg.esm.js" ;
 window.SVG = SVGmodule ;
-console.log( window.SVG
-) ;
 const sorter = new Sorter( [], [] ) ;
 let ui = null ;
-$( getCriteria() ) ;
+
+
+$( loadData() ) ;
+
+
+function loadData( ) {
+  getCriteria() ;
+  getTechnologies() ;
+}
 function getCriteria( ) {
   $.get( "/api/criteria", function( data ) {
     sorter.criteria = data.criteria ;
     ui = new UI( $( "#controlPanel" )[ 0 ], sorter.criteria.all, () => initSorter() ) ;
-
+  } ) ;
+}
+function getTechnologies( ) {
+  $.get( "/api/technologies", function( data ) {
+    sorter.technologies = data.technologies ;
+    initSorter() ;
   } ) ;
 }
 
-
-$.get( "/api/technologies", function( data ) {
-  sorter.technologies = data.technologies ;
-  initSorter() ;
-} ) ;
-
+let onlyOnce = true ;
 function initSorter() {
-  if( sorter.criteria.all.length > 0 && sorter.technologies.all.length > 0 ) {
+  if( sorter.criteria.all.length > 0 && sorter.technologies.all.length > 0 && onlyOnce ) {
     attachEventListener() ;
     loadState() ;
+    onlyOnce = false ;
+    $( "#controlPanel" ).mouseup( () => { setTimeout( updateTable, 100 ) ; } ) ;
   }
 }
 
@@ -35,12 +44,19 @@ function loadState( ) {
 }
 
 function attachEventListener () {
+  console.log( "attachEventListener" ) ;
+  const downloader = new Downloader( $( "#saveButton" )[ 0 ] ) ;
   sorter.on( Sorter.eventType.sorted, () => {
-
-    $( "#result" ).empty().append( template.table(
-      { technologies : sorter.technologies.sorted
-      , criteria     : sorter.criteria.all } ) ) ;
+    updateTable( 10 ) ;
+    downloader.updateCSV( sorter.technologies ) ;
   } ) ;
+}
+
+function updateTable( longueur ) {
+  longueur = longueur ? longueur : sorter.technologies.sorted.length ;
+  $( "#result" ).empty().append( template.table(
+	  { technologies : sorter.technologies.sorted.slice( 0, longueur )
+	  , criteria     : sorter.criteria.all } ) ) ;
 }
 
 function loadControlPanel( mode ) {

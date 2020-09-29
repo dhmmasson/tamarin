@@ -35,6 +35,7 @@ app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modul
 app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/materialize-css/dist/js" ) ) ) ;
 app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/@svgdotjs/svg.draggable.js/dist" ) ) ) ;
 app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/@svgdotjs/svg.js/dist" ) ) ) ;
+app.use( "/javascripts", express.static( path.join( process.env.PWD, "node_modules/papaparse" ) ) ) ;
 
 app.use( "/fonts", express.static( path.join( process.env.PWD, "node_modules/materialize-css/dist/fonts" ) ) ) ;
 

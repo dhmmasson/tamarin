@@ -27,6 +27,8 @@ class Label {
    * * @param  {Object} offset.y y coordinate for the label
    * @param  {module:Models~Criterion} criterion description
    */
+   
+  
   constructor( twoDimensionControlPanel, offset, criterion, callback ) {
     this.panel = twoDimensionControlPanel ;
     this.criterion = criterion ;
@@ -45,10 +47,10 @@ class Label {
     this.callback = callback ;
 
     this.label = this.labelsGroup
-      .text( criterion.description )
-      .move( offset.x, offset.y )
-      .fill( this.color )
-      .mousedown( event => { this.onMousedown( event ) ; } ) ;
+    .text( criterion.description )			
+    .move( offset.x, offset.y )
+    .fill( this.color )
+    .mousedown( event => { this.onMousedown( event ) ; } ) ;
 
     this.labelBbox = this.label.bbox() ;
     this.LineOrigin = { x : this.labelBbox.x2
@@ -68,6 +70,8 @@ class Label {
 
   }
 
+  
+	
   // add offset
   set stageBox( box ) {
     const { x2, y2 } = box ;
@@ -77,13 +81,13 @@ class Label {
   }
 
   /**
-   * onMousedown - On clicking over the label create an elipse and start dragging it
+   * onMousedown - On clicking over the label create an ellipse and start dragging it
    * if the ellipse exist don't create it.
    *
    * @param  {type} event description
    * @return {type}       description
    */
-  onMousedown( event ) {
+  onMousedown( event ) {   
     if( this.ellipse === null ) {
       this.createHandle( event.offsetX, event.offsetY ) ;
     }
