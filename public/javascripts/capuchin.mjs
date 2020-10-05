@@ -48,6 +48,9 @@ function attachEventListener () {
   const downloader = new Downloader( $( "#saveButton" )[ 0 ] ) ;
   sorter.on( Sorter.eventType.sorted, () => {
     updateTable( 10 ) ;
+	 
+	save(sorter, "output_CSV.csv");
+	
     downloader.updateCSV( sorter.technologies ) ;
   } ) ;
 }
