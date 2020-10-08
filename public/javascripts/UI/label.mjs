@@ -61,7 +61,12 @@ class Label {
     criterion.on( "updated",
       () => {
         if( ( this.weight !== this.criterion.weight ) || ( this.blurIntensity !== this.criterion.blurIntensity ) ) {
-          this.createHandle( 0, 0 ) ;
+		/**
+		*if the ellipse exist don't create it.
+		*/
+          if( this.ellipse === null ) {
+			this.createHandle( 0, 0 ) ;
+		  }
           this.updatePosition() ;
         }
       }
