@@ -19,7 +19,8 @@
     "mysql2": "^2.1.0",
     "node-sass-middleware": "0.11.0",
     "papaparse": "^5.2.0",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "statistics.js": "^1.0.0"
   },
   "description": "Rezbuild Emperor Tamarin is a tool to explore a set of product by ordering a set of criteria",
   "main": "bin/www",
