@@ -45,7 +45,7 @@ class Criterion extends EventEmitter {
   }
 
   /**
-   * blur - take a evaluation and blur it according to the intensity
+   * blur - take an evaluation and blur it according to the intensity
    *
    * @param  {module:Models~Score} value the evaluation to blur
    * @return {Score}       the computed lower bound
@@ -99,6 +99,15 @@ class Criterion extends EventEmitter {
    */
   get blurIntensity() {
     return this._blur || 0 ;
+  }
+  
+  /**
+   * export - return the name, the weight and the blur intensity of a technology
+   *
+   * @return {number} the name, the weight and the blur intensity.
+   */
+  export() {
+	return { name: this.name, weight: this.weight, blurIntensity: this.blurIntensity }
   }
 
 }

@@ -71,8 +71,7 @@ class Technology {
 			// descending	  
 			if( criterion.sortingorder == 'descending' && this.bounds[ criterion.name ] < technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
 			}
-		
-	}	
+}	
 	}
     return this ;
 }

@@ -20,7 +20,7 @@ const express = require( "express" ) ;
  */
 function loadFiles( directory ) {
   const root = express.Router() ;
-  const baseDirectory = process.env.PWD || path.resolve( __dirname, ".." ) ;
+  const baseDirectory = process.cwd() || path.resolve( __dirname, ".." ) ;
   let routeDirectory = ( directory === undefined ) ? "routes" : directory ;
   routeDirectory = path.isAbsolute( routeDirectory ) ? routeDirectory : path.resolve( baseDirectory, routeDirectory ) ;
   const dirs = fs.readdirSync( routeDirectory ) ;
