@@ -17,7 +17,6 @@
 * @alias module:Models~Technology
 */
 class Technology {
-
   /**
    * constructor - construct a new Technology object from a serialization (json or the db)
    *
@@ -27,15 +26,15 @@ class Technology {
    * @param  {string} [serialization.description]                      - description of the technology
    * @param  {Object.<string, module:Models~Score>} serialization.evaluations - key are part {@link module:Models~Criterion} evaluations
    */
-  constructor ( { technology, name, description, evaluations } ) {
-    this.name = technology || name ;
+  constructor({ technology, name, description, evaluations }) {
+    this.name = technology || name;
     // TODO: Change so that description is taken into account
-    this.description = description || technology ;
-    this.evaluations = evaluations || {} ;
-    this.bounds = {} ;
-    this.dominance = {} ;
-	this.sortingorder = {} ;
-    this.score = 0 ;
+    this.description = description || technology;
+    this.evaluations = evaluations || {};
+    this.bounds = {};
+    this.dominance = {};
+    this.sortingorder = {};
+    this.score = 0;
   }
 
   /**
@@ -44,15 +43,15 @@ class Technology {
    * @param  {module:Models~Criterion[]} criteria
    * @return {module:Models~Technology}        return this
    */
-  updateBounds( criteria ) {
-    for( const criterion of criteria ) {
-      this.bounds[ criterion.name ] = criterion.blur( this.evaluations[ criterion.name ] ) ;
-      this.dominance[ criterion.name ] = 0 ;
-	  
+  updateBounds(criteria) {
+    for (const criterion of criteria) {
+      this.bounds[criterion.name] = criterion.blur(
+        this.evaluations[criterion.name]
+      );
+      this.dominance[criterion.name] = 0;
     }
-    return this ;
+    return this;
   }
-
 
   /**
    * updateDominance - compute how many other technology are dominated (i.e this lower bound is greater than their evaluation)
@@ -61,22 +60,28 @@ class Technology {
    * @param  {module:Models~Technology[]} technologies all technologies to compare to
    * @return {module:Models~Technology}              this
    */
-  updateDominance( criteria, technologies ) {
-    for( const criterion of criteria ) {
-    this.dominance[ criterion.name ] = 0 ;
-    for( const technology of technologies ) {
-		if( technology !== this ) {			
-          // this dominate technology / ascending  
-			if( criterion.sortingorder == 'ascending' && this.bounds[ criterion.name ] > technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
-			// descending	  
-			if( criterion.sortingorder == 'descending' && this.bounds[ criterion.name ] < technology.evaluations[ criterion.name ] ) this.dominance[ criterion.name ]++ ;
-			}
-}	
-	}
-    return this ;
-}
-
-
+  updateDominance(criteria, technologies) {
+    for (const criterion of criteria) {
+      this.dominance[criterion.name] = 0;
+      for (const technology of technologies) {
+        if (technology !== this) {
+          // this dominate technology / ascending
+          if (
+            criterion.sortingorder == "ascending" &&
+            this.bounds[criterion.name] > technology.evaluations[criterion.name]
+          )
+            this.dominance[criterion.name]++;
+          // descending
+          if (
+            criterion.sortingorder == "descending" &&
+            this.bounds[criterion.name] < technology.evaluations[criterion.name]
+          )
+            this.dominance[criterion.name]++;
+        }
+      }
+    }
+    return this;
+  }
 
   /**
    * updateScore - weight sum of the dominance
@@ -85,16 +90,18 @@ class Technology {
    * @return {module:Models~Technology}          this
    * @todo should normalize dominance to rank
    */
-  updateScore( criteria ) {
-    this.score = 0 ;
-    let normalization = 0 ;
-    for( const criterion of criteria ) {
-      this.score += criterion.weight * this.dominance[ criterion.name ] / criterion.maxDominance ;
-      normalization += criterion.weight ;
+  updateScore(criteria) {
+    this.score = 0;
+    let normalization = 0;
+    for (const criterion of criteria) {
+      this.score +=
+        (criterion.weight * this.dominance[criterion.name]) /
+        criterion.maxDominance;
+      normalization += criterion.weight;
     }
-    this.score /= normalization ;
-    return this ;
+    this.score /= normalization;
+    return this;
   }
 }
 
-export { Technology } ;
+export { Technology };

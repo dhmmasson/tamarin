@@ -1,7 +1,7 @@
 @import "../../node_modules/materialize-css/sass/components/color-variables";
 @import "../../node_modules/materialize-css/sass/components/color-classes";
 
-$primary-color: #A50 !default;
+$primary-color: #a50 !default;
 $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: darken($primary-color, 15%) !default;
 

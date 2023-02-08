@@ -3,8 +3,7 @@
  * @author dhmmasson
  */
 
-
-import debug from "debug" ;
+import debug from "debug";
 
 /**
  * listening Callback
@@ -13,19 +12,18 @@ import debug from "debug" ;
  */
 
 /**
-  * listeningHandler - return an Event listener for HTTP server "listening" event.
-  * @param  {@external:Express.Server} server an express server associated with the listening
-  * @return {module:ExpressUtility.onListening} an onlistening calback that print the port number or pipe name
-  * @memberof! module:HttpUtils
-  */
-function listeningHandler( server ) {
+ * listeningHandler - return an Event listener for HTTP server "listening" event.
+ * @param  {@external:Express.Server} server an express server associated with the listening
+ * @return {module:ExpressUtility.onListening} an onlistening calback that print the port number or pipe name
+ * @memberof! module:HttpUtils
+ */
+function listeningHandler(server) {
   return function onListening() {
-    const addr = server.address() ;
-    const bind = typeof addr === "string"
-      ? "pipe " + addr
-      : "port " + addr.port ;
-    debug( "Listening on " + bind ) ;
-  } ;
+    const addr = server.address();
+    const bind =
+      typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+    debug("Listening on " + bind);
+  };
 }
 
-export { listeningHandler } ;
+export { listeningHandler };

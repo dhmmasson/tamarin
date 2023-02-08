@@ -1,19 +1,19 @@
 @import "./_tamarinColors.scss";
 .actionsButton {
   bottom: auto;
-  margin-top:15px;
+  margin-top: 15px;
 }
 #githubLogo {
   vertical-align: middle;
   path {
-  fill: $primary-color;
+    fill: $primary-color;
   }
 }
 #rezbuildLogo {
   height: 24px;
   line-height: 24px;
   margin-top: 12px;
-  color:white;
+  color: white;
   border-radius: 50%;
 }
 .appTitle {

@@ -4,15 +4,14 @@
  */
 
 class EventEmitter {
-
   /**
    * Constructor - Create an new event firer
    *
    * @param  {string[]} [eventType] list of possible events, serve no purpose for now
    */
-  constructor( eventType ) {
-    this.eventType = eventType ;
-    this.handlers = [] ;
+  constructor(eventType) {
+    this.eventType = eventType;
+    this.handlers = [];
   }
 
   /**
@@ -20,25 +19,24 @@ class EventEmitter {
    *
    * @param  {EventEmitter.eventType} eventName name of the event to fire
    */
-  fire( eventName ) {
-    if( Object.hasOwnProperty.call( this.handlers, eventName ) ) {
-      if( typeof this.handlers[ eventName ] === "function" ) {
-        this.handlers[ eventName ]( eventName, this ) ;
-        return this ;
-      } else if ( this.handlers[ eventName ] instanceof Array ) {
-        let fired = false ;
-        for( const handler of this.handlers[ eventName ] ) {
-
-          if( typeof handler === "function" ) {
-            fired = true ;
-            handler( eventName, this ) ;
+  fire(eventName) {
+    if (Object.hasOwnProperty.call(this.handlers, eventName)) {
+      if (typeof this.handlers[eventName] === "function") {
+        this.handlers[eventName](eventName, this);
+        return this;
+      } else if (this.handlers[eventName] instanceof Array) {
+        let fired = false;
+        for (const handler of this.handlers[eventName]) {
+          if (typeof handler === "function") {
+            fired = true;
+            handler(eventName, this);
           }
         }
-        if( fired ) return this ;
+        if (fired) return this;
       }
     }
 
-    return this ;
+    return this;
   }
 
   /**
@@ -49,14 +47,17 @@ class EventEmitter {
    * @param  {object}  [_this] object to bind the callback
    * TODO check for duplicate
    */
-  on( eventName, callback, _this ) {
-    if( typeof callback !== "function" ) return ;
-    if( typeof this.handlers[ eventName ] === "function" ) {
-      this.handlers[ eventName ] = [ this.handlers[ eventName ], callback.bind( _this ) ] ;
-    } else if ( this.handlers[ eventName ] instanceof Array ) {
-      this.handlers[ eventName ].push( callback.bind( _this ) ) ;
+  on(eventName, callback, _this) {
+    if (typeof callback !== "function") return;
+    if (typeof this.handlers[eventName] === "function") {
+      this.handlers[eventName] = [
+        this.handlers[eventName],
+        callback.bind(_this),
+      ];
+    } else if (this.handlers[eventName] instanceof Array) {
+      this.handlers[eventName].push(callback.bind(_this));
     } else {
-      this.handlers[ eventName ] = callback.bind( _this ) ;
+      this.handlers[eventName] = callback.bind(_this);
     }
   }
 }
@@ -66,6 +67,6 @@ class EventEmitter {
  * @enum {string}
  * @readonly
  */
-EventEmitter.eventType = {} ;
+EventEmitter.eventType = {};
 
-export { EventEmitter } ;
+export { EventEmitter };

@@ -1,4 +1,4 @@
-const createError = require( "http-errors" ) ;
+const createError = require("http-errors");
 
 /**
  * errorHandler - The actual handler
@@ -8,14 +8,14 @@ const createError = require( "http-errors" ) ;
  * @param  {Express~Request} req  the HTTP request
  * @param  {Express~Response} res  the HTTP response
  */
-function errorHandler( err, req, res ) {
-  console.log( "errorHandler", err ) ;
+function errorHandler(err, req, res) {
+  console.log("errorHandler", err);
   // set locals, only providing error in development
-  res.locals.message = err.message ;
-  res.locals.error = req.app.get( "env" ) === "development" ? err : {} ;
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
   // render the error page
-  res.status( err.status || 500 ) ;
-  res.render( "error" ) ;
+  res.status(err.status || 500);
+  res.render("error");
 }
 
 /**
@@ -25,9 +25,9 @@ function errorHandler( err, req, res ) {
  * @param  {Express~Response} res  the HTTP response
  * @param  {Express~callback} next the next handler to call
  */
-function handle404 ( req, res ) {
-  console.log( "Handle404" ) ;
-  errorHandler( createError( 404 ), req, res ) ;
+function handle404(req, res) {
+  console.log("Handle404");
+  errorHandler(createError(404), req, res);
 }
 
-module.exports = handle404 ;
+module.exports = handle404;

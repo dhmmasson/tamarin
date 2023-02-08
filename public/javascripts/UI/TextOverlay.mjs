@@ -1,5 +1,3 @@
-
-
 /**
  * @property {Svg.js~Container} svg
  * @property {string} color  color of the background of the label
@@ -8,7 +6,6 @@
  * @todo: add foreground and background color
  */
 export default class TextOverlay {
-
   /**
    * constructor - Create a new text overlay
    *
@@ -18,51 +15,61 @@ export default class TextOverlay {
    * @return {type}           description
    */
 
-  constructor( container, backgroundColor ) {
-    this.svg = container ;
-    this.color = backgroundColor ;
-    this.fontSize = 11 ;
-    this.border = 2 ;
+  constructor(container, backgroundColor) {
+    this.svg = container;
+    this.color = backgroundColor;
+    this.fontSize = 11;
+    this.border = 2;
     // Save coordinate for resizing purposes
-    this._x = 0 ;
-    this._y = 0 ;
-    this._hidden = false ;
-    this.group = this.svg.group() ;
-    this.group.front().mouseover( () => this.group.front() ) ;
+    this._x = 0;
+    this._y = 0;
+    this._hidden = false;
+    this.group = this.svg.group();
+    this.group.front().mouseover(() => this.group.front());
     this.textElement = this.group
-      .text( "a" )
-      .addClass( "overlay" )
-      .font( { anchor : "middle"
-      , size   : this.fontSize } ) ;
+      .text("a")
+      .addClass("overlay")
+      .font({ anchor: "middle", size: this.fontSize });
 
     this.rect = this.group
-      .rect( this.textElement.length() + this.border * 2, this.fontSize + this.border * 2 )
-      .radius( 3 )
-      .fill( this.color )
-      .stroke( this.color )
-      .back() ;
+      .rect(
+        this.textElement.length() + this.border * 2,
+        this.fontSize + this.border * 2
+      )
+      .radius(3)
+      .fill(this.color)
+      .stroke(this.color)
+      .back();
 
-    this.recenter() ;
+    this.recenter();
   }
 
-  set hidden( value ) {
-    this._hidden = value ;
-    if( value ) this.group.hide() ;
-    else this.group.show() ;
+  set hidden(value) {
+    this._hidden = value;
+    if (value) this.group.hide();
+    else this.group.show();
   }
 
-  addClass( className ) {
-    this.group.addClass( className ) ;
-    return this ;
+  addClass(className) {
+    this.group.addClass(className);
+    return this;
   }
 
-  hide( ) { this.hidden = true ; return this ; }
+  hide() {
+    this.hidden = true;
+    return this;
+  }
 
-  show( ) { this.hidden = false ; return this ; }
+  show() {
+    this.hidden = false;
+    return this;
+  }
 
-  mousedown( callback ) {
-    this.group.mousedown( event => { callback( event ) ; } ) ;
-    return this ;
+  mousedown(callback) {
+    this.group.mousedown((event) => {
+      callback(event);
+    });
+    return this;
   }
 
   /**
@@ -72,30 +79,30 @@ export default class TextOverlay {
    * @param  {number} y new center coordinate
    * @return {TextOverlay}      itself
    */
-  move( x, y ) {
+  move(x, y) {
     // Save them for resize/recenter
-    this._x = x ;
-    this._y = y ;
-    this.textElement.center( x, y ) ;
-    this.rect.center( x, y ) ;
+    this._x = x;
+    this._y = y;
+    this.textElement.center(x, y);
+    this.rect.center(x, y);
     // Push back to top
-    this.top() ;
-    return this ;
+    this.top();
+    return this;
   }
-
 
   /**
    * recenter - resize rectangle and recenter text
    *
    * @return {TextOverlay}      itself
    */
-  recenter( ) {
-    this.rect
-      .size( this.textElement.length() + this.border * 2
-        , this.fontSize + this.border * 2 ) ;
-    this.textElement.center( this._x, this._y ) ;
-    this.rect.center( this._x, this._y ) ;
-    return this ;
+  recenter() {
+    this.rect.size(
+      this.textElement.length() + this.border * 2,
+      this.fontSize + this.border * 2
+    );
+    this.textElement.center(this._x, this._y);
+    this.rect.center(this._x, this._y);
+    return this;
   }
 
   /**
@@ -104,22 +111,21 @@ export default class TextOverlay {
    * @param  {string} text text to display
    * @return {TextOverlay}      itself
    */
-  text( text ) {
-    this.textElement.text( `${ text }` ) ;
-    this.recenter() ;
-    return this ;
+  text(text) {
+    this.textElement.text(`${text}`);
+    this.recenter();
+    return this;
   }
-
 
   /**
    * top - push the element to the Top so that it overlay the line
    *
    * @return {TextOverlay}      itself
    */
-  top( ) {
-    this.rect.front() ;
-    this.textElement.front() ;
-    this.group.front() ;
-    return this ;
+  top() {
+    this.rect.front();
+    this.textElement.front();
+    this.group.front();
+    return this;
   }
 }
