@@ -5,14 +5,14 @@ import {
   updateTemplate,
 } from "./src/expressUtils/index.mjs";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
+import { SetUpEnvironment } from "./src/secrets.mjs";
 import errorHandler from "./routes/_error.js";
 import express from "express";
 import logger from "morgan";
 import path from "path";
 //import sassMiddleware from "node-sass-middleware" ;
 
-dotenv.config();
+await SetUpEnvironment();
 const app = express();
 if (app.get("env")) app.use(logger("dev"));
 

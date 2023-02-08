@@ -6,6 +6,7 @@
     "start": "node ./bin/www.mjs"
   },
   "dependencies": {
+    "@google-cloud/secret-manager": "^4.2.0",
     "@svgdotjs/svg.draggable.js": "^3.0.2",
     "@svgdotjs/svg.js": "^3.0.16",
     "cookie-parser": "^1.4.5",
