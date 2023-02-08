@@ -95,6 +95,7 @@ class ParallelCoordinatesPlotPanel {
     });
     this.stage.move(0, 0);
     this._setupCriteria(criteria);
+    this.technologyLabels = this.svg.group();
   }
 
   /**
@@ -247,10 +248,10 @@ class ParallelCoordinatesPlotPanel {
    * @memberof ParallelCoordinatesPlotPanel
    * */
   _drawTechnologyLabels(technology, criteria) {
-    this.axisLabels.clear();
+    this.technologyLabels.clear();
     const activeCriteria = criteria.filter((c) => c._weight > 0);
     activeCriteria.forEach((criterion, index) => {
-      const label = this.axisLabels.text(
+      const label = this.technologyLabels.text(
         `${criterion.name}: ${technology.dominance[criterion.name]}`
       );
       label.attr({
