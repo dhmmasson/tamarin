@@ -37,6 +37,7 @@ class Technology {
     this.rank = {};
     this.sortingorder = {};
     this.score = 0;
+    this.selected = false;
   }
 
   /**

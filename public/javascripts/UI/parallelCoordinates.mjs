@@ -193,7 +193,8 @@ class ParallelCoordinatesPlotPanel {
     this._colorTechnology(line, technology, index, length);
     line.on("click", () => {
       this._drawTechnologyLabels(technology, criteria);
-      technology._selected = !technology._selected;
+      technology.selected = !technology.selected;
+      criteria[0].update();
       this._colorTechnology(line, technology, index);
     });
   }
@@ -202,10 +203,10 @@ class ParallelCoordinatesPlotPanel {
     //Color the line
     line.attr({
       fill: "none",
-      stroke: technology._selected
+      stroke: technology.selected
         ? "rgb(0,255,0)"
         : mapIndexToColor(index, length),
-      "stroke-width": technology._selected ? 5 : 2,
+      "stroke-width": technology.selected ? 5 : 2,
     });
   }
 

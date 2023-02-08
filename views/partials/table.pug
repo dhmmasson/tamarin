@@ -31,7 +31,9 @@ table.responsive-table.striped.compactTable
                           
   tbody
     each technology in technologies
-      tr
+      - const style=`background-color:${technology.selected ? 'lightgreen' : 'white'}`
+      tr( class="technology" , data-technology=technology.name,  style=style)
+
         td= technology.description
         td.orange-text  
           each starIcon in star( technology.score  )
@@ -39,6 +41,6 @@ table.responsive-table.striped.compactTable
         each criterion in criteria
           if criterion.weight > 0 
             - let style=`color:${criterion.color}`
-            td( style=style)
+            td( style=style, title=technology.evaluations[ criterion.name ] )
               each starIcon in star( technology.dominance[ criterion.name ] / criterion.maxDominance )
                 i.material-icons= starIcon

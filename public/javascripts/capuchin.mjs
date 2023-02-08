@@ -166,6 +166,40 @@ function updateTable(longueur) {
         criteria: sorter.criteria.all,
       })
     );
+  makeTableInteractive();
+}
+
+function makeTableInteractive() {
+  $("#result tbody").on("click", "tr.technology", function (e) {
+    const element = $(e.target).parents("tr.technology")[0];
+    console.log(element.dataset.technology);
+    if (element.dataset.technology) {
+      const technologie = sorter.technologies.map[element.dataset.technology];
+      technologie.selected = !technologie.selected;
+      updateTable();
+      loadParallelCoordinatesPlotPanel();
+    }
+  });
+
+  let extension = null;
+  $("#result tbody").on("mouseover", "tr.technology", function (e) {
+    if (e.buttons === 1) {
+      const element = $(e.target).parents("tr.technology")[0];
+      console.log(element.dataset.technology);
+      if (element.dataset.technology) {
+        const technologie = sorter.technologies.map[element.dataset.technology];
+        technologie.selected = !technologie.selected;
+        element.style.backgroundColor = technologie.selected
+          ? "yellow"
+          : "white";
+        loadParallelCoordinatesPlotPanel();
+        clearTimeout(extension);
+        extension = setTimeout(() => {
+          updateUI();
+        }, 100);
+      }
+    }
+  });
 }
 
 /**
