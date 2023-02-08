@@ -76,9 +76,6 @@ function initSorter() {
     attachEventListener();
 
     onlyOnce = false;
-    $("#controlPanel").on("mouseup", () => {
-      setTimeout(updateTable, 100);
-    });
   }
 }
 
@@ -138,16 +135,20 @@ function attachEventListener() {
       logs.updateData(c, t)
     );
   }
-
+  let extension = null;
   sorter.on(Sorter.eventType.sorted, (sorted) => {
-    updateUI();
+    clearTimeout(extension);
+    extension = setTimeout(() => {
+      updateUI();
+    }, 100);
+    updateUI(10);
     saveToLocalStorage();
     downloader.updateCSV(sorter.technologies);
   });
 }
 
-function updateUI() {
-  updateTable(10);
+function updateUI(longueur) {
+  updateTable(longueur);
   loadParallelCoordinatesPlotPanel();
 }
 
