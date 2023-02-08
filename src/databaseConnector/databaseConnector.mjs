@@ -4,13 +4,13 @@
  * @memberof! module:ExpressUtils
  */
 
-import * as models from "../../public/javascripts/models/index.mjs" ;
-import { basename, dirname, join, resolve } from "path" ;
-import { fileURLToPath } from "url" ;
-import { promises as fs } from "fs" ;
-import mysql from "mysql2" ;
+import * as models from "../../public/javascripts/models/index.mjs";
+import { basename, dirname, join, resolve } from "path";
+import { fileURLToPath } from "url";
+import { promises as fs } from "fs";
+import mysql from "mysql2";
 
-const __dirname = dirname( fileURLToPath( import.meta.url ) ) ;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @typedef {string} Query - a string representing a mysql Query **/
 
@@ -32,28 +32,29 @@ class Connector {
    * @param  {Object} _configuration.sqlPath  Path to the sql folder containing the request.
    * @return {module:ExpressUtils.Connector}                description
    */
-  constructor( _configuration ) {
+  constructor(_configuration) {
     const defaultConfiguration =
-    { host     : process.env.mysqlHost
-    , user     : process.env.mysqlUser
-    , password : process.env.mysqlPassword
-    , database : process.env.mysqlDatabase
-    , sqlPath  : join( __dirname, "sql" )
-    } ;
-    const configuration = Object.assign( defaultConfiguration, _configuration ) ;
+    {
+      host: process.env.mysqlHost
+      , user: process.env.mysqlUser
+      , password: process.env.mysqlPassword
+      , database: process.env.mysqlDatabase
+      , sqlPath: join(__dirname, "sql")
+    };
+    const configuration = Object.assign(defaultConfiguration, _configuration);
 
     /** @property {Object.<string,Query> } sqlRoot - root folder for the sql files  */
-    this.sqlRoot = resolve( process.env.PWD, configuration.sqlPath ) ;
+    this.sqlRoot = resolve(process.env.PWD, configuration.sqlPath);
     // delete sqlPath as mysql is strict on what should be in it options object
-    delete configuration.sqlPath ;
+    delete configuration.sqlPath;
 
     /** @property {external:MySql2.pool} pool - internal pool to query the db */
-    this.pool = mysql.createPool( configuration ).promise() ;
+    this.pool = mysql.createPool(configuration).promise();
 
     /** @property {Object.<string,Query> } sql - queries map */
-    this.sql = {} ;
+    this.sql = {};
 
-    this.importSql().then( console.log ) ;
+    this.importSql().then().catch(console.warn);
   }
 
 
@@ -62,16 +63,16 @@ class Connector {
    *
    * @return {Promise.<empty>} An empty promise... resolved when the sql map is filled
    */
-  importSql( ) {
+  importSql() {
 
-    const storeQuery = filename => query => { this.sql[ basename( filename, ".sql" ) ] = query ; }
-        , getContent = filename => fs.readFile( resolve( this.sqlRoot, filename ), "utf8" )
-        , readSqlFile = filename => getContent( filename ).then( storeQuery( filename ) )
-        , readFiles = files => Promise.all( files.map( readSqlFile ) ) ;
+    const storeQuery = filename => query => { this.sql[basename(filename, ".sql")] = query; }
+      , getContent = filename => fs.readFile(resolve(this.sqlRoot, filename), "utf8")
+      , readSqlFile = filename => getContent(filename).then(storeQuery(filename))
+      , readFiles = files => Promise.all(files.map(readSqlFile));
 
-    return fs.readdir( this.sqlRoot )
-      .then( readFiles )
-      .catch( console.warn ) ;
+    return fs.readdir(this.sqlRoot)
+      .then(readFiles)
+      .catch(console.warn);
   }
 
   /**
@@ -81,8 +82,8 @@ class Connector {
   */
   getCriteria() {
     return this.pool
-      .query( this.sql.criteria_get_all )
-      .then( cleanCriterion ) ;
+      .query(this.sql.criteria_get_all)
+      .then(cleanCriterion);
   }
 
 
@@ -95,8 +96,8 @@ class Connector {
   getTechnologies() {
     // TODO: join with technology table to gather the description
     return this.pool
-      .query( this.sql.data_get_all )
-      .then( pivotEvaluation ) ;
+      .query(this.sql.data_get_all)
+      .then(pivotEvaluation);
   }
 }
 
@@ -107,26 +108,26 @@ class Connector {
   * @return {Promise<module:Models~Technology[]>} Promise a array of evaluated technologies
   * @memberof! module:ExpressUtils~Connector
   */
-function pivotEvaluation( [ evaluations ] ) {
+function pivotEvaluation([evaluations]) {
 
   /** @type Object.<String,Technology> */
-  const technologiesMap = {} ;
+  const technologiesMap = {};
 
   /** @type Technology[] */
-  const technologiesArray = [] ;
-  for( const evaluation of evaluations ) {
+  const technologiesArray = [];
+  for (const evaluation of evaluations) {
 
     /** @type Technology */
-    let technology = technologiesMap[ evaluation.technology ] ;
+    let technology = technologiesMap[evaluation.technology];
     // Create technology if not already in the array
-    if( technology === undefined ) {
-      technology = new models.Technology( evaluation ) ;
-      technologiesMap[ evaluation.technology ] = technology ;
-      technologiesArray.push( technology ) ;
+    if (technology === undefined) {
+      technology = new models.Technology(evaluation);
+      technologiesMap[evaluation.technology] = technology;
+      technologiesArray.push(technology);
     }
-    technology.evaluations[ evaluation.criteria ] = +evaluation.value ;
+    technology.evaluations[evaluation.criteria] = +evaluation.value;
   }
-  return Promise.resolve( technologiesArray ) ;
+  return Promise.resolve(technologiesArray);
 }
 
 
@@ -137,14 +138,14 @@ function pivotEvaluation( [ evaluations ] ) {
    * @return {Promise.<module:Models~Criterion[]>}          Cleaned Criterion
    * @memberof! module:ExpressUtils~Connector
    */
-function cleanCriterion( [ rows ] ) {
+function cleanCriterion([rows]) {
 
   /** @type Criterion[] */
-  const criterias = [] ;
-  for( const row of rows ) {
-    criterias.push( new models.Criterion( row ) ) ;
+  const criterias = [];
+  for (const row of rows) {
+    criterias.push(new models.Criterion(row));
   }
-  return Promise.resolve( criterias ) ;
+  return Promise.resolve(criterias);
 }
 
-export default function() { return new Connector() ; }
+export default function () { return new Connector(); }
