@@ -91,6 +91,7 @@ function loadState() {
       sorter.criteria.map[criterion.name].weight = criterion.weight;
       sorter.criteria.map[criterion.name].blurIntensity = criterion.blurIntensity;
     }
+    updateUI();
   }
 }
 
@@ -123,11 +124,15 @@ function attachEventListener() {
   }
 
   sorter.on(Sorter.eventType.sorted, (sorted) => {
-    updateTable(10);
-    loadParallelCoordinatesPlotPanel();
+    updateUI();
     saveToLocalStorage();
     downloader.updateCSV(sorter.technologies);
   });
+}
+
+function updateUI() {
+  updateTable(10);
+  loadParallelCoordinatesPlotPanel()
 }
 
 /**
@@ -210,4 +215,5 @@ function loadParallelCoordinatesPlotPanel(longueur) {
   longueur = longueur ? longueur : sorter.technologies.sorted.length;
   if (sorter.criteria.all.filter(e => e.weight > 0).length < 2) return;
   const activeCriteria = sorter.criteria.all.filter(e => e.weight > 0).sort((a, b) => a.weight - b.weight);
+  parallelCoordinatesPlotPanel.update(sorter.technologies.sorted.slice(0, longueur), activeCriteria);
 }
