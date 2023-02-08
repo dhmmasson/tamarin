@@ -1,0 +1,4 @@
+# Google app engine yaml for nodejs app
+runtime: nodejs18
+
+instance_class: F1
