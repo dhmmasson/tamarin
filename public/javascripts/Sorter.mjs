@@ -151,14 +151,41 @@ class Sorter extends EventEmitter {
           Math.max(acc, technologie.dominance[criterion.name]),
         0
       );
-      criterion.classCount = [
+      const classes = [
         ...new Set(
           this.technologies.all.map(
             (technologie) => technologie.dominance[criterion.name]
           )
         ),
-      ].length;
+      ].sort();
+
+      classes.forEach((dominance, rank) => {
+        const techs = this.technologies.all.filter(
+          (t) => t.dominance[criterion.name] === dominance
+        );
+        criterion.classes[dominance] = {
+          dominance: dominance,
+          rank: rank,
+          centroid:
+            techs.reduce((acc, t) => acc + t.evaluations[criterion.name], 0) /
+            techs.length,
+          centroidNormal:
+            techs.reduce((acc, t) => acc + t.evaluations[criterion.name], 0) /
+            techs.length /
+            criterion.max,
+          count: techs.length,
+        };
+      });
+
+      criterion.classCount = classes.length;
+      this.technologies.all.forEach(
+        (t) =>
+          (t.rank[criterion.name] = classes.indexOf(
+            t.dominance[criterion.name]
+          ))
+      );
     }
+
     return this;
   }
 

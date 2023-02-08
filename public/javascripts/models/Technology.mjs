@@ -10,6 +10,7 @@
 * @property {Object.<Criterion~name,Evaluation~value>} evaluations - actual evaluation of the technology for the criteria
 * @property {Object.<Criterion~name,Evaluation~value>} bounds - blurred value for the criteria
 * @property {Object.<Criterion~name,number>} dominance - How many technologies are dominated ( value  >  bounds )
+* @property {Object.<Criterion~name,number>} rank - rank of the technology for the criteria
 * @property {number} score - computed score : weighted sum.
 
 * @todo Change everything to have a it in a one read ( compare this techno to an reduced array of technologies )
@@ -33,6 +34,7 @@ class Technology {
     this.evaluations = evaluations || {};
     this.bounds = {};
     this.dominance = {};
+    this.rank = {};
     this.sortingorder = {};
     this.score = 0;
   }

@@ -9,6 +9,26 @@ import { EventEmitter } from "../EventEmitter.mjs";
 import { definePrivateProperties } from "../utils.mjs";
 
 /**
+ * A class represent a group of technologies with the same dominance
+ *
+ * @property {number} dominance - number of technologies that are dominated by technology in that class
+ * @property {number} rank - rank of the class
+ * @property {number} centroid - centroid of the class
+ * @property {number} centroidNormal - centroid of the class normalized to [0,1]
+ * @property {number} count - number of technologies in the class
+ *
+ */
+class Class {
+  constructor() {
+    (this.dominance = 0),
+      (this.rank = 0),
+      (this.centroid = 0),
+      (this.centroidNormal = 0),
+      (this.count = 0);
+  }
+}
+
+/**
  * @extends EventEmitter
  * @property {string} name - Unique name of the criteria, to use to reference the criteria
  * @property {string} description - Full name to be used to be displayed
@@ -16,7 +36,11 @@ import { definePrivateProperties } from "../utils.mjs";
  * @property {Score}  max - Maximum value for the criteria in the database
  * @property {number} weight - weight of the criteria for the score computation
  * @property {number} blurIntensity - [0-1] how much to extend the range [ evaluation - blurIntensity * ( max - min ), evaluation ]
- *@property {string} sortingorder - indicates whether the criterion is ascending or descending
+ * @property {string} sortingorder - indicates whether the criterion is ascending or descending
+ * @property {number} maxDominance - maximum number of technologies that are dominated by this criteria
+ * @property {Class[]} classes - centroids of the classes map from rank to class NEED to be improved
+ *
+ *
  * @memberof! Models
  * @alias module:Models~Criterion
  */
@@ -38,8 +62,25 @@ class Criterion extends EventEmitter {
     this.min = +min || 0;
     this.max = +max || 5;
     this.maxDominance = 0;
+    this.classes = [];
+    this.classCount = 0;
     this.sortingorder = sortingorder;
     definePrivateProperties(this, "_weight", "_blur");
+  }
+
+  /**
+   * update - fire the event event:Criterion.eventType.updated
+   * @return {void}
+   * @memberof! module:Models~Criterion
+   * @instance
+   * @method
+   * @public
+   *
+   * @fires module:Models~Criterion.eventType.updated
+   * */
+
+  update() {
+    this.fire(Criterion.eventType.updated);
   }
 
   /**

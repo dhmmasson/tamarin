@@ -219,16 +219,23 @@ class ParallelCoordinatesPlotPanel {
    * @private
    * @memberof ParallelCoordinatesPlotPanel
    * */
-  _getTechnologyPosition(technology, criterion, index, length) {
+  _getTechnologyPosition(
+    technology,
+    criterion,
+    index,
+    length,
+    mode = "centroid"
+  ) {
     const r = (centeredUnitRandom(index) * criterion.blurIntensity) / 8;
-    return (
-      this.dimensions.height *
-      clamp(
-        technology.dominance[criterion.name] / criterion.maxDominance + r,
-        0,
-        1
-      )
-    );
+    const position = {
+      rank: technology.rank[criterion.name] / (criterion.classCount - 1),
+      dominance:
+        technology.dominance[criterion.name] / (criterion.maxDominance - 1),
+      centroid:
+        criterion.classes[technology.dominance[criterion.name]].centroidNormal,
+    };
+
+    return this.dimensions.height * clamp(1 - position[mode] + r, 0, 1);
   }
 
   /**
