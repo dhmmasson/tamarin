@@ -1,5 +1,6 @@
 import { Technology } from "../models/Technology.mjs";
 import * as SVGmodule from "../svg.esm.js";
+import { centeredUnitRandom, clamp } from "../utils.mjs";
 
 window.SVG = SVGmodule;
 
@@ -8,7 +9,7 @@ class ParallelCoordinatesPlotPanel {
         this.dimensions = (
             {
                 width: "100%"
-                , height: "150px"
+                , height: "300px"
             });
 
         this._initSvg(root, this.dimensions)
@@ -184,21 +185,27 @@ class ParallelCoordinatesPlotPanel {
      * */
     _drawTechnology(technology, criteria, index, length) {
         const activeCriteria = criteria.filter(c => c._weight > 0)
-        const points = activeCriteria.map((criterion, index) => {
+        const points = activeCriteria.map((criterion, indexCriteria) => {
             return [
-                this._getAxisPosition(index, activeCriteria.length),
+                this._getAxisPosition(indexCriteria, activeCriteria.length),
                 this._getTechnologyPosition(technology, criterion, index, activeCriteria.length)
             ];
         });
         const line = this.stage.polyline(points);
+        this._colorTechnology(line, technology, index, length);
+        line.on('click', () => {
+            this._drawTechnologyLabels(technology, criteria);
+            technology._selected = !technology._selected;
+            this._colorTechnology(line, technology, index);
+        });
+    }
+
+    _colorTechnology(line, technology, index, length) {
         //Color the line
         line.attr({
             fill: 'none',
-            stroke: mapIndexToColor(index, length),
-            'stroke-width': 2
-        });
-        line.on('click', () => {
-            this._drawTechnologyLabels(technology, criteria);
+            stroke: technology._selected ? "rgb(0,255,0)" : mapIndexToColor(index, length),
+            'stroke-width': technology._selected ? 5 : 2
         });
     }
 
@@ -213,7 +220,9 @@ class ParallelCoordinatesPlotPanel {
      * @memberof ParallelCoordinatesPlotPanel
      * */
     _getTechnologyPosition(technology, criterion, index, length) {
-        return this.dimensions.height * technology.dominance[criterion.name] / criterion.maxDominance;
+
+        const r = centeredUnitRandom(index) * criterion.blurIntensity / 8;
+        return this.dimensions.height * clamp((technology.dominance[criterion.name] / criterion.maxDominance + r), 0, 1);
     }
 
     /**
@@ -244,6 +253,7 @@ function mapIndexToColor(index, length) {
     const b = Math.floor(255 * (length - index) / length);
     return `rgba(${r}, 0, ${b}, 0.5)`;
 }
+
 
 
 export { ParallelCoordinatesPlotPanel };
