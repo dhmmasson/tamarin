@@ -2,6 +2,8 @@
 
 Follow up to the famous Rezbuild-baboon project with an all new UI.
 
+![Demonstration of the parallel plot](/docs/parallelPlotCoordinate.gif)
+
 ## install
 
 1. Clone the project from : https://github.com/dhmmasson/rezbuild-emperor-tamarin.git
