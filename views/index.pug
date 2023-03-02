@@ -13,7 +13,19 @@ block content
         li 
           a.btn-floating.red.sidenav-trigger(href="#" data-target="slide-out" )
             i.material-icons menu
-        
+        //- file input 
+        li 
+          form(action="#")
+            div.file-field.input-field
+              div.btn-floating.green
+                i.material-icons upload
+                input#csv(type="file")
+              div.file-path-wrapper
+                input.file-path.validate(type="text").hide
+        li
+          a#loadDB.btn-floating.blue
+            i.material-icons cloud_download
+
 
     .row.z-depth-1
       #controlPanel.col.s12

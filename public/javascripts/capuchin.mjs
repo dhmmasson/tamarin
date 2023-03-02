@@ -5,6 +5,7 @@
 
 import { Sorter } from "./Sorter.mjs";
 import { Criterion } from "./models/Criterion.mjs";
+import { Technology } from "./models/Technology.mjs";
 import { UI } from "./UI/twoDimensionControlPanel.mjs";
 import { ParallelCoordinatesPlotPanel } from "./UI/parallelCoordinates.mjs";
 import { template } from "./template.mjs";
@@ -15,8 +16,26 @@ window.SVG = SVGmodule;
 const sorter = new Sorter([], []);
 let ui = null;
 let parallelCoordinatesPlotPanel;
+let logs = null;
+$(load());
+$("#csv").on("change", function (e) {
+  loadFromCSV(e.target.files[0]);
+});
+$("#loadDB").on("click", loadDataFromDb);
 
-$(loadData());
+function load() {
+  if (localStorage.getItem("criteria") === null) {
+    loadDataFromDb();
+  } else {
+    loadDataLocally();
+  }
+}
+
+function cleanUI() {
+  $("#controlPanel").empty();
+  $("#ParallelCoordinatesPlotPanel").empty();
+  $("#logs").empty();
+}
 
 /**
  * loadData - load criteria and technologies
@@ -24,26 +43,87 @@ $(loadData());
  * @param  {function} call function getCriteria
  * @param  {function} call function getTechnologies
  */
-
-function loadData() {
-  getCriteria();
-  getTechnologies();
+async function loadDataFromDb() {
+  cleanUI();
+  // Wait for both promises to resolve
+  const [criteria, technologies] = await Promise.all([
+    getCriteria(),
+    getTechnologies(),
+  ]);
+  initSorter(criteria, technologies);
 }
 
+/**
+ * Save the data locally to avoid reloading from the database or from the csv file
+ */
+function saveDataLocally() {
+  localStorage.setItem("criteria", JSON.stringify(sorter.criteria.all));
+  localStorage.setItem("technologies", JSON.stringify(sorter.technologies.all));
+}
+
+/**
+ * Load the data locally
+ * */
+
+function loadDataLocally() {
+  const criteria = JSON.parse(localStorage.getItem("criteria"));
+  const technologies = JSON.parse(localStorage.getItem("technologies"));
+  initSorter(criteria, technologies);
+}
+
+/**
+ * Load the data from a CSV file
+ * @param {File} csvFile
+ * */
+
+function loadFromCSV(csvFile) {
+  Papa.parse(csvFile, {
+    download: true,
+    header: true,
+    worker: true,
+    skipEmptyLines: true,
+    dynamicTyping: true,
+    complete: function (results) {
+      const criteria = results.meta.fields.map((name) => ({
+        name: name,
+        description: name,
+        min: results.data.reduce(
+          (min, p) => (p[name] < min ? p[name] : min),
+          results.data[0][name]
+        ),
+        max: results.data.reduce(
+          (max, p) => (p[name] > max ? p[name] : max),
+          results.data[0][name]
+        ),
+        sortingorder: "ascending",
+      }));
+      const technologies = results.data.map((technology, i) => {
+        if (technology === undefined) return;
+        const t = {
+          technology: i,
+          name: technology.name || i,
+          description:
+            technology.description ||
+            `${Math.ceil(100 * technology.TS)}_${Math.ceil(
+              100 * technology.WFS
+            )}`,
+          evaluations: technology,
+        };
+        return t;
+      });
+      initSorter(criteria, technologies);
+    },
+  });
+}
 /**
  * getCriteria - get criteria from db to sorter
  *
  * @param
  */
-function getCriteria() {
-  $.get("/api/criteria", function (data) {
-    sorter.criteria = data.criteria;
-    ui = new UI($("#controlPanel")[0], sorter.criteria.all, () => initSorter());
-    parallelCoordinatesPlotPanel = new ParallelCoordinatesPlotPanel(
-      $("#ParallelCoordinatesPlotPanel")[0],
-      sorter.criteria.all
-    );
-  });
+async function getCriteria() {
+  const response = await fetch("/api/criteria");
+  const data = await response.json();
+  return data.criteria;
 }
 
 /**
@@ -51,32 +131,30 @@ function getCriteria() {
  *
  * @param
  */
-function getTechnologies() {
-  $.get("/api/technologies", function (data) {
-    sorter.technologies = data.technologies;
-    initSorter();
-  });
+async function getTechnologies() {
+  // fetch asynchrone
+  const response = await fetch("/api/technologies");
+  const data = await response.json();
+  return data.technologies;
 }
 
 /**
- * initSorter - initialize the the window for the first time
- *
- * @param {boolean} activate only once the function initSorter
+ * initSorter - initialize the the window
  */
-let onlyOnce = true;
-let logs = null;
-function initSorter() {
-  if (
-    sorter.criteria.all.length > 0 &&
-    sorter.technologies.all.length > 0 &&
-    onlyOnce
-  ) {
-    logs = new Logs();
+
+function initSorter(criteria, technologies) {
+  cleanUI();
+  sorter.criteria = criteria;
+  sorter.technologies = technologies;
+  saveDataLocally();
+  logs = new Logs();
+  ui = new UI($("#controlPanel")[0], sorter.criteria.all, () => {
     loadState();
     attachEventListener();
-
-    onlyOnce = false;
-  }
+  });
+  parallelCoordinatesPlotPanel = new ParallelCoordinatesPlotPanel(
+    $("#ParallelCoordinatesPlotPanel")[0]
+  );
 }
 
 /**
@@ -85,19 +163,19 @@ function initSorter() {
  * @param
  */
 function loadState() {
+  console.log("loadState");
   if (localStorage.getItem("sorterCriteria") === null) {
     sorter.criteria.all[0].weight = 1;
   } else {
     let criteria = JSON.parse(localStorage.getItem("sorterCriteria"));
-
     for (var i = 0; i < criteria.length; i++) {
       let criterion = criteria[i];
-      console.log(criterion);
+      if (!sorter.criteria.map[criterion.name]) continue;
       sorter.criteria.map[criterion.name].weight = criterion.weight;
       sorter.criteria.map[criterion.name].blurIntensity =
         criterion.blurIntensity;
     }
-    updateUI();
+    //updateUI();
   }
 }
 
@@ -109,12 +187,27 @@ function loadState() {
  * @param {function} add this date to localStorage
  */
 function saveToLocalStorage() {
-  localStorage.setItem(
-    "sorterCriteria",
-    JSON.stringify(
-      sorter.criteria.all.filter((e) => e.weight > 0).map((e) => e.export())
-    )
+  const exportedCriteria = sorter.criteria.all.map((e) => e.export());
+  const savedCriteria = JSON.parse(localStorage.getItem("sorterCriteria"));
+  // Remove saved criteria if their weight in exported criteria is 0
+  const filteredSavedCriteria = savedCriteria.filter(
+    (c) => !(exportedCriteria.find((e) => e.name === c.name)?.weight < 0)
   );
+  // Update saved criteria if their weight in exported criteria is > 0
+  const updatedSavedCriteria = filteredSavedCriteria.map((c) => {
+    const e = exportedCriteria.find((e) => e.name === c.name);
+    if (e?.weight > 0) {
+      c.weight = e.weight;
+      c.blurIntensity = e.blurIntensity;
+    }
+    return c;
+  });
+  // Add new criteria to updated saved criteria
+  const newCriteria = exportedCriteria.filter(
+    (e) => !updatedSavedCriteria.find((c) => c.name === e.name)
+  );
+  const allCriteria = [...updatedSavedCriteria, ...newCriteria];
+  localStorage.setItem("sorterCriteria", JSON.stringify(allCriteria));
 }
 
 /**
@@ -159,15 +252,20 @@ function updateUI(longueur) {
  */
 function updateTable(longueur) {
   longueur = longueur ? longueur : sorter.technologies.sorted.length;
-  $("#result")
-    .empty()
-    .append(
-      template.table({
-        technologies: sorter.technologies.sorted.slice(0, longueur),
-        criteria: sorter.criteria.all,
-      })
-    );
-  makeTableInteractive();
+  try {
+    $("#result")
+      .empty()
+      .append(
+        template.table({
+          technologies: sorter.technologies.sorted.slice(0, longueur),
+          criteria: sorter.criteria.all,
+        })
+      );
+
+    makeTableInteractive();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function makeTableInteractive() {
