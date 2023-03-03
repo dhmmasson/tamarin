@@ -154,10 +154,10 @@ class Sorter extends EventEmitter {
       const classes = [
         ...new Set(
           this.technologies.all.map(
-            (technologie) => technologie.dominance[criterion.name]
+            (technologie) => +technologie.dominance[criterion.name]
           )
         ),
-      ].sort();
+      ].sort((a, b) => a - b);
 
       classes.forEach((dominance, rank) => {
         const techs = this.technologies.all.filter(
