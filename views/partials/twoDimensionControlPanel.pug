@@ -1,6 +1,6 @@
 svg
-  each criterion,index  in criteria 
-    g.draggable( id=criterion.name)
-      ellipse( cx=15, cy=index*15+10)
-      text( x=20, y=index*15+10)
-        tspan #{criterion.description}
+  each criterion, index in criteria 
+    g.draggable(id=criterion.name)
+      ellipse(cx=15, cy=index * 15 + 10)
+      text(x=20, y=index * 15 + 10)
+        tspan #{ criterion.description }

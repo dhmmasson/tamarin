@@ -1,46 +1,53 @@
 - function fixed2( x ) { return Number.parseFloat(x).toFixed(2)}
-- const names=["star","star_half","star_border"]
+- const names = ["star", "star_half", "star_border"];
 - function star( x ) {  x = Math.min(1, Math.max(0,x))||0 ; const full = Math.floor( x * 5 ), half = Math.floor( x * 10 ) %2 ; return [ full, half, 5 - full - half ].map( (e,i)=> Array( e ).fill( names[i] ) ).flat() } 
 table.responsive-table.striped.compactTable
   thead
     tr.hide-on-med-and-down
       th Technology
-      th     
-        .flex 
-          span.orange-text  score 
-          
+      th
+        .flex
+          span.orange-text score
+
       each criterion in criteria
-        if criterion.weight > 0 
+        if criterion.weight > 0
           th
             .flex
-              - let style=`color:${criterion.color}` 
-              span( style=style) #{criterion.name} 
+              - let style = `color:${criterion.color}`;
+              span(style=style) #{ criterion.name }
             .hide-on-med-and-down.flex.small
-              span importance 
-              span granularity 
+              span importance
+              span granularity
             .hide-on-med-and-down.flex.small
-              span #{fixed2( criterion.weight ) } 
-              span #{ Math.floor( criterion.blurIntensity * 100) }% - #{criterion.classCount } classes 
+              span #{ fixed2( criterion.weight ) }
+              span #{ Math.floor( criterion.blurIntensity * 100) }% - #{ criterion.classCount } classes
     tr.hide-on-large-only
       th Technology
-      th.orange-text  score 
+      th.orange-text score
       each criterion in criteria
-        if criterion.weight > 0 
-          - let style=`color:${criterion.color}` 
-          th( style=style) #{criterion.name} 
-                          
+        if criterion.weight > 0
+          - let style = `color:${criterion.color}`;
+          th(style=style) #{ criterion.name }
+
   tbody
     each technology in technologies
-      - const style=`background-color:${technology.selected ? 'lightgreen' : 'white'}`
-      tr( class="technology" , data-technology=technology.name,  style=style)
-
+      - const style = `background-color:${technology.selected ? "lightgreen" : "white"}`;
+      tr.technology(data-technology=technology.name, style=style)
         td= technology.description
-        td.orange-text  
+        td.orange-text
           each starIcon in star( technology.score  )
             i.material-icons= starIcon
         each criterion in criteria
-          if criterion.weight > 0 
-            - let style=`color:${criterion.color}`
-            td( style=style, title=technology.evaluations[ criterion.name ] )
-              each starIcon in star( technology.dominance[ criterion.name ] / criterion.maxDominance )
-                i.material-icons= starIcon
+          if criterion.weight > 0
+            - let style = `color:${criterion.color}`;
+            td(style=style, title=technology.evaluations[criterion.name])
+              span
+                each starIcon in star( technology.dominance[ criterion.name ] / criterion.maxDominance )
+                  i.material-icons= starIcon
+
+              span
+                span= Math.ceil(100 * technology.evaluations[criterion.name]) / 100
+                span ,
+                span= Math.ceil((100 * technology.dominance[criterion.name]) / criterion.maxDominance)
+                span ,
+                span= Math.ceil((technology.rank[criterion.name] / (criterion.classCount - 1)) * 100)

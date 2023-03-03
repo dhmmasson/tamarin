@@ -4,37 +4,46 @@ block content
   main
     .fixed-action-btn.actionsButton
       a.btn-floating.btn-large.waves-effect.waves-light
-        img( src="/images/favicon/apple-touch-icon.png" width="100%")
+        img(src="/images/favicon/apple-touch-icon.png", width="100%")
       ul
         li#saveButton
           a.btn-floating.yellow.darken-1
             i.material-icons save
-          
-        li 
-          a.btn-floating.red.sidenav-trigger(href="#" data-target="slide-out" )
+
+        li
+          a.btn-floating.red.sidenav-trigger(href="#", data-target="slide-out")
             i.material-icons menu
-        //- file input 
-        li 
+
+        li
           form(action="#")
-            div.file-field.input-field
-              div.btn-floating.green
+            .file-field.input-field
+              .btn-floating.green
                 i.material-icons upload
                 input#csv(type="file")
-              div.file-path-wrapper
-                input.file-path.validate(type="text").hide
+              .file-path-wrapper
+                input.file-path.validate.hide(type="text")
         li
           a#loadDB.btn-floating.blue
             i.material-icons cloud_download
 
-
     .row.z-depth-1
       #controlPanel.col.s12
     .row.z-depth-1
+      .col.s12
+        ul.tabs
+          li.tab.col.s3
+            a(href="#result") Result
+          li.tab.col.s3
+            a(href="#parallelCoordinatesPlotPanel") Parallel Coordinates Plot
+
       #ParallelCoordinatesPlotPanel.col.s12
-    .row.z-depth-1
       #result.col.s12
+
 block scripts
   script.
-    $(document).ready(function(){
-      $('.fixed-action-btn').floatingActionButton({hoverEnabled:true, direction:'bottom'});
+    $(document).ready(function () {
+      $(".fixed-action-btn").floatingActionButton({ hoverEnabled: true, direction: "bottom" });
+      M.Tabs.getInstance(".tabs");
+
+      instance.select("result");
     });
