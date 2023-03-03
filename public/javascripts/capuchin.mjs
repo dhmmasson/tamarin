@@ -175,7 +175,7 @@ function loadState() {
       sorter.criteria.map[criterion.name].blurIntensity =
         criterion.blurIntensity;
     }
-    //updateUI();
+    updateUI();
   }
 }
 
