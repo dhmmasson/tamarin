@@ -91,7 +91,10 @@ class Criterion extends EventEmitter {
    */
   blur(value) {
     // Clamp the value to 0--5
-    return Math.max(0, value - 2 * this.blurIntensity * (this.max - this.min));
+    const order = this.sortingorder === "ascending" ? -2 : 2;
+    const range = this.max - this.min;
+    const blur = order * this.blurIntensity * range;
+    return Math.min(this.max, Math.max(this.min, value + blur));
   }
 
   /**
