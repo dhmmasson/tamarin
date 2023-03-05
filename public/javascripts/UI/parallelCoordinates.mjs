@@ -3,14 +3,18 @@ import * as SVGmodule from "../svg.esm.js";
 import { centeredUnitRandom, clamp } from "../utils.mjs";
 
 window.SVG = SVGmodule;
-
+const modes = {
+  dominance: "dominance",
+  rank: "rank",
+  centroid: "centroid",
+};
 class ParallelCoordinatesPlotPanel {
   constructor(root, criteria) {
     this.dimensions = {
       width: "100%",
       height: "300px",
     };
-
+    this.mode = modes.dominance;
     this._initSvg(root, this.dimensions)._setupStage();
   }
 
@@ -22,6 +26,9 @@ class ParallelCoordinatesPlotPanel {
    * @memberof ParallelCoordinatesPlotPanel
    * */
   update(technologies, criteria) {
+    this._cachedTechnologies = technologies;
+    this._cachedCriteria = criteria;
+
     this._cleanUpStage()._setupStage(criteria);
     technologies.forEach((technology, index) =>
       this._drawTechnology(technology, criteria, index, technologies.length)
@@ -42,20 +49,23 @@ class ParallelCoordinatesPlotPanel {
   _initSvg(root, size) {
     window.SVG = SVGmodule;
     this.svg = SVGmodule.SVG().addTo(root).size(size.width, size.height);
-    const rect = this.svg.rect("100%", "100%");
-    this.dimensions = rect.bbox();
-    rect.remove();
+    this.paddingTop = 15;
+    this._updateSize();
 
     window.addEventListener("resize", () => {
-      const rect = this.svg.rect("100%", "100%");
-      this.dimensions = rect.bbox();
-      rect.remove();
+      this._updateSize();
       this._cleanUpStage()._setupStage();
     });
 
     return this;
   }
 
+  _updateSize() {
+    const rect = this.svg.rect("100%", "100%");
+    this.dimensions = rect.bbox();
+    this.dimensions.height -= this.paddingTop;
+    rect.remove();
+  }
   /**
    * _getAxisPosition - get the position of the axis for a given criteria
    * @param {number} index
@@ -89,13 +99,35 @@ class ParallelCoordinatesPlotPanel {
     this.stage.attr({
       id: "stage",
     });
+
     this.stage.attr({
       "stroke-width": 1,
-      stroke: "black",
     });
-    this.stage.move(0, 0);
+
+    //add 10px padding to the top of the stage
+    this.stage.translate(0, this.paddingTop);
+
     this._setupCriteria(criteria);
-    this.technologyLabels = this.svg.group();
+    this.technologyLabels = this.stage.group();
+    // Add text for the mode of the plot
+    this.modeText = this.stage.text(this.mode);
+    this.modeText.attr({
+      "font-size": 12,
+      "font-family": "sans-serif",
+      fill: "black",
+      "text-anchor": "start",
+    });
+
+    this.modeText.move(10, -this.paddingTop);
+
+    // Change mode on click
+    this.modeText.on("click", () => {
+      const modesArray = Object.values(modes);
+      const index = modesArray.indexOf(this.mode);
+      this.mode = modesArray[(index + 1) % modesArray.length];
+      this.modeText.text(this.mode);
+      this.update(this._cachedTechnologies, this._cachedCriteria);
+    });
   }
 
   /**
@@ -107,7 +139,7 @@ class ParallelCoordinatesPlotPanel {
    */
   _setupCriteria(criteria) {
     this.criteria = criteria ?? this.criteria ?? [];
-    this.axisLabels = this.svg.group();
+    this.axisLabels = this.stage.group();
     this.axisLabels.attr({
       id: "axisLabels",
     });
@@ -221,13 +253,7 @@ class ParallelCoordinatesPlotPanel {
    * @private
    * @memberof ParallelCoordinatesPlotPanel
    * */
-  _getTechnologyPosition(
-    technology,
-    criterion,
-    index,
-    length,
-    mode = "centroid"
-  ) {
+  _getTechnologyPosition(technology, criterion, index, length, mode = "rank") {
     const r = (centeredUnitRandom(index) * criterion.blurIntensity) / 8;
     const position = {
       rank: technology.rank[criterion.name] / (criterion.classCount - 1),
@@ -237,7 +263,7 @@ class ParallelCoordinatesPlotPanel {
         criterion.classes[technology.dominance[criterion.name]].centroidNormal,
     };
 
-    return this.dimensions.height * clamp(1 - position[mode] + r, 0, 1);
+    return this.dimensions.height * clamp(1 - position[this.mode] + r, 0, 1);
   }
 
   /**
