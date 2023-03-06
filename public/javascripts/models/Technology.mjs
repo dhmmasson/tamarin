@@ -96,7 +96,7 @@ class Technology {
   updateScore(criteria) {
     this.score = 0;
     let normalization = 0;
-    for (const criterion of criteria) {
+    for (const criterion of criteria.filter((c) => c.weight > 0)) {
       this.score +=
         (criterion.weight * this.dominance[criterion.name]) /
         criterion.maxDominance;

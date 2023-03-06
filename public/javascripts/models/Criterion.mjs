@@ -105,7 +105,7 @@ class Criterion extends EventEmitter {
    * @return {number} return the new weight
    */
   set weight(newWeight) {
-    this._weight = newWeight;
+    this._weight = Math.max(0, newWeight);
     this.fire(Criterion.eventType.weightUpdated);
     this.fire(Criterion.eventType.updated);
     return newWeight;
@@ -127,7 +127,7 @@ class Criterion extends EventEmitter {
    * @return {number} return the intensity
    */
   set blurIntensity(intensity) {
-    this._blur = intensity;
+    this._blur = Math.max(0, intensity);
     this.fire(Criterion.eventType.blurIntensityUpdated);
     this.fire(Criterion.eventType.updated);
     return intensity;
