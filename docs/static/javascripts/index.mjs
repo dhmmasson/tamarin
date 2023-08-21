@@ -42,7 +42,7 @@
     /******/
   };
   /******/
-})(); /* webpack/runtime/compat */ /******/
+})(); /******/ /* webpack/runtime/compat */
 /******/
 
 /******/ /******/ if (typeof __nccwpck_require__ !== "undefined")
@@ -10122,6 +10122,7 @@ $("#csv").on("change", function (e) {
 $("#loadDB").on("click", loadDataFromDb);
 
 function load() {
+  $(".tabs").tabs();
   if (localStorage.getItem("criteria") === null) {
     loadDataFromDb();
   } else {
