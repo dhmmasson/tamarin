@@ -1,274 +1,276 @@
-[
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+{
+  "criteria": [
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Capacite de lavage (en kg)",
+      "description": "Capacite de lavage (en kg)",
+      "min": 3,
+      "max": 17,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Capacite de lavage (en kg)",
-    "description": "Capacite de lavage (en kg)",
-    "min": 3,
-    "max": 17,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Classe energetique",
+      "description": "Classe energetique",
+      "min": 0,
+      "max": 5,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Classe energetique",
-    "description": "Classe energetique",
-    "min": 0,
-    "max": 5,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Connecte",
+      "description": "Connecte",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Connecte",
-    "description": "Connecte",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Consommation eau annuelle (en L)",
+      "description": "Consommation eau annuelle (en L)",
+      "min": 10,
+      "max": 16500,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "descending"
     },
-    "handlers": [],
-    "name": "Consommation eau annuelle (en L)",
-    "description": "Consommation eau annuelle (en L)",
-    "min": 10,
-    "max": 16500,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "descending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Consommation energie annuelle (en kW)",
+      "description": "Consommation energie annuelle (en kW)",
+      "min": 76,
+      "max": 8999,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "descending"
     },
-    "handlers": [],
-    "name": "Consommation energie annuelle (en kW)",
-    "description": "Consommation energie annuelle (en kW)",
-    "min": 76,
-    "max": 8999,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "descending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Cout annuel d utilisation (en euros)",
+      "description": "Cout annuel d utilisation (en euros)",
+      "min": 19,
+      "max": 1354,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "descending"
     },
-    "handlers": [],
-    "name": "Cout annuel d utilisation (en euros)",
-    "description": "Cout annuel d utilisation (en euros)",
-    "min": 19,
-    "max": 1354,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "descending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Essorage (en tr/mn)",
+      "description": "Essorage (en tr/mn)",
+      "min": 700,
+      "max": 1600,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Essorage (en tr/mn)",
-    "description": "Essorage (en tr/mn)",
-    "min": 700,
-    "max": 1600,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Front loading",
+      "description": "Front loading",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Front loading",
-    "description": "Front loading",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Largeur < 40cm",
+      "description": "Largeur < 40cm",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Largeur < 40cm",
-    "description": "Largeur < 40cm",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Largeur < 60cm",
+      "description": "Largeur < 60cm",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Largeur < 60cm",
-    "description": "Largeur < 60cm",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Largeur > 60cm",
+      "description": "Largeur > 60cm",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Largeur > 60cm",
-    "description": "Largeur > 60cm",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Niveau sonore a l essorage (dB)",
+      "description": "Niveau sonore a l essorage (dB)",
+      "min": 65,
+      "max": 85,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "descending"
     },
-    "handlers": [],
-    "name": "Niveau sonore a l essorage (dB)",
-    "description": "Niveau sonore a l essorage (dB)",
-    "min": 65,
-    "max": 85,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "descending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Niveau sonore au lavage (dB)",
+      "description": "Niveau sonore au lavage (dB)",
+      "min": 41,
+      "max": 63,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "descending"
     },
-    "handlers": [],
-    "name": "Niveau sonore au lavage (dB)",
-    "description": "Niveau sonore au lavage (dB)",
-    "min": 41,
-    "max": 63,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "descending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Prix (en euros)",
+      "description": "Prix (en euros)",
+      "min": 188,
+      "max": 3562,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "descending"
     },
-    "handlers": [],
-    "name": "Prix (en euros)",
-    "description": "Prix (en euros)",
-    "min": 188,
-    "max": 3562,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "descending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Sechant",
+      "description": "Sechant",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Sechant",
-    "description": "Sechant",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Tambour (en L)",
+      "description": "Tambour (en L)",
+      "min": 1,
+      "max": 127,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
     },
-    "handlers": [],
-    "name": "Tambour (en L)",
-    "description": "Tambour (en L)",
-    "min": 1,
-    "max": 127,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  },
-  {
-    "eventType": {
-      "updated": "updated",
-      "blurIntensityUpdated": "blurIntensityUpdated",
-      "weightUpdated": "weightUpdated"
-    },
-    "handlers": [],
-    "name": "Top loading",
-    "description": "Top loading",
-    "min": 0,
-    "max": 1,
-    "maxDominance": 0,
-    "classes": [],
-    "classCount": 0,
-    "sortingorder": "ascending"
-  }
-]
+    {
+      "eventType": {
+        "updated": "updated",
+        "blurIntensityUpdated": "blurIntensityUpdated",
+        "weightUpdated": "weightUpdated"
+      },
+      "handlers": [],
+      "name": "Top loading",
+      "description": "Top loading",
+      "min": 0,
+      "max": 1,
+      "maxDominance": 0,
+      "classes": [],
+      "classCount": 0,
+      "sortingorder": "ascending"
+    }
+  ]
+}
