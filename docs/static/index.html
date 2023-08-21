@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description">
+  <meta name="author">
+  <title></title>
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="images/favicon/site.webmanifest">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="javascripts/papaparse.min.js"> </script>
+  <script src="javascripts/jquery.min.js"></script>
+  <script src="javascripts/materialize.min.js"></script>
+  <script src="javascripts/index.mjs" type="module"></script>
+</head>
+
+<body>
+  <main>
+    <div class="fixed-action-btn actionsButton"><a class="btn-floating btn-large waves-effect waves-light"><img
+          src="images/favicon/apple-touch-icon.png" width="100%"></a>
+      <ul>
+        <li id="saveButton"><a class="btn-floating yellow darken-1"><i class="material-icons">save</i></a></li>
+        <li><a class="btn-floating red sidenav-trigger" href="#" data-target="slide-out"><i
+              class="material-icons">menu</i></a></li>
+        <li>
+          <form action="#">
+            <div class="file-field input-field">
+              <div class="btn-floating green"><i class="material-icons">upload</i>
+                <input id="csv" type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate hide" type="text">
+              </div>
+            </div>
+          </form>
+        </li>
+        <li><a class="btn-floating blue" id="loadDB"><i class="material-icons">cloud_download</i></a></li>
+      </ul>
+    </div>
+    <div class="row z-depth-1">
+      <div class="col s12" id="controlPanel"></div>
+    </div>
+    <div class="row z-depth-1">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s3"><a href="#result">Result</a></li>
+          <li class="tab col s3"><a href="#parallelCoordinatesPlotPanel">Parallel Coordinates Plot</a></li>
+        </ul>
+      </div>
+      <div class="col s12" id="ParallelCoordinatesPlotPanel"></div>
+      <div class="col s12" id="result"></div>
+    </div>
+  </main>
+
+  <ul class="sidenav" id="slide-out">
+    <li>
+      <div class="user-view">
+        <div class="background"> </div><a class="sidenav-close"><img class="circle"
+            src="images/favicon/apple-touch-icon.png"></a><span class="appTitle"></span>
+      </div>
+    </li>
+    <li><a href="https://rezbuildapp.estia.fr/"><i class="material-icons orange"
+          id="rezbuildLogo">home</i><span>Rezbuild Plateform</span></a></li>
+    <li><a><i>
+          <svg id="githubLogo" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+            </path>
+          </svg></i><span>github</span></a></li>
+  </ul>
+  <script>
+    $(document).ready(function () {
+      $(".sidenav").sidenav({ edge: "right" });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(".fixed-action-btn").floatingActionButton({ hoverEnabled: true, direction: "bottom" });
+      const instance = M.Tabs.getInstance(".tabs");
+    });
+  </script>
+</body>
+
+</html>
