@@ -42,12 +42,10 @@
     /******/
   };
   /******/
-})(); /* webpack/runtime/compat */
+})(); /* webpack/runtime/compat */ /******/
 /******/
 
-/******/ /******/
-
-/******/ if (typeof __nccwpck_require__ !== "undefined")
+/******/ /******/ if (typeof __nccwpck_require__ !== "undefined")
   __nccwpck_require__.ab =
     new URL(".", import.meta.url).pathname.slice(
       import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0,
@@ -10249,7 +10247,7 @@ function loadFromCSV(csvFile) {
  * @param
  */
 async function getCriteria() {
-  const response = await fetch("/api/criteria");
+  const response = await fetch("api/criteria");
   const data = await response.json();
   return data.criteria;
 }
@@ -10261,7 +10259,7 @@ async function getCriteria() {
  */
 async function getTechnologies() {
   // fetch asynchrone
-  const response = await fetch("/api/technologies");
+  const response = await fetch("api/technologies");
   const data = await response.json();
   return data.technologies;
 }
