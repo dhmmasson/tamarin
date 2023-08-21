@@ -72,10 +72,26 @@ function loadDataLocally() {
 }
 
 /**
+ *
+ * @param {*} key a key of the form "name (ASC|DESC)"
+ * @returns  [key, name, order] original key, cleaned name of the criterion, order of the criterion (ascending (default) or descending)
+ */
+const parseNameOrder = (key) => {
+  const order = key.match(/\((ASC|DESC)\)$/);
+  const name = key.replace(/\((ASC|DESC)\)$/, "").trim();
+  const mapper = { ASC: "ascending", DESC: "descending" };
+  return order ? [key, name, mapper[order[1]]] : [key, name, mapper["ASC"]];
+};
+
+const reduceMin = (key) => (min, p) => p[key] < min ? p[key] : min;
+const reduceMax = (key) => (max, p) => p[key] > max ? p[key] : max;
+const filterFieldOut = ([, name]) =>
+  name != "name" && name != "description" && name != "technology";
+
+/**
  * Load the data from a CSV file
  * @param {File} csvFile
  * */
-
 function loadFromCSV(csvFile) {
   Papa.parse(csvFile, {
     download: true,
@@ -84,19 +100,16 @@ function loadFromCSV(csvFile) {
     skipEmptyLines: true,
     dynamicTyping: true,
     complete: function (results) {
-      const criteria = results.meta.fields.map((name) => ({
-        name: name,
-        description: name,
-        min: results.data.reduce(
-          (min, p) => (p[name] < min ? p[name] : min),
-          results.data[0][name]
-        ),
-        max: results.data.reduce(
-          (max, p) => (p[name] > max ? p[name] : max),
-          results.data[0][name]
-        ),
-        sortingorder: "ascending",
-      }));
+      const criteria = results.meta.fields
+        .map(parseNameOrder)
+        .filter(filterFieldOut)
+        .map(([key, name, order]) => ({
+          name: name,
+          description: name,
+          min: results.data.reduce(reduceMin(key), results.data[0][key]),
+          max: results.data.reduce(reduceMax(key), results.data[0][key]),
+          sortingorder: order,
+        }));
       const technologies = results.data.map((technology, i) => {
         if (technology === undefined) return;
         const t = {
@@ -104,10 +117,25 @@ function loadFromCSV(csvFile) {
           name: technology.name || i,
           description:
             technology.description ||
+            technology.name ||
             `${Math.ceil(100 * technology.TS)}_${Math.ceil(
               100 * technology.WFS
             )}`,
-          evaluations: technology,
+          evaluations: Object.entries(technology)
+            .filter(
+              // filter out the name, description and technology fields
+              ([name, value]) =>
+                name != "name" && name != "description" && name != "technology"
+            )
+            .map(
+              // map the remaining fields to the criterion format)
+              ([name, value]) => [parseNameOrder(name)[1], value]
+            )
+            .reduce(
+              // reduce the array to an object
+              (obj, [name, value]) => ({ ...obj, [name]: value }),
+              {}
+            ),
         };
         return t;
       });
@@ -163,7 +191,6 @@ function initSorter(criteria, technologies) {
  * @param
  */
 function loadState() {
-  console.log("loadState");
   if (localStorage.getItem("sorterCriteria") === null) {
     sorter.criteria.all[0].weight = 1;
   } else {
@@ -188,7 +215,8 @@ function loadState() {
  */
 function saveToLocalStorage() {
   const exportedCriteria = sorter.criteria.all.map((e) => e.export());
-  const savedCriteria = JSON.parse(localStorage.getItem("sorterCriteria"));
+  const savedCriteria =
+    JSON.parse(localStorage.getItem("sorterCriteria")) || [];
   // Remove saved criteria if their weight in exported criteria is 0
   const filteredSavedCriteria = savedCriteria.filter(
     (c) => !(exportedCriteria.find((e) => e.name === c.name)?.weight < 0)
@@ -216,7 +244,6 @@ function saveToLocalStorage() {
  * @param
  */
 function attachEventListener() {
-  console.log("attachEventListener");
   const downloader = new Downloader($("#saveButton")[0]);
 
   for (var i = 0; i < sorter.criteria.all.length; i++) {

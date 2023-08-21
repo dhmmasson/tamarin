@@ -92,6 +92,8 @@ class Label {
   onMousedown(event) {
     if (this.ellipse === null) {
       this.createHandle(event.offsetX, event.offsetY);
+    } else {
+      this.moveHandle(event.offsetX, event.offsetY);
     }
     this.show();
     this.ellipse.remember("_draggable").startDrag(event);
@@ -221,7 +223,7 @@ class Label {
       // Managing axis constrained motion
       .on("dragend.namespace", () => {
         this.constraints.axis = null;
-        if (this.criterion.weight < 0) this.hide();
+        if (this.criterion.weight <= 0) this.hide();
         this.callback(this);
       });
 

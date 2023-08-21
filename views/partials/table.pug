@@ -1,6 +1,7 @@
 - function fixed2( x ) { return Number.parseFloat(x).toFixed(2)}
 - const names = ["star", "star_half", "star_border"];
 - function star( x ) {  x = Math.min(1, Math.max(0,x))||0 ; const full = Math.floor( x * 5 ), half = Math.floor( x * 10 ) %2 ; return [ full, half, 5 - full - half ].map( (e,i)=> Array( e ).fill( names[i] ) ).flat() } 
+- const sortedCriteria = criteria.filter((c) => c.weight > 0).sort((a, b) => a.weight - b.weight);
 table.responsive-table.striped.compactTable
   thead
     tr.hide-on-med-and-down
@@ -9,22 +10,21 @@ table.responsive-table.striped.compactTable
         .flex
           span.orange-text score
 
-      each criterion in criteria
-        if criterion.weight > 0
-          th
-            .flex
-              - let style = `color:${criterion.color}`;
-              span(style=style) #{ criterion.name }
-            .hide-on-med-and-down.flex.small
-              span importance
-              span granularity
-            .hide-on-med-and-down.flex.small
-              span #{ fixed2( criterion.weight ) }
-              span #{ Math.floor( criterion.blurIntensity * 100) }% - #{ criterion.classCount } classes
+      each criterion in sortedCriteria
+        th
+          .flex
+            - let style = `color:${criterion.color}`;
+            span(style=style) #{ criterion.name }
+          .hide-on-med-and-down.flex.small
+            span importance
+            span granularity
+          .hide-on-med-and-down.flex.small
+            span #{ fixed2( criterion.weight ) }
+            span #{ Math.floor( criterion.blurIntensity * 100) }% - #{ criterion.classCount } classes
     tr.hide-on-large-only
       th Technology
       th.orange-text score
-      each criterion in criteria
+      each criterion in sortedCriteria
         if criterion.weight > 0
           - let style = `color:${criterion.color}`;
           th(style=style) #{ criterion.name }
@@ -34,20 +34,17 @@ table.responsive-table.striped.compactTable
       - const style = `background-color:${technology.selected ? "lightgreen" : "white"}`;
       tr.technology(data-technology=technology.name, style=style)
         td= technology.description
-        td.orange-text
+        - const totalWeight = sortedCriteria.reduce((acc, c) => acc + c.weight, 0);
+        - const scoreDetail = sortedCriteria.map((c) => ({name : c.name,weight: fixed2(c.weight), normalizedDominance: fixed2(technology.dominance[c.name] / c.maxDominance), partialScore: fixed2 ((c.weight * technology.dominance[c.name]) / c.maxDominance),normalizedPartialScore: fixed2(c.weight * technology.dominance[c.name] / c.maxDominance / totalWeight) }));
+        - let title = `score: ${fixed2(technology.score)}\n${scoreDetail.map((c) => `+${c.weight}x${c.normalizedDominance} = ${c.partialScore} | +${c.normalizedPartialScore} ${c.name}`).join("\n")}`;
+        td.orange-text(title=title)
           each starIcon in star( technology.score  )
             i.material-icons= starIcon
-        each criterion in criteria
+        each criterion in sortedCriteria
           if criterion.weight > 0
             - let style = `color:${criterion.color}`;
-            td(style=style, title=technology.evaluations[criterion.name])
+            - let title = `${criterion.name}: ${technology.evaluations[criterion.name]}\ndominance: ${technology.dominance[criterion.name]}\nrank: ${technology.rank[criterion.name]}`;
+            td(style=style, title=title)
               span
-                each starIcon in star( technology.dominance[ criterion.name ] / criterion.maxDominance )
+                each starIcon in star( technology.rank[ criterion.name ] / (criterion.classCount - 1) )
                   i.material-icons= starIcon
-
-              span
-                span= Math.ceil(100 * technology.evaluations[criterion.name]) / 100
-                span ,
-                span= Math.ceil((100 * technology.dominance[criterion.name]) / criterion.maxDominance)
-                span ,
-                span= Math.ceil((technology.rank[criterion.name] / (criterion.classCount - 1)) * 100)

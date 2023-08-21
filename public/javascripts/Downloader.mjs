@@ -40,7 +40,6 @@ export class Downloader {
       console.log("click");
       this.saveData();
     });
-    console.log(htmlElement, this.anchor);
   }
 
   // Update the csv to be downloaded
