@@ -34,7 +34,7 @@ block content
           li.tab.col.s3
             a(href="#result") Result
           li.tab.col.s3
-            a(href="#parallelCoordinatesPlotPanel") Parallel Coordinates Plot
+            a(href="#ParallelCoordinatesPlotPanel") Parallel Coordinates Plot
 
       #ParallelCoordinatesPlotPanel.col.s12
       #result.col.s12
@@ -44,4 +44,5 @@ block scripts
     $(document).ready(function () {
       $(".fixed-action-btn").floatingActionButton({ hoverEnabled: true, direction: "bottom" });
       const instance = M.Tabs.getInstance(".tabs");
+      $(".tabs").tabs();
     });

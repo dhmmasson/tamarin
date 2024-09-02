@@ -83,8 +83,8 @@ const parseNameOrder = (key) => {
   return order ? [key, name, mapper[order[1]]] : [key, name, mapper["ASC"]];
 };
 
-const reduceMin = (key) => (min, p) => p[key] < min ? p[key] : min;
-const reduceMax = (key) => (max, p) => p[key] > max ? p[key] : max;
+const reduceMin = (key) => (min, p) => (p[key] < min ? p[key] : min);
+const reduceMax = (key) => (max, p) => (p[key] > max ? p[key] : max);
 const filterFieldOut = ([, name]) =>
   name != "name" && name != "description" && name != "technology";
 

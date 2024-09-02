@@ -1,6 +1,8 @@
 /* eslint new-cap: ["error", { "capIsNewExceptions": ["SVG"] }]*/
 
 import * as SVGmodule from "../svg.esm.js";
+import { draggable } from "../svg.draggable.js";
+
 import { map, mapClamped } from "../utils.mjs";
 import { Label } from "./label.mjs";
 
@@ -47,19 +49,22 @@ class UI {
    */
   _initSvg(root, size) {
     window.SVG = SVGmodule;
-    return import("../svg.draggable.js").then(() => {
+    // delay loading of svg.draggable.js
+    draggable(window.SVG);
+    return Promise.resolve().then(() => {
       // delete window.SVG ;
       this.svg = SVGmodule.SVG().addTo(root).size(size.width, size.height);
       const rect = this.svg.rect("100%", "100%");
       this.dimensions = rect.bbox();
       rect.remove();
-
-      window.addEventListener("resize", () => {
+      const reload = () => {
         const rect = this.svg.rect("100%", "100%");
         this.dimensions = rect.bbox();
         rect.remove();
         this._cleanUpStage()._setupStage();
-      });
+      };
+      window.addEventListener("resize", reload);
+      $(".tabs").tabs({ onShow: reload });
 
       return this;
     });
