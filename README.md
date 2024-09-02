@@ -29,3 +29,21 @@ You can observe not only the ranking but also the impact of each parameter on th
 - nodemon ./bin/www.mjs
 - Or a better version :
 - nodemon -i public/javascripts -e js,pug,mjs,cjs bin/www.mjs
+
+## Cite 
+
+```APA
+Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin (Version v1.9) [Computer software]. https://github.com/dhmmasson/tamarin
+```
+
+```bibtex
+@software{Masson_Tamarin_2024,
+   author = {Masson, Dimitri and Laguna Salvadó, Laura and Villeneuve, Eric},
+   license = {MIT},
+   month = sep,
+   title = {{Tamarin}},
+   url = {https://github.com/dhmmasson/tamarin},
+   version = {v1.9},
+   year = {2024}
+}
+```
