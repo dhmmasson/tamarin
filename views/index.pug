@@ -42,7 +42,11 @@ block content
 block scripts
   script.
     $(document).ready(function () {
-      $(".fixed-action-btn").floatingActionButton({ hoverEnabled: true, direction: "bottom" });
-      const instance = M.Tabs.getInstance(".tabs");
-      $(".tabs").tabs();
+      M.FloatingActionButton.init(
+          document.querySelectorAll(".fixed-action-btn"), 
+          {
+            hoverEnabled: true,
+            direction: "bottom",
+          });
+      M.Tabs.init(document.querySelectorAll(".tabs"));
     });

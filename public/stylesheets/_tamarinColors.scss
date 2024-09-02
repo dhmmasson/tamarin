@@ -1,5 +1,5 @@
-@import "../../node_modules/materialize-css/sass/components/color-variables";
-@import "../../node_modules/materialize-css/sass/components/color-classes";
+@import "../../node_modules/@materializecss/materialize/sass/components/color-variables";
+@import "../../node_modules/@materializecss/materialize/sass/components/color-classes";
 
 $primary-color: #a50 !default;
 $primary-color-light: lighten($primary-color, 15%) !default;

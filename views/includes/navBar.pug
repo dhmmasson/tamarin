@@ -27,5 +27,7 @@ ul#slide-out.sidenav
       span github
 script(defer=defer).
   $(document).ready(function () {
-    $(".sidenav").sidenav({ edge: "right" });
+    M.Sidenav.init( document.querySelectorAll(".sidenav"), {
+      edge: "right",
+    });
   });
