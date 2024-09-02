@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: Tamarin
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Dimitri
+    family-names: Masson
+    email: d.masson@estia.fr
+    affiliation: ESTIA INSTITUTE OF TECHNOLOGY
+    orcid: 'https://orcid.org/0000-0002-7072-3146'
+  - given-names: Laura
+    family-names: Laguna Salvadó
+    orcid: 'https://orcid.org/0000-0002-6549-4393'
+    affiliation: ESTIA INSTITUTE OF TECHNOLOGY
+  - given-names: Eric
+    family-names: Villeneuve
+    orcid: 'https://orcid.org/0000-0003-0273-2267'
+    affiliation: ESTIA INSTITUTE OF TECHNOLOGY
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.13628740
+repository-code: 'https://github.com/dhmmasson/tamarin'
+url: 'https://dhmmasson.github.io/tamarin/static/'
+abstract: >-
+  Tamarin is an open-source **interactive alternative
+  ranking system** for Multi-Criteria Decision-Making (MCDM)
+  designed to help users select the optimal technology
+  alternatives based on their preferences and criteria. The
+  software integrates quantitative and qualitative data to
+  rank alternatives, considering user-defined importance and
+  uncertainty levels. Tamarin’s dynamic user interface
+  allows real-time adjustments, enabling users to set for
+  each criteria, importance, and granularity, and observe
+  the impact on rankings. Built for flexibility, Tamarin
+  supports various decision-making scenarios, including
+  refurbishment technology selection, washing machine
+  comparisons, or any decision involving evaluated
+  alternatives provided through CSV files.
+keywords:
+  - Decision Support System
+  - Multi Criteria Decision Making
+  - Alternative Ranking
+license: MIT
+version: v1.9
+date-released: '2024-09-02'

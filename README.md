@@ -1,6 +1,12 @@
-# Capuchin
+# Tamarin
 
-Follow up to the famous Rezbuild-baboon project with an all new UI.
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/dhmmasson/rezbuild-emperor-tamarin/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/dhmmasson/rezbuild-emperor-tamarin)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13628740.svg)](https://doi.org/10.5281/zenodo.13628740)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Tamarin is an open-source **interactive alternative ranking system** for Multi-Criteria Decision-Making (MCDM) designed to help users select the optimal technology alternatives based on their preferences and criteria. The software integrates quantitative and qualitative data to rank alternatives, considering user-defined importance and uncertainty levels. Tamarin’s dynamic user interface allows real-time adjustments, enabling users to set for each criteria, importance, and granularity, and observe the impact on rankings. Built for flexibility, Tamarin supports various decision-making scenarios, including refurbishment technology selection, washing machine comparisons, or any decision involving evaluated alternatives provided through CSV files.
+
+You can observe not only the ranking but also the impact of each parameter on the final ranking but on each individual criteria with the parallel plot visualisation: 
 
 ![Demonstration of the parallel plot](/docs/parallelPlotCoordinate.gif)
 
