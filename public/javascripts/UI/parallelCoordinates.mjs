@@ -11,8 +11,8 @@ const modes = {
 class ParallelCoordinatesPlotPanel {
   constructor(root, criteria) {
     this.dimensions = {
-      width: "100%",
-      height: "300px",
+      width: window.innerWidth,
+      height: 300,
     };
     this.mode = modes.dominance;
     this._initSvg(root, this.dimensions)._setupStage();
@@ -48,21 +48,29 @@ class ParallelCoordinatesPlotPanel {
    */
   _initSvg(root, size) {
     window.SVG = SVGmodule;
+    console.log(size )
     this.svg = SVGmodule.SVG().addTo(root).size(size.width, size.height);
     this.paddingTop = 15;
     this._updateSize();
-
-    window.addEventListener("resize", () => {
-      this._updateSize();
-      this._cleanUpStage()._setupStage();
-    });
-
+    
+    window.addEventListener("resize", () => this._reload() )
+    //Force reload when switching tabs
+    
     return this;
+  }
+  _reload() {
+    console.log("helllo")
+    this._updateSize();
+    this._cleanUpStage()._setupStage();
   }
 
   _updateSize() {
     const rect = this.svg.rect("100%", "100%");
-    this.dimensions = rect.bbox();
+    const dimension = rect.bbox() ;
+    this.dimensions = {
+      width: dimension.width == 0 ? this.dimensions.width : dimension.width,
+      height: dimension.height == 0 ? this.dimensions.height : dimension.height}
+    console.log( this.dimensions)
     this.dimensions.height -= this.paddingTop;
     rect.remove();
   }
