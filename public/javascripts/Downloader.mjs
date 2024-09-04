@@ -1,3 +1,4 @@
+import Papa from "papaparse";
 const formater = new Intl.DateTimeFormat("en", {
   year: "2-digit",
   month: "2-digit",
@@ -35,8 +36,10 @@ export class Downloader {
    * @return {type}             description
    */
   constructor(htmlElement) {
-    [this.anchor] = $(htmlElement).find("a");
-    $(htmlElement).click((event) => {
+    this.anchor = htmlElement.querySelector("a");
+    
+    // Add a click event listener to htmlElement
+    htmlElement.addEventListener('click', (event) => {
       console.log("click");
       this.saveData();
     });

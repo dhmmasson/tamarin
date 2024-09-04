@@ -2,6 +2,13 @@
  * @file the main functions
  * @author dhmmasson
  */
+import Papa from "papaparse" ; 
+import { Tabs, Sidenav, FloatingActionButton } from "@materializecss/materialize";
+window.M = {Tabs, Sidenav, FloatingActionButton} ; 
+
+import * as SVGmodule from "./svg.esm.js";
+window.SVG = SVGmodule;
+
 
 import { Sorter } from "./Sorter.mjs";
 import { Criterion } from "./models/Criterion.mjs";
@@ -10,20 +17,19 @@ import { UI } from "./UI/twoDimensionControlPanel.mjs";
 import { ParallelCoordinatesPlotPanel } from "./UI/parallelCoordinates.mjs";
 import { template } from "./template.mjs";
 import { Downloader } from "./Downloader.mjs";
-import * as SVGmodule from "./svg.esm.js";
 import { Logs } from "./Logs.mjs";
-window.SVG = SVGmodule;
 const sorter = new Sorter([], []);
 let ui = null;
 let parallelCoordinatesPlotPanel;
 let logs = null;
-$(load());
-$("#csv").on("change", function (e) {
-  loadFromCSV(e.target.files[0]);
-});
-$("#loadDB").on("click", loadDataFromDb);
+
+document.addEventListener('DOMContentLoaded', load);
 
 function load() {
+  document.getElementById('csv').addEventListener('change', function (e) {
+    loadFromCSV(e.target.files[0]);
+  });
+  document.getElementById('loadDB').addEventListener('click', loadDataFromDb);
   if (localStorage.getItem("criteria") === null) {
     loadDataFromDb();
   } else {
@@ -31,10 +37,13 @@ function load() {
   }
 }
 
+function empty( id ) {
+  const element = document.getElementById(id);
+  if (element) element.innerHTML = '';
+}
 function cleanUI() {
-  $("#controlPanel").empty();
-  $("#ParallelCoordinatesPlotPanel").empty();
-  $("#logs").empty();
+  const panels = ['controlPanel', 'ParallelCoordinatesPlotPanel', 'logs']
+  panels.forEach(empty)
 }
 
 /**
@@ -176,13 +185,14 @@ function initSorter(criteria, technologies) {
   sorter.technologies = technologies;
   saveDataLocally();
   logs = new Logs();
-  ui = new UI($("#controlPanel")[0], sorter.criteria.all, () => {
+  ui = new UI(document.getElementById('controlPanel'), sorter.criteria.all, () => {
     loadState();
     attachEventListener();
-  });
-  parallelCoordinatesPlotPanel = new ParallelCoordinatesPlotPanel(
-    $("#ParallelCoordinatesPlotPanel")[0]
-  );
+});
+
+parallelCoordinatesPlotPanel = new ParallelCoordinatesPlotPanel(
+    document.getElementById('ParallelCoordinatesPlotPanel')
+);
 }
 
 /**
@@ -244,7 +254,7 @@ function saveToLocalStorage() {
  * @param
  */
 function attachEventListener() {
-  const downloader = new Downloader($("#saveButton")[0]);
+  const downloader = new Downloader(document.querySelector('#saveButton'));
 
   for (var i = 0; i < sorter.criteria.all.length; i++) {
     let criterion = sorter.criteria.all[i];
@@ -280,14 +290,20 @@ function updateUI(longueur) {
 function updateTable(longueur) {
   longueur = longueur ? longueur : sorter.technologies.sorted.length;
   try {
-    $("#result")
-      .empty()
-      .append(
-        template.table({
-          technologies: sorter.technologies.sorted.slice(0, longueur),
-          criteria: sorter.criteria.all,
-        })
-      );
+    // Get the element with ID 'result'
+    const resultElement = document.getElementById('result');
+    // Clear the contents of the 'result' element
+    resultElement.innerHTML = '';
+
+    // Create the new content using the template
+    const newContent = template.table({
+      technologies: sorter.technologies.sorted.slice(0, longueur),
+      criteria: sorter.criteria.all,
+    });
+
+    // Append the new content to the 'result' element
+    resultElement.insertAdjacentHTML('beforeend', newContent);
+
 
     makeTableInteractive();
   } catch (e) {
@@ -296,21 +312,25 @@ function updateTable(longueur) {
 }
 
 function makeTableInteractive() {
-  $("#result tbody").on("click", "tr.technology", function (e) {
-    const element = $(e.target).parents("tr.technology")[0];
-    console.log(element.dataset.technology);
-    if (element.dataset.technology) {
-      const technologie = sorter.technologies.map[element.dataset.technology];
-      technologie.selected = !technologie.selected;
-      updateTable();
-      loadParallelCoordinatesPlotPanel();
-    }
+  
+    document.querySelector('#result tbody').addEventListener('click', function (e) {
+      if (e.target.closest('tr.technology')) {
+        const element = e.target.closest("tr.technology");
+        console.log(element.dataset.technology);
+        if (element.dataset.technology) {
+          const technologie = sorter.technologies.map[element.dataset.technology];
+          technologie.selected = !technologie.selected;
+          updateTable();
+          loadParallelCoordinatesPlotPanel();
+        }}
   });
 
   let extension = null;
-  $("#result tbody").on("mouseover", "tr.technology", function (e) {
+  
+    document.querySelector('#result tbody').addEventListener('mouseover', function (e) {
+      if (e.target.closest('tr.technology')) {
     if (e.buttons === 1) {
-      const element = $(e.target).parents("tr.technology")[0];
+      const element = e.target.closest("tr.technology");
       console.log(element.dataset.technology);
       if (element.dataset.technology) {
         const technologie = sorter.technologies.map[element.dataset.technology];
@@ -324,7 +344,7 @@ function makeTableInteractive() {
           updateUI();
         }, 100);
       }
-    }
+    }}
   });
 }
 
@@ -347,17 +367,36 @@ function loadControlPanel(mode) {
  * @param
  */
 function load2SliderControlPanel() {
-  $("#controlPanel")
-    .empty()
-    .append(template.twoSliderControlPanel({ criteria: sorter.criteria.all }))
-    .find("input")
-    .change(function (e) {
-      const input = $(e.target),
-        criterionName = input.data("criterion"),
-        parameter = input.data("parameter"),
-        criterion = sorter.criteria.map[criterionName];
-      criterion[parameter] = input.val();
-    });
+  // Get the element with ID 'controlPanel'
+const controlPanel = document.getElementById('controlPanel');
+
+// Clear the contents of the 'controlPanel' element
+controlPanel.innerHTML = '';
+
+// Generate the new content using the template
+const newContent = template.twoSliderControlPanel({ criteria: sorter.criteria.all });
+
+// Insert the new content into the 'controlPanel'
+controlPanel.insertAdjacentHTML('beforeend', newContent);
+
+// Add event listeners to the input elements within 'controlPanel'
+controlPanel.addEventListener('change', function (e) {
+  const target = e.target;
+
+  // Check if the changed element is an input
+  if (target.tagName === 'INPUT') {
+    const input = target;
+    const criterionName = input.dataset.criterion;
+    const parameter = input.dataset.parameter;
+    const criterion = sorter.criteria.map[criterionName];
+
+    // Update the criterion parameter
+    if (criterion) {
+      criterion[parameter] = input.value;
+    }
+  }
+});
+
 }
 
 /**
@@ -366,28 +405,30 @@ function load2SliderControlPanel() {
  * @param
  */
 function load2DimensionControlPanel() {
-  $("#controlPanel")
-    .empty()
-    .append(
-      template.twoDimensionControlPanel({ criteria: sorter.criteria.all })
-    )
-    .find(".draggable")
-    .each(
-      /**
-       * function - apply draggable
-       * @this {Jquery~element} an .draggable element
-       */
-      function () {
-        const label = ui.svg(this);
-        label.mousedown(function (event) {
-          const node = label
-            .ellipse()
-            .draggable()
-            .move(2.5 + event.offsetX, 2.5 + event.offsetY);
-          node.remember("_draggable").startDrag(event);
-        });
-      }
-    );
+  // Get the element with ID 'controlPanel'
+const controlPanel = document.getElementById('controlPanel');
+
+// Clear the contents of the 'controlPanel' element
+controlPanel.innerHTML = '';
+
+// Generate the new content using the template
+const newContent = template.twoDimensionControlPanel({ criteria: sorter.criteria.all });
+
+// Insert the new content into the 'controlPanel'
+controlPanel.insertAdjacentHTML('beforeend', newContent);
+
+// Find elements with class 'draggable' and apply draggable functionality
+controlPanel.querySelectorAll('.draggable').forEach(element => {
+  const label = ui.svg(element);
+  element.addEventListener('mousedown', function (event) {
+    const node = label
+      .ellipse()
+      .draggable()
+      .move(2.5 + event.offsetX, 2.5 + event.offsetY);
+    node.remember("_draggable").startDrag(event);
+  });
+});
+
 }
 
 /**

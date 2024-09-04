@@ -40,8 +40,8 @@ block content
       #result.col.s12
 
 block scripts
-  script.
-    $(document).ready(function () {
+  script( defer="defer").
+    document.addEventListener('DOMContentLoaded', function() {
       M.FloatingActionButton.init(
           document.querySelectorAll(".fixed-action-btn"), 
           {

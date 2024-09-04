@@ -18,14 +18,20 @@ function test() {
     sorter.on(Sorter.eventType.sorted, printer);
     sorter.on(Sorter.eventType.sorted, () => {
       console.log("hello");
-      $("#result")
-        .empty()
-        .append(
-          template.table({
-            technologies: sorter.technologies.sorted,
-            criteria: sorter.criteria.all,
-          })
-        );
+      // Get the element with ID 'result'
+      const resultElement = document.getElementById('result');
+
+      // Clear the contents of the 'result' element
+      resultElement.innerHTML = '';
+
+      // Generate the new content using the template
+      const newContent = template.table({
+        technologies: sorter.technologies.sorted,
+        criteria: sorter.criteria.all,
+      });
+
+      // Insert the new content into the 'result' element
+      resultElement.insertAdjacentHTML('beforeend', newContent);
     });
     sorter.criteria.all[0].weight = 0;
     sorter.criteria.all[1].weight = 1;
@@ -36,18 +42,35 @@ function test() {
 
     sorter.criteria.all[3].blurIntensity = 0.2;
     sorter.criteria.all[3].weight = 1;
+    // Get the element with ID 'controlPanel'
+    const controlPanel = document.getElementById('controlPanel');
 
-    $("#controlPanel")
-      .empty()
-      .append(template.twoSliderControlPanel({ criteria: sorter.criteria.all }))
-      .find("input")
-      .change(function (e) {
-        const input = $(e.target),
-          criterionName = input.data("criterion"),
-          parameter = input.data("parameter"),
-          criterion = sorter.criteria.map[criterionName];
-        criterion[parameter] = input.val();
-      });
+    // Clear the contents of the 'controlPanel' element
+    controlPanel.innerHTML = '';
+
+    // Generate the new content using the template
+    const newContent = template.twoSliderControlPanel({ criteria: sorter.criteria.all });
+
+    // Insert the new content into the 'controlPanel'
+    controlPanel.insertAdjacentHTML('beforeend', newContent);
+
+    // Add event listeners to input elements within 'controlPanel'
+    controlPanel.addEventListener('change', function (e) {
+      const target = e.target;
+
+      // Check if the changed element is an input
+      if (target.tagName === 'INPUT') {
+        const input = target;
+        const criterionName = input.dataset.criterion;
+        const parameter = input.dataset.parameter;
+        const criterion = sorter.criteria.map[criterionName];
+
+        // Update the criterion parameter
+        if (criterion) {
+          criterion[parameter] = input.value;
+        }
+      }
+    });
 
     // const confortBlur = $( "#comfort_blur" ) ;
     // confortBlur.change( () => {

@@ -63,9 +63,8 @@ class UI {
         rect.remove();
         this._cleanUpStage()._setupStage();
       };
-      window.addEventListener("resize", reload);
-      $(".tabs").tabs({ onShow: reload });
-
+      window.addEventListener("resize", reload);      
+      //M.Tabs.init(document.querySelectorAll(".tabs"));
       return this;
     });
   }
