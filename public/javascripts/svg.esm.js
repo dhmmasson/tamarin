@@ -6420,20 +6420,20 @@ registerMethods({
 });
 register(Svg, "Svg", true);
 
-class Symbol extends Container {
+class Symbol2 extends Container {
   // Initialize node
   constructor(node, attrs = node) {
-    super(nodeOrNew("symbol", node), attrs);
+    super(nodeOrNew("symbol2", node), attrs);
   }
 }
 registerMethods({
   Container: {
-    symbol: wrapWithAttrCheck(function () {
-      return this.put(new Symbol());
+    symbol2: wrapWithAttrCheck(function () {
+      return this.put(new Symbol2());
     }),
   },
 });
-register(Symbol, "Symbol");
+register(Symbol2, "Symbol2");
 
 function plain(text) {
   // clear if build mode is disabled
@@ -7201,7 +7201,7 @@ register(Use, "Use");
 
 /* Optional Modules */
 const SVG = makeInstance;
-extend([Svg, Symbol, Image, Pattern, Marker], getMethodsFor("viewbox"));
+extend([Svg, Symbol2, Image, Pattern, Marker], getMethodsFor("viewbox"));
 extend([Line, Polyline, Polygon, Path], getMethodsFor("marker"));
 extend(Text, getMethodsFor("Text"));
 extend(Path, getMethodsFor("Path"));
@@ -7275,7 +7275,7 @@ export {
   Stop,
   Style,
   Svg,
-  Symbol,
+  Symbol2,
   Text,
   TextPath,
   Timeline,
