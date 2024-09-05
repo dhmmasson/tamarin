@@ -70,5 +70,6 @@ Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin (Version v1.9)
    url = {https://github.com/dhmmasson/tamarin},
    version = {v1.9},
    year = {2024}
+   doi = {10.5281/zenodo.13628740}
 }
 ```
