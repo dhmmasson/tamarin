@@ -59,7 +59,7 @@ you can build indivually the css, pug or js elements.
 
 ### Latest version 
 ```APA
-Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin [Computer software]. https://https://doi.org/10.5281/zenodo.13628637
+Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin [Computer software]. https://doi.org/10.5281/zenodo.13628637
 ```
 
 ```bibtex
@@ -77,7 +77,7 @@ Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin [Computer soft
 
 ### version v1.9
 ```APA
-Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin (Version v1.9) [Computer software]. https://https://doi.org/10.5281/zenodo.13628740
+Masson, D., Laguna Salvadó, L., & Villeneuve, E. (2024). Tamarin (Version v1.9) [Computer software]. https://doi.org/10.5281/zenodo.13628740
 ```
 
 ```bibtex
