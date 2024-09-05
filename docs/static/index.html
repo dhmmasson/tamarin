@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html theme="light">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -48,9 +48,6 @@
         <div class="col s12" id="result"></div>
       </div>
     </main>
-    <script src="javascripts/papaparse.min.js"> </script>
-    <script src="javascripts/jquery.min.js"></script>
-    <script src="javascripts/materialize.min.js"></script>
     <script src="javascripts/capuchin.mjs" type="module"></script>
     <ul class="sidenav" id="slide-out">
       <li>
@@ -65,15 +62,21 @@
             </svg></i><span>github</span></a></li>
     </ul>
     <script>
-      $(document).ready(function () {
-        $(".sidenav").sidenav({ edge: "right" });
+      document.addEventListener('DOMContentLoaded', function() {
+        M.Sidenav.init( document.querySelectorAll(".sidenav"), {
+          edge: "right",
+        });
       });
     </script>
-    <script>
-      $(document).ready(function () {
-        $(".fixed-action-btn").floatingActionButton({ hoverEnabled: true, direction: "bottom" });
-        const instance = M.Tabs.getInstance(".tabs");
-        $(".tabs").tabs();
+    <script defer="defer">
+      document.addEventListener('DOMContentLoaded', function() {
+        M.FloatingActionButton.init(
+            document.querySelectorAll(".fixed-action-btn"), 
+            {
+              hoverEnabled: true,
+              direction: "bottom",
+            });
+        M.Tabs.init(document.querySelectorAll(".tabs"));
       });
     </script>
   </body>

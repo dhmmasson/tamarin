@@ -10,9 +10,33 @@ You can observe not only the ranking but also the impact of each parameter on th
 
 ![Demonstration of the parallel plot](/docs/parallelPlotCoordinate.gif)
 
-## install
+## Install
 
-1. Clone the project from : https://github.com/dhmmasson/rezbuild-emperor-tamarin.git
+### Generate the static version 
+
+For version 2.0 the idea is to generate a static version of the application that can be served by any web server. This mean rendering the pug into HTML, rendering the scss to css and bundling the app logic into a single js file. The "api" part is **statically generated**, (the JSON files are directly served as files). 
+Version 2 will drop all the app logic, and will rely on the csv import for the orignal dataset.
+
+To build the full project: 
+```bash
+npm run build 
+``` 
+you can build indivually the css, pug or js elements. 
+```
+  build-css
+    sass public/stylesheets/style.scss docs/static/stylesheets/style.css --quiet
+  build-pug
+    npx pug3 -P views/index.pug --out docs/static/
+  build-template
+    node src/exportTemplate.cjs
+  build-js
+    npm run build-template && webpack --config webpack.config.cjs --mode=production
+  build
+    npm run build-css && npm run build-pug && npm run build-js 
+```
+
+### node version (DEPRECATED)
+
 1. Create the database and populate the database
    1. Create an empty database on mysql
    2. Import db/structure\_\*.sql ( you may have to reorder the elements )
@@ -21,7 +45,7 @@ You can observe not only the ranking but also the impact of each parameter on th
 1. install libraries : npm install
 1. test by launching the app : npm start
 
-## development
+#### quick dev
 
 1. install nodemon : npm install nodemon
 1. launch the app :
@@ -29,6 +53,7 @@ You can observe not only the ranking but also the impact of each parameter on th
 - nodemon ./bin/www.mjs
 - Or a better version :
 - nodemon -i public/javascripts -e js,pug,mjs,cjs bin/www.mjs
+
 
 ## Cite 
 

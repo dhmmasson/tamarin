@@ -2,9 +2,9 @@
  * @file the main functions
  * @author dhmmasson
  */
-import Papa from "papaparse" ; 
+import Papa from "papaparse";
 import { Tabs, Sidenav, FloatingActionButton } from "@materializecss/materialize";
-window.M = {Tabs, Sidenav, FloatingActionButton} ; 
+window.M = { Tabs, Sidenav, FloatingActionButton };
 
 import * as SVGmodule from "./svg.esm.js";
 window.SVG = SVGmodule;
@@ -37,7 +37,7 @@ function load() {
   }
 }
 
-function empty( id ) {
+function empty(id) {
   const element = document.getElementById(id);
   if (element) element.innerHTML = '';
 }
@@ -188,11 +188,11 @@ function initSorter(criteria, technologies) {
   ui = new UI(document.getElementById('controlPanel'), sorter.criteria.all, () => {
     loadState();
     attachEventListener();
-});
+  });
 
-parallelCoordinatesPlotPanel = new ParallelCoordinatesPlotPanel(
+  parallelCoordinatesPlotPanel = new ParallelCoordinatesPlotPanel(
     document.getElementById('ParallelCoordinatesPlotPanel')
-);
+  );
 }
 
 /**
@@ -312,39 +312,41 @@ function updateTable(longueur) {
 }
 
 function makeTableInteractive() {
-  
-    document.querySelector('#result tbody').addEventListener('click', function (e) {
-      if (e.target.closest('tr.technology')) {
-        const element = e.target.closest("tr.technology");
-        console.log(element.dataset.technology);
-        if (element.dataset.technology) {
-          const technologie = sorter.technologies.map[element.dataset.technology];
-          technologie.selected = !technologie.selected;
-          updateTable();
-          loadParallelCoordinatesPlotPanel();
-        }}
-  });
 
-  let extension = null;
-  
-    document.querySelector('#result tbody').addEventListener('mouseover', function (e) {
-      if (e.target.closest('tr.technology')) {
-    if (e.buttons === 1) {
+  document.querySelector('#result tbody').addEventListener('click', function (e) {
+    if (e.target.closest('tr.technology')) {
       const element = e.target.closest("tr.technology");
       console.log(element.dataset.technology);
       if (element.dataset.technology) {
         const technologie = sorter.technologies.map[element.dataset.technology];
         technologie.selected = !technologie.selected;
-        element.style.backgroundColor = technologie.selected
-          ? "yellow"
-          : "white";
+        updateTable();
         loadParallelCoordinatesPlotPanel();
-        clearTimeout(extension);
-        extension = setTimeout(() => {
-          updateUI();
-        }, 100);
       }
-    }}
+    }
+  });
+
+  let extension = null;
+
+  document.querySelector('#result tbody').addEventListener('mouseover', function (e) {
+    if (e.target.closest('tr.technology')) {
+      if (e.buttons === 1) {
+        const element = e.target.closest("tr.technology");
+        console.log(element.dataset.technology);
+        if (element.dataset.technology) {
+          const technologie = sorter.technologies.map[element.dataset.technology];
+          technologie.selected = !technologie.selected;
+          element.style.backgroundColor = technologie.selected
+            ? "yellow"
+            : "white";
+          loadParallelCoordinatesPlotPanel();
+          clearTimeout(extension);
+          extension = setTimeout(() => {
+            updateUI();
+          }, 100);
+        }
+      }
+    }
   });
 }
 
@@ -368,34 +370,34 @@ function loadControlPanel(mode) {
  */
 function load2SliderControlPanel() {
   // Get the element with ID 'controlPanel'
-const controlPanel = document.getElementById('controlPanel');
+  const controlPanel = document.getElementById('controlPanel');
 
-// Clear the contents of the 'controlPanel' element
-controlPanel.innerHTML = '';
+  // Clear the contents of the 'controlPanel' element
+  controlPanel.innerHTML = '';
 
-// Generate the new content using the template
-const newContent = template.twoSliderControlPanel({ criteria: sorter.criteria.all });
+  // Generate the new content using the template
+  const newContent = template.twoSliderControlPanel({ criteria: sorter.criteria.all });
 
-// Insert the new content into the 'controlPanel'
-controlPanel.insertAdjacentHTML('beforeend', newContent);
+  // Insert the new content into the 'controlPanel'
+  controlPanel.insertAdjacentHTML('beforeend', newContent);
 
-// Add event listeners to the input elements within 'controlPanel'
-controlPanel.addEventListener('change', function (e) {
-  const target = e.target;
+  // Add event listeners to the input elements within 'controlPanel'
+  controlPanel.addEventListener('change', function (e) {
+    const target = e.target;
 
-  // Check if the changed element is an input
-  if (target.tagName === 'INPUT') {
-    const input = target;
-    const criterionName = input.dataset.criterion;
-    const parameter = input.dataset.parameter;
-    const criterion = sorter.criteria.map[criterionName];
+    // Check if the changed element is an input
+    if (target.tagName === 'INPUT') {
+      const input = target;
+      const criterionName = input.dataset.criterion;
+      const parameter = input.dataset.parameter;
+      const criterion = sorter.criteria.map[criterionName];
 
-    // Update the criterion parameter
-    if (criterion) {
-      criterion[parameter] = input.value;
+      // Update the criterion parameter
+      if (criterion) {
+        criterion[parameter] = input.value;
+      }
     }
-  }
-});
+  });
 
 }
 
@@ -406,28 +408,28 @@ controlPanel.addEventListener('change', function (e) {
  */
 function load2DimensionControlPanel() {
   // Get the element with ID 'controlPanel'
-const controlPanel = document.getElementById('controlPanel');
+  const controlPanel = document.getElementById('controlPanel');
 
-// Clear the contents of the 'controlPanel' element
-controlPanel.innerHTML = '';
+  // Clear the contents of the 'controlPanel' element
+  controlPanel.innerHTML = '';
 
-// Generate the new content using the template
-const newContent = template.twoDimensionControlPanel({ criteria: sorter.criteria.all });
+  // Generate the new content using the template
+  const newContent = template.twoDimensionControlPanel({ criteria: sorter.criteria.all });
 
-// Insert the new content into the 'controlPanel'
-controlPanel.insertAdjacentHTML('beforeend', newContent);
+  // Insert the new content into the 'controlPanel'
+  controlPanel.insertAdjacentHTML('beforeend', newContent);
 
-// Find elements with class 'draggable' and apply draggable functionality
-controlPanel.querySelectorAll('.draggable').forEach(element => {
-  const label = ui.svg(element);
-  element.addEventListener('mousedown', function (event) {
-    const node = label
-      .ellipse()
-      .draggable()
-      .move(2.5 + event.offsetX, 2.5 + event.offsetY);
-    node.remember("_draggable").startDrag(event);
+  // Find elements with class 'draggable' and apply draggable functionality
+  controlPanel.querySelectorAll('.draggable').forEach(element => {
+    const label = ui.svg(element);
+    element.addEventListener('mousedown', function (event) {
+      const node = label
+        .ellipse()
+        .draggable()
+        .move(2.5 + event.offsetX, 2.5 + event.offsetY);
+      node.remember("_draggable").startDrag(event);
+    });
   });
-});
 
 }
 

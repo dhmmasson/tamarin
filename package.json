@@ -1,14 +1,14 @@
 {
   "name": "rezbuild-emperor-tamarin",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www.mjs",
     "build-css": "sass public/stylesheets/style.scss docs/static/stylesheets/style.css --quiet",
     "build-pug": "npx pug3 -P views/index.pug --out docs/static/",
     "build-template": "node src/exportTemplate.cjs",
-    "build-js": "npm run build-template && webpack --config webpack.config.cjs --mode production",
-    "publish": "npm run build-css && npm run build-pug && npm run build-js "
+    "build-js": "npm run build-template && webpack --config webpack.config.cjs --mode=production",
+    "build": "npm run build-css && npm run build-pug && npm run build-js "
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^5.6.0",
@@ -20,7 +20,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.18.2",
     "http-errors": "~1.6.3",
-    "jquery": "^3.5.0",
     "morgan": "~1.9.1",
     "mysql2": "^3.11.0",
     "papaparse": "^5.2.0",
@@ -55,7 +54,7 @@
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-scss": "^6.5.1",
     "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
+        "webpack-cli": "^5.1.4"
   },
   "sasslintConfig": ".sasslintrc.json",
   "type": "module",
