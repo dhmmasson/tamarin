@@ -158,7 +158,7 @@ function loadFromCSV(csvFile) {
  * @param
  */
 async function getCriteria() {
-  const response = await fetch("/api/criteria");
+  const response = await fetch("api/criteria");
   const data = await response.json();
   return data.criteria;
 }
@@ -170,7 +170,7 @@ async function getCriteria() {
  */
 async function getTechnologies() {
   // fetch asynchrone
-  const response = await fetch("/api/technologies");
+  const response = await fetch("api/technologies");
   const data = await response.json();
   return data.technologies;
 }
